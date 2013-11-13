@@ -1,5 +1,7 @@
 package esir.dom13.nsoc.objects;
 
+import java.util.LinkedList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Clement
@@ -10,7 +12,35 @@ package esir.dom13.nsoc.objects;
 public class Room {
 
 
-    public Room(){
+    private   int roomId;
+    private   int buildingId;
+    private   String roomName;
+    private   LinkedList<Equipment> listEquipment;
+
+
+    public Room(int room,String name, int building, LinkedList<Equipment> list){
+
+        roomId = room;
+        buildingId = building;
+        listEquipment = list;
 
     }
+
+    public int getRoomId() {
+        return roomId;
+    }
+
+    public int getBuildingId() {
+        return buildingId;
+    }
+
+    public String getRoomName() {
+       return roomName;
+    }
+
+    public LinkedList<Equipment> getListEquipment() {
+        return listEquipment;
+    }
+
+
 }

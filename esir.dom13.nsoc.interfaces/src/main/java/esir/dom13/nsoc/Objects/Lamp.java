@@ -1,20 +1,22 @@
-package esir.dom13.nsoc.objects;
+package esir.dom13.nsoc.Objects;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Clement
+ * User: Renaud
  * Date: 13/11/13
- * Time: 17:01
+ * Time: 17:07
  * To change this template use File | Settings | File Templates.
  */
-public class Screen {
+public class Lamp {
 
     private String adress;
     private String protocol;
 
-    public Screen(String adress, String protocol) {
-        this.adress = adress;
-        this.protocol = protocol;
+    public Lamp(String adressHomeAutomation, String protocolHomeHomeAutomation ){
+
+        adress = adressHomeAutomation;
+        protocol = protocolHomeHomeAutomation;
+
     }
 
     public String getAdress() {
