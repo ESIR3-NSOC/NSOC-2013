@@ -8,4 +8,7 @@ package esir.dom13.nsoc.interfaces;
  * To change this template use File | Settings | File Templates.
  */
 public interface IBadgeReading {
+
+    boolean badgeReading(String id_Badge);
+
 }

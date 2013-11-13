@@ -8,4 +8,6 @@ package esir.dom13.nsoc.interfaces;
  * To change this template use File | Settings | File Templates.
  */
 public interface IManagementScenario {
+
+
 }

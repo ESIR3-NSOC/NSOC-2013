@@ -12,9 +12,11 @@ import esir.dom13.nsoc.objects.Shutter;
  */
 public interface IManagementShutter {
 
-    void pullUp(Shutter screen);
+    void setUp(Shutter shutter);
 
-    void pullDown(Shutter screen);
+    void setDown(Shutter shutter);
 
-    void getState(Shutter screen);
+    void setIntermediate( Shutter shutter, int position);
+
+    void getState(Shutter shutter);
 }

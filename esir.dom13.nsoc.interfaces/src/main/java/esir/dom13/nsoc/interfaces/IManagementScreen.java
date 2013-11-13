@@ -11,9 +11,9 @@ import esir.dom13.nsoc.objects.Screen;
  */
 public interface IManagementScreen {
 
-    void pullUp(Screen screen);
+    void setUp(Screen screen);
 
-    void pullDown(Screen screen);
+    void setDown(Screen screen);
 
     void getState(Screen screen);
 }
