@@ -1,6 +1,6 @@
 package esir.dom13.nsoc.interfaces;
 
-import esir.dom13.nsoc.Objects.Lamp;
+import esir.dom13.nsoc.objects.Lamp;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package esir.dom13.nsoc.Objects;
+package esir.dom13.nsoc.objects;
 
 /**
  * Created with IntelliJ IDEA.

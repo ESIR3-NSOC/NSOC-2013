@@ -1,7 +1,4 @@
-package esir.dom13.nsoc.Objects;
-
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
+package esir.dom13.nsoc.objects;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,4 +9,7 @@ import java.util.LinkedList;
  */
 public class Equipment {
 
+public Equipment(){
+
+}
 }
