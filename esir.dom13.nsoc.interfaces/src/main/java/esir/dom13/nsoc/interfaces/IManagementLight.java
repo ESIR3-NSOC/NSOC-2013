@@ -12,19 +12,19 @@ import esir.dom13.nsoc.objects.Lamp;
 public interface IManagementLight {
 
     /**
-     * Turn on the light on the room
+     * Turning on the light of the room
      * @param light
      */
     void turnOn(Lamp light);
 
     /**
-     * Turn off the light on the room
+     * Turning off the light of the room
      * @param light
      */
     void turnOff(Lamp light);
 
     /**
-     * Change state of light
+     * Changing the state of the light
      * @param light
      */
     void toggle(Lamp light);
