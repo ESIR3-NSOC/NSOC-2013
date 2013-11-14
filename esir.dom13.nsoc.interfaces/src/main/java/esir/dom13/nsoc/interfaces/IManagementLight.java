@@ -28,4 +28,6 @@ public interface IManagementLight {
      * @param light
      */
     void toggle(Lamp light);
+
+    boolean getState(Lamp light);
 }

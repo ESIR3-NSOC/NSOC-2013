@@ -18,7 +18,9 @@ public interface IManagementShutter {
 
     void setIntermediate( Shutter shutter, int position);
 
-    void getState(Shutter shutter);
+    void stop(Shutter shutter);
+
+    float getState(Shutter shutter);
 
     // void getProtocol(Shutter shutter);
 }

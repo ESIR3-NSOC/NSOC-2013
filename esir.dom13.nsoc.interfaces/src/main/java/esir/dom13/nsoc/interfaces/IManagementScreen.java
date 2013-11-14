@@ -15,5 +15,5 @@ public interface IManagementScreen {
 
     void setDown(Screen screen);
 
-    void getState(Screen screen);
+    boolean getState(Screen screen);
 }
