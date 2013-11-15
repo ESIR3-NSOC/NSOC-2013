@@ -1,5 +1,6 @@
 package esir.dom13.nsoc.interfaces;
 
+import esir.dom13.nsoc.objects.Protocols;
 import esir.dom13.nsoc.objects.Screen;
 import esir.dom13.nsoc.objects.Shutter;
 
@@ -22,5 +23,5 @@ public interface IManagementShutter {
 
     float getState(Shutter shutter);
 
-    // void getProtocol(Shutter shutter);
+    String getProtocol(Shutter shutter);
 }

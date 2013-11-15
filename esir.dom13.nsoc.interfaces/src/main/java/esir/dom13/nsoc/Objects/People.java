@@ -13,7 +13,6 @@ public class People {
     String firstName;
     String surname;
     int id_people;
-    int studentNumber;
     String emailAddress;
     String id_rfid;
 
@@ -22,11 +21,10 @@ public class People {
     }
 
 
-    public People(String firstName, String surname, int id_people, int studentNumber, String emailAddress) {
+    public People(String firstName, String surname, int id_people, String emailAddress) {
         this.firstName = firstName;
         this.surname = surname;
         this.id_people = id_people;
-        this.studentNumber = studentNumber;
         this.emailAddress = emailAddress;
     }
 
@@ -59,14 +57,6 @@ public class People {
 
     public void setId_people(int id_people) {
         this.id_people = id_people;
-    }
-
-    public int getStudentNumber() {
-        return studentNumber;
-    }
-
-    public void setStudentNumber(int studentNumber) {
-        this.studentNumber = studentNumber;
     }
 
     public String getEmailAddress() {

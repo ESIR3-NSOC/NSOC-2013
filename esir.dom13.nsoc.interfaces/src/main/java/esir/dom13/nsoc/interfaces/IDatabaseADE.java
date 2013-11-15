@@ -1,5 +1,7 @@
 package esir.dom13.nsoc.interfaces;
 
+import esir.dom13.nsoc.objects.Room;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Clement
@@ -8,4 +10,9 @@ package esir.dom13.nsoc.interfaces;
  * To change this template use File | Settings | File Templates.
  */
 public interface IDatabaseADE {
+
+    String getURLAgendaByRoom(Room room);
+
+
+
 }

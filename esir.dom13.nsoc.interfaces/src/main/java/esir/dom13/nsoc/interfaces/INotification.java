@@ -7,16 +7,14 @@ import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Renaud
- * Date: 12/11/13
- * Time: 14:56
+ * User: Clement
+ * Date: 15/11/13
+ * Time: 13:32
  * To change this template use File | Settings | File Templates.
  */
-public interface IBooking {
+public interface INotification {
 
-    // FR : Réservation d'une salle
-    // EN : Booking a room
-    boolean bookingRequest(Date date, int duration, Room room, People id_people);
+    void successfulBooking(People people, Room room, Date date, int duration);
 
-
+    void bookingConflict(People people, Room room, Date date, int duration);
 }

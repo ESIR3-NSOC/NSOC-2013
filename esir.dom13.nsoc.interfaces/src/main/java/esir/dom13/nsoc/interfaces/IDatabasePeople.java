@@ -1,5 +1,9 @@
 package esir.dom13.nsoc.interfaces;
 
+import esir.dom13.nsoc.objects.People;
+
+import java.util.LinkedList;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Clement
@@ -8,5 +12,13 @@ package esir.dom13.nsoc.interfaces;
  * To change this template use File | Settings | File Templates.
  */
 public interface IDatabasePeople {
+
+    People getPeopleById(int id_people);
+
+    People getPeopleByRFID(String id_rfid);
+
+    LinkedList<People> getPeople();
+
+    void addPeople(People people);
 
 }
