@@ -11,20 +11,20 @@ import esir.dom13.nsoc.objects.Room;
  */
 public interface IScenario {
 
-    void projectorScn(Room room);
+    void projectorScn();
 
-    void goodByeScn(Room room);
+    void goodByeScn();
 
-    void helloScn(Room room);
+    void helloScn();
 
-    void turnOnLightsScn (Room room);
+    void turnOnLightsScn ();
 
-    void turnOffLightsScn (Room room);
+    void turnOffLightsScn ();
 
-    void setDownShutterScn (Room room);
+    void setDownShutterScn ();
 
-    void setUpShutterScn (Room room);
+    void setUpShutterScn ();
 
-    void autoSetBrightnessScn(Room room, int brightness);
+    void autoSetBrightnessScn(int brightness);
 
 }

@@ -9,6 +9,6 @@ package esir.dom13.nsoc.interfaces;
  */
 public interface IBadgeReading {
 
-    boolean badgeReading(String id_Badge);
+    boolean badgeReading();
 
 }

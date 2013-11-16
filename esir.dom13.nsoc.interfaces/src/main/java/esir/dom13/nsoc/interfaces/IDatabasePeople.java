@@ -19,6 +19,4 @@ public interface IDatabasePeople {
 
     LinkedList<People> getPeople();
 
-    void addPeople(People people);
-
 }

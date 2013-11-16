@@ -18,17 +18,17 @@ public interface IDatabaseBuilding {
 
     Room getRoomByName(int name_room);
 
-    LinkedList<Room> getRooms(int id_building);
+    LinkedList<Room> getAllRooms(int id_building);
 
     Building getBuildingById (int id_building);
 
     Building getBuildingByName(String name_building);
 
-    LinkedList<Building> getBuildings();
+    LinkedList<Building> getAllBuildings();
 
-    void addBuilding(Building building);
+    //
 
-    void addRoom(Building building, Room room);
+
 
 
 }

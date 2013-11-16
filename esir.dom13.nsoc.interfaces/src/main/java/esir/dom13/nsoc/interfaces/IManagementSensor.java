@@ -1,8 +1,6 @@
 package esir.dom13.nsoc.interfaces;
 
 
-import esir.dom13.nsoc.objects.Sensor;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Renaud
@@ -12,7 +10,5 @@ import esir.dom13.nsoc.objects.Sensor;
  */
 public interface IManagementSensor {
 
-    Object getState(Sensor sensor);
 
-    void detectChange(Sensor sensor);
 }

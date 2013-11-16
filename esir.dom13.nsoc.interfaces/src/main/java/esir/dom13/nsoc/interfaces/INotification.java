@@ -14,6 +14,7 @@ import java.util.Date;
  */
 public interface INotification {
 
+
     void successfulBooking(People people, Room room, Date date, int duration);
 
     void bookingConflict(People people, Room room, Date date, int duration);

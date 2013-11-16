@@ -11,9 +11,9 @@ import esir.dom13.nsoc.objects.Projector;
  */
 public interface IManagementProjector {
 
-    void turnOn(Projector projector);
+    void turnOn();
 
-    void turnOff(Projector projector);
+    void turnOff();
 
-    void getState(Projector projector);
+    void getState();
 }

@@ -11,7 +11,7 @@ import esir.dom13.nsoc.objects.ElectricStrike;
  */
 public interface IManagementElectricStrike {
 
-    void open( ElectricStrike electricStrike);
+    void openLock();
 
-    void close( ElectricStrike electricStrike);
+    void closeLock();
 }

@@ -13,15 +13,15 @@ import esir.dom13.nsoc.objects.Shutter;
  */
 public interface IManagementShutter {
 
-    void setUp(Shutter shutter);
+    void setUp();
 
-    void setDown(Shutter shutter);
+    void setDown();
 
-    void setIntermediate( Shutter shutter, int position);
+    void setIntermediate(int position);
 
-    void stop(Shutter shutter);
+    void stop();
 
-    float getState(Shutter shutter);
+    float getState();
 
-    String getProtocol(Shutter shutter);
+    String getProtocol();
 }

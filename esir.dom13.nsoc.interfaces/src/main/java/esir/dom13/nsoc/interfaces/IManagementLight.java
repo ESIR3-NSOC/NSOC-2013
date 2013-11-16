@@ -13,21 +13,21 @@ public interface IManagementLight {
 
     /**
      * Turning on the light of the room
-     * @param light
+
      */
-    void turnOn(Lamp light);
+    void turnOn();
 
     /**
      * Turning off the light of the room
-     * @param light
+
      */
-    void turnOff(Lamp light);
+    void turnOff();
 
     /**
      * Changing the state of the light
-     * @param light
-     */
-    void toggle(Lamp light);
 
-    boolean getState(Lamp light);
+     */
+    void toggle();
+
+    boolean getState();
 }
