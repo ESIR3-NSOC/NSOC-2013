@@ -1,5 +1,6 @@
 package esir.dom13.nsoc.devices.light.knx;
 
+import esir.dom13.nsoc.communication.knx.ICommunicationKNX;
 import esir.dom13.nsoc.devices.light.IManagementLight;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
@@ -18,6 +19,9 @@ import org.kevoree.log.Log;
 @Provides({
         @ProvidedPort(name = "CommandLight", type = PortType.SERVICE, className = IManagementLight.class)
 })
+@Requires({
+        @RequiredPort(name = "Com_KNX", type = PortType.SERVICE, className = ICommunicationKNX.class)
+})
 @DictionaryType({
         @DictionaryAttribute(name = "address", defaultValue = "1/1/1", optional = false),
         @DictionaryAttribute(name = "name", defaultValue = "no_name", optional = true)
@@ -25,9 +29,11 @@ import org.kevoree.log.Log;
 @ComponentType
 public class Light_KNX extends AbstractComponentType implements IManagementLight {
 
+    String address;
     @Start
     public void start() {
         Log.debug("Component ManagementLights_KNX started");
+        address = getDictionary().get("address").toString();
     }
 
     @Stop
@@ -38,7 +44,7 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
 
     @Update
     public void update() {
-
+        address = getDictionary().get("address").toString();
         Log.debug("Component ManagementLights_KNX updated");
     }
 
@@ -48,29 +54,31 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
     @Port(name = "CommandLight", method = "turnOn")
     @Override
     public void turnOn() {
-        String address = getDictionary().get("address").toString();
+
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,true);
         Log.info("Lampe "+address +" allumé");
     }
 
     @Port(name = "CommandLight", method = "turnOff")
     @Override
     public void turnOff() {
-        String address = getDictionary().get("address").toString();
+
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,false);
         Log.info("Lampe "+address +" etteinte");
     }
 
     @Port(name = "CommandLight", method = "toggle")
     @Override
     public void toggle() {
-        String address = getDictionary().get("address").toString();
+
+        boolean state = getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,!state);
         Log.info("Lampe "+address +" toggle");
     }
 
     @Port(name = "CommandLight", method = "getState")
     @Override
     public boolean getState() {
-        String address = getDictionary().get("address").toString();
-
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        return getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
