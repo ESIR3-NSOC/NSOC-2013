@@ -9,5 +9,9 @@ package esir.dom13.nsoc.interfaces;
  */
 public interface ICommunicationKNX {
 
+   void writeBoolean (String address, boolean value);
+
+   void readBoolean(String address);
+
 
 }

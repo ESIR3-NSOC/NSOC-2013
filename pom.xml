@@ -41,11 +41,8 @@
 
     <modules>
         <module>esir.dom13.nsoc.interfaces</module>
-        <module>esir.dom13.nsoc.management.email</module>
-        <module>esir.dom13.nsoc.devices.light</module>
-        <module>esir.dom13.nsoc.devices.fakeSwitch</module>
-        <module>esir.dom13.nsoc.devices.lectureBadge</module>
         <module>esir.dom13.nsoc.arduino</module>
+        <module>esir.dom13.nsoc.javase</module>
     </modules>
 
     <name>NSOC :: Library :: Root</name>
