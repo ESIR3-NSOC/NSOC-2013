@@ -20,6 +20,7 @@
         <module>../esir.dom13.nsoc.devices.light</module>
         <module>../esir.dom13.nsoc.devices.fakeSwitch</module>
         <module>../esir.dom13.nsoc.management.email</module>
+        <module>../esir.dom13.nsoc.devices.shutter</module>
     </modules>
 
     <dependencies>

@@ -43,6 +43,7 @@
         <module>esir.dom13.nsoc.interfaces</module>
         <module>esir.dom13.nsoc.arduino</module>
         <module>esir.dom13.nsoc.javase</module>
+        <module>esir.dom13.nsoc.devices.shutter</module>
     </modules>
 
     <name>NSOC :: Library :: Root</name>
