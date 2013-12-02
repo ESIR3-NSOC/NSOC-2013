@@ -22,6 +22,7 @@
         <module>../esir.dom13.nsoc.management.email</module>
         <module>../esir.dom13.nsoc.devices.shutter</module>
         <module>../esir.dom13.nsoc.communication.knx</module>
+        <module>../esir.dom13.nsoc.scenarii</module>
     </modules>
 
     <dependencies>
