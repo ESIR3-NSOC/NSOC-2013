@@ -29,7 +29,7 @@ import org.kevoree.log.Log;
 @ComponentType
 public class Light_KNX extends AbstractComponentType implements IManagementLight {
 
-    String address;
+    private String address;
     @Start
     public void start() {
         Log.debug("Component ManagementLights_KNX started");

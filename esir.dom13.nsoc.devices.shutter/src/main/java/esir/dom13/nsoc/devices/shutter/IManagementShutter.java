@@ -12,11 +12,8 @@ public interface IManagementShutter {
 
     void setDown();
 
-    void setIntermediate(int position);
-
-    void stop();
+    void setIntermediate(Integer position);
 
     int getState();
 
-    String getProtocol();
 }
