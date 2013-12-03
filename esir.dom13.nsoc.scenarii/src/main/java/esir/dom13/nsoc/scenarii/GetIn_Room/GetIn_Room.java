@@ -27,18 +27,26 @@ public class GetIn_Room extends AbstractComponentType {
 
     @Start
     public void start() {
+        Log.debug("Component GetIn_Room started");
     }
 
     @Stop
     public void stop() {
+        Log.debug("Component GetIn_Room stopped");
+
     }
 
     @Update
     public void update() {
+        Log.debug("Component GetIn_Room updated");
+
     }
 
     @Port(name="StartScenario")
     public void startScenario(){
+
+    getPortByName("CommandLight", IManagementLight.class).turnOn();
+    getPortByName("CommandShutter", IManagementShutter.class).setUp();
 
     }
 
