@@ -17,6 +17,7 @@
  */
 package esir.dom13.nsoc.devices.fakeSwitch;
 
+import esir.dom13.nsoc.devices.shutter.IManagementShutter;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.log.Log;
@@ -31,8 +32,8 @@ import java.util.HashMap;
 
 @Library(name = "NSOC2013")
 @Requires({
-
-        @RequiredPort(name = "bouton", type = PortType.SERVICE, className = IManagementLight.class, optional = true, needCheckDependency = true)
+        @RequiredPort(name = "shutter", type = PortType.SERVICE, className = IManagementShutter.class, optional = true, needCheckDependency = false),
+        @RequiredPort(name = "light", type = PortType.SERVICE, className = IManagementLight.class, optional = true, needCheckDependency = false)
 })
 
 @ComponentType
@@ -84,8 +85,11 @@ public class FakeSwitch extends AbstractComponentType {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if (isPortBinded("bouton")) {
-                                getPortByName("bouton", IManagementLight.class).turnOn();
+                            if (isPortBinded("light")) {
+                                getPortByName("light", IManagementLight.class).turnOn();
+                            }
+                            if(isPortBinded("shutter")){
+                                getPortByName("shutter", IManagementShutter.class).setUp();
                             }
                         }
                     });
@@ -100,8 +104,12 @@ public class FakeSwitch extends AbstractComponentType {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if (isPortBinded("bouton")) {
-                                getPortByName("bouton", IManagementLight.class).turnOff();
+                            if (isPortBinded("light")) {
+                                getPortByName("light", IManagementLight.class).turnOff();
+
+                            }
+                            if(isPortBinded("shutter")){
+                                getPortByName("shutter", IManagementShutter.class).setDown();
                             }
                         }
                     });
@@ -115,8 +123,12 @@ public class FakeSwitch extends AbstractComponentType {
                     SwingUtilities.invokeLater(new Runnable() {
                         @Override
                         public void run() {
-                            if (isPortBinded("bouton")) {
-                                getPortByName("bouton", IManagementLight.class).toggle();
+                            if (isPortBinded("light")) {
+                                getPortByName("light", IManagementLight.class).toggle();
+
+                            }
+                            if (isPortBinded("shutter")) {
+                                getPortByName("shutter", IManagementShutter.class).setIntermediate();
 
                             }
                         }
