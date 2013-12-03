@@ -17,6 +17,7 @@
  */
 package esir.dom13.nsoc.devices.fakeSwitch;
 
+import esir.dom13.nsoc.devices.light.IManagementLight;
 import esir.dom13.nsoc.devices.shutter.IManagementShutter;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
@@ -32,8 +33,8 @@ import java.util.HashMap;
 
 @Library(name = "NSOC2013")
 @Requires({
-        @RequiredPort(name = "shutter", type = PortType.SERVICE, className = IManagementShutter.class, optional = true, needCheckDependency = false),
-        @RequiredPort(name = "light", type = PortType.SERVICE, className = IManagementLight.class, optional = true, needCheckDependency = false)
+        @RequiredPort(name = "shutter", type = PortType.SERVICE, className = IManagementShutter.class, optional = true, needCheckDependency = true),
+        @RequiredPort(name = "light", type = PortType.SERVICE, className = IManagementLight.class, optional = true, needCheckDependency = true)
 })
 
 @ComponentType

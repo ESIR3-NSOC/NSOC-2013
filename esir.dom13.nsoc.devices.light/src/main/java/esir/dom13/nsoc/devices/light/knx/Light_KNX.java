@@ -4,6 +4,7 @@ import esir.dom13.nsoc.communication.knx.ICommunicationKNX;
 import esir.dom13.nsoc.devices.light.IManagementLight;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+import org.kevoree.framework.MessagePort;
 import org.kevoree.log.Log;
 
 /**
@@ -70,9 +71,11 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
     @Port(name = "CommandLight", method = "toggle")
     @Override
     public void toggle() {
+        Log.info("Start Toggle ");
 
         boolean state = getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,!state);
+        Log.debug("state ::: "+state);
+        getPortByName("Com_KNX", ICommunicationKNX.class).writeBoolean(address,!state);
         Log.info("Lampe "+address +" toggle");
     }
 

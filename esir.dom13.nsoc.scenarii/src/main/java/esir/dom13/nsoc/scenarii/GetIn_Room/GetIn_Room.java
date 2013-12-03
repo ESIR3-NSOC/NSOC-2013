@@ -43,10 +43,13 @@ public class GetIn_Room extends AbstractComponentType {
     }
 
     @Port(name="StartScenario")
-    public void startScenario(){
+    public void startScenario(Object object){
+        Log.debug(object.toString());
 
-    getPortByName("CommandLight", IManagementLight.class).turnOn();
-    getPortByName("CommandShutter", IManagementShutter.class).setUp();
+            String message = object.toString();
+
+                getPortByName("CommandLight", IManagementLight.class).turnOn();
+                getPortByName("CommandShutter", IManagementShutter.class).setUp();
 
     }
 

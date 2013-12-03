@@ -68,7 +68,7 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
 
     @Port(name = "CommandShutter", method = "setIntermediate")
     @Override
-    public void setIntermediate(Integer position) {
+    public void setIntermediate(/*Integer position*/) {
         Log.info("Shutter "+address +" set intermediate");
         setUp();
         try {
@@ -78,7 +78,7 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
         }
         setDown();
         try {
-            Thread.sleep(Integer.parseInt(getDictionary().get("delay").toString())/position);
+            Thread.sleep(Integer.parseInt(getDictionary().get("delay").toString())/50);  //TODO position
         } catch (InterruptedException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

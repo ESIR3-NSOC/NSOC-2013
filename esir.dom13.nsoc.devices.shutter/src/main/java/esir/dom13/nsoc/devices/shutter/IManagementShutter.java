@@ -12,7 +12,7 @@ public interface IManagementShutter {
 
     void setDown();
 
-    void setIntermediate(Integer position);
+    void setIntermediate(/*Integer position*/);
 
     int getState();
 
