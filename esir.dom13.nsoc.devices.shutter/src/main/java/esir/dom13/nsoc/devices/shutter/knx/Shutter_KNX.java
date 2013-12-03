@@ -21,7 +21,8 @@ import org.kevoree.log.Log;
         @RequiredPort(name = "Com_KNX", type = PortType.SERVICE, className = ICommunicationKNX.class)
 })
 @DictionaryType({
-        @DictionaryAttribute(name = "address", defaultValue = "2/1/1", optional = false)
+        @DictionaryAttribute(name = "address", defaultValue = "2/1/1", optional = false) ,
+        @DictionaryAttribute(name = "delay", defaultValue = "10000",optional = true)
 })
 @ComponentType
 public class Shutter_KNX extends AbstractComponentType implements IManagementShutter {
@@ -52,14 +53,16 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
     @Port(name = "CommandShutter", method = "setUp")
     @Override
     public void setUp() {
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,true);
+        boolean value = false;
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address, value);
         Log.info("Shutter "+address +" set up");
     }
 
     @Port(name = "CommandShutter", method = "setDown")
     @Override
     public void setDown() {
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,false);
+        boolean value = true;
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address, value);
         Log.info("Shutter "+address +" set down");
     }
 
@@ -67,6 +70,19 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
     @Override
     public void setIntermediate(Integer position) {
         Log.info("Shutter "+address +" set intermediate");
+        setUp();
+        try {
+            Thread.sleep(Integer.parseInt(getDictionary().get("delay").toString()));
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        setDown();
+        try {
+            Thread.sleep(Integer.parseInt(getDictionary().get("delay").toString())/position);
+        } catch (InterruptedException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        setUp();
     }
 
     @Port(name = "CommandShutter", method = "getState")

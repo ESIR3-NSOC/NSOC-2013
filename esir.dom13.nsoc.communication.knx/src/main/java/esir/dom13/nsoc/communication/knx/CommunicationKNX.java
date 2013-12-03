@@ -94,6 +94,38 @@ public class CommunicationKNX extends AbstractComponentType implements ICommunic
         return value;
     }
 
+    @Override
+    @Port(name = "ComKNX", method = "writeFloat")
+    public void writeFloat(String address, Float value) {
+        try {
+            connect();
+            pc.write(new GroupAddress(address),value);
+            Log.info("writeFloat on GroupAddress : "+address+"  ::  value : "+value);
+        } catch (KNXException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            Log.error("Can't connect to KNX gateway");
+        }
+        disconnect();
+    }
+
+
+    @Port(name = "ComKNX", method = "readFloat")
+    @Override
+    public float readFloat(String address) {
+        float value = 0;
+        try {
+            connect();
+            value = pc.readFloat(new GroupAddress(address));
+            Log.info("ReadFloat on GroupAddress : "+address);
+
+        } catch (KNXException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            Log.error("Can't connect to KNX gateway");
+        }
+        disconnect();
+        return value;
+    }
+
     public void disconnect() {
         netLinkIp.close();
     }

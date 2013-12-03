@@ -15,5 +15,11 @@ public interface ICommunicationKNX {
 
    Boolean readBoolean(String address);
 
+   public void writeFloat(String address, Float value);
+
+   public float readFloat(String address);
+
+
+
 
 }
