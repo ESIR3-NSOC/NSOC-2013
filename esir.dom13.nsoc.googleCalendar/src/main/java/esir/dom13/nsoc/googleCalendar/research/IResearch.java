@@ -1,5 +1,10 @@
 package esir.dom13.nsoc.googleCalendar.research;
 
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
+
+import java.io.IOException;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Renaud
@@ -9,7 +14,7 @@ package esir.dom13.nsoc.googleCalendar.research;
  */
 public interface IResearch {
 
-    public boolean isAuthorized();
+    public boolean isAuthorized() throws ServiceException, IOException;
 
     public boolean isAvailable();
 }

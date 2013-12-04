@@ -1,7 +1,15 @@
 package esir.dom13.nsoc.googleCalendar.research;
 
+import com.google.gdata.client.calendar.CalendarQuery;
+import com.google.gdata.client.calendar.CalendarService;
+import com.google.gdata.data.DateTime;
+import com.google.gdata.data.calendar.CalendarEventEntry;
+import com.google.gdata.data.calendar.CalendarEventFeed;
+import com.google.gdata.util.AuthenticationException;
+import com.google.gdata.util.ServiceException;
 import org.kevoree.framework.AbstractComponentType;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -13,8 +21,13 @@ import java.net.URL;
  * To change this template use File | Settings | File Templates.
  */
 public class Research extends AbstractComponentType implements IResearch {
+    private String mail;
+    private String pw;
+    private DateTime start;
+    private DateTime end;
+
     @Override
-    public boolean isAuthorized() {
+    public boolean isAuthorized() throws ServiceException, IOException {
         boolean isAutho = false;
         URL feedUrl = null;
         try {
@@ -57,8 +70,6 @@ public class Research extends AbstractComponentType implements IResearch {
         return isAutho;
     }
 
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     @Override
     public boolean isAvailable() {
