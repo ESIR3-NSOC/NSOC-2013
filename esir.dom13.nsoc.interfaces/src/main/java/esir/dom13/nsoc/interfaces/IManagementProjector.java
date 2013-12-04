@@ -1,7 +1,5 @@
 package esir.dom13.nsoc.interfaces;
 
-import esir.dom13.nsoc.objects.Projector;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Renaud

@@ -4,7 +4,6 @@ import esir.dom13.nsoc.communication.knx.ICommunicationKNX;
 import esir.dom13.nsoc.devices.light.IManagementLight;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
-import org.kevoree.framework.MessagePort;
 import org.kevoree.log.Log;
 
 /**

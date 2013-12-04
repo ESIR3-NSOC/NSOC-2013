@@ -9,7 +9,7 @@ import tuwien.auto.calimero.link.KNXNetworkLinkIP;
 import tuwien.auto.calimero.link.medium.TPSettings;
 import tuwien.auto.calimero.process.ProcessCommunicator;
 import tuwien.auto.calimero.process.ProcessCommunicatorImpl;
-import esir.dom13.nsoc.communication.knx.ICommunicationKNX;
+
 import java.net.InetSocketAddress;
 
 

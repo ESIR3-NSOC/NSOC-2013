@@ -1,7 +1,5 @@
 package esir.dom13.nsoc.communication.knx;
 
-import jet.runtime.typeinfo.KotlinSignature;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Clement
