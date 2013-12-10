@@ -40,7 +40,7 @@
     </pluginRepositories>
 
     <modules>
-        <module>esir.dom13.nsoc.arduino</module>
+       <!-- <module>esir.dom13.nsoc.arduino</module>      -->
         <module>esir.dom13.nsoc.javase</module>
     </modules>
 

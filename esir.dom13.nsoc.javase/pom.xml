@@ -24,6 +24,7 @@
         <module>../esir.dom13.nsoc.communication.knx</module>
         <module>../esir.dom13.nsoc.scenarii</module>
         <module>../esir.dom13.nsoc.googleCalendar</module>
+        <module>../esir.dom13.nsoc.management.roomAccess</module>
     </modules>
 
     <dependencies>
