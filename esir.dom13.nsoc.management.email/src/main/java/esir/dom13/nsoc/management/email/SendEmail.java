@@ -30,8 +30,8 @@ import java.util.Properties;
 @DictionaryType({
         @DictionaryAttribute(name = "SMTP_HOST_NAME", defaultValue = "smtp.gmail.com", optional = false),
         @DictionaryAttribute(name = "SMTP_HOST_PORT", defaultValue = "465",optional = false),
-        @DictionaryAttribute(name = "SMTP_AUTH_USER", defaultValue = "abc@gmail.com", optional = false),
-        @DictionaryAttribute(name = "SMTP_AUTH_PWD", defaultValue = "password", optional = false)
+        @DictionaryAttribute(name = "SMTP_AUTH_USER", defaultValue = "projet.nsoc2013@gmail.com", optional = false),
+        @DictionaryAttribute(name = "SMTP_AUTH_PWD", defaultValue = "esir2013", optional = false)
 })
 @ComponentType
 public class SendEmail extends AbstractComponentType {
