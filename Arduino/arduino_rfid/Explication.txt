@@ -1,1 +1,1 @@
-Ajouter SeedRFIDLib.cpp et SeddRFIDLib.h dans le dossier Documents/Arudino/Librairies
+Ajouter le dossier SeedRFID dans le dossier MesDocuments/Arudino/Librairies
