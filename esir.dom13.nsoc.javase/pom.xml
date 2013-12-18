@@ -27,6 +27,7 @@
         <module>../esir.dom13.nsoc.management.roomAccess</module>
         <module>../esir.dom13.nsoc.idBadge</module>
         <module>../esir.dom13.nsoc.databasePeople</module>
+        <module>../esir.dom13.nsoc.databaseBuildings</module>
     </modules>
 
     <dependencies>
