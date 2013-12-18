@@ -17,7 +17,6 @@ import java.sql.Statement;
 
 @Library(name = "NSOC2013")
 
-
 @Provides({
         @ProvidedPort(name = "getCursus", type = PortType.SERVICE, className = IDatabasePeople.class)
 })
@@ -26,9 +25,9 @@ import java.sql.Statement;
         @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
         @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://localhost/projetnsoc", optional = false),
         @DictionaryAttribute(name = "USER", defaultValue = "PASS", optional = false),
-        @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false),
-
+        @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false)
 })
+
 @ComponentType
 public class DatabasePeople extends AbstractComponentType implements IDatabasePeople {
 
@@ -41,10 +40,10 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
 
     @Start
     public void start() {
-        JDBC_DRIVER = getPortByName("JDBC_DRIVER").toString();
-        DB_URL = getPortByName("DB_URL").toString();
-        USER = getPortByName("DB_URL").toString();
-        PASS = getPortByName("PASS").toString();
+        JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
+        DB_URL = getDictionary().get("DB_URL").toString();
+        USER = getDictionary().get("DB_URL").toString();
+        PASS = getDictionary().get("PASS").toString();
     }
 
     @Stop
@@ -52,15 +51,17 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
 
     }
 
+
     @Update
     public void update() {
-        JDBC_DRIVER = getPortByName("JDBC_DRIVER").toString();
-        DB_URL = getPortByName("DB_URL").toString();
-        USER = getPortByName("DB_URL").toString();
-        PASS = getPortByName("PASS").toString();
+        JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
+        DB_URL = getDictionary().get("DB_URL").toString();
+        USER = getDictionary().get("DB_URL").toString();
+        PASS = getDictionary().get("PASS").toString();
     }
 
-    @Port(name = "getCursus")
+
+    @Port(name = "getCursus",method = "getCursus")
     public String getCursus(String id_rfid) {
 
         Connection conn = null;

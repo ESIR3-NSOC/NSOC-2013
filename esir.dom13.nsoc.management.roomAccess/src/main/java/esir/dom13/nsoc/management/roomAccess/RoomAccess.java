@@ -10,6 +10,8 @@ import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.framework.MessagePort;
 
+import java.sql.SQLException;
+
 
 /**
  * Created by Clement on 18/12/13.
@@ -38,8 +40,8 @@ public class RoomAccess extends AbstractComponentType{
 
     @Start
     public void start() {
-        salle = getPortByName("Salle").toString();
-        batiment = getPortByName("Batiment").toString();
+        salle = getDictionary().get("Salle").toString();
+        batiment = getDictionary().get("Batiment").toString();
     }
 
     @Stop
@@ -49,12 +51,12 @@ public class RoomAccess extends AbstractComponentType{
 
     @Update
     public void update() {
-        salle = getPortByName("Salle").toString();
-        batiment = getPortByName("Batiment").toString();
+        salle = getDictionary().get("Salle").toString();
+        batiment = getDictionary().get("Batiment").toString();
     }
 
     @Port(name = "getRFID")
-    public void getRFID(Object id_rfid) throws JSONException {
+    public void getRFID(Object id_rfid){
 
         String cursus = getPortByName("speciality",IDatabasePeople.class).getCursus(id_rfid.toString());
         Boolean isAuthorized = getPortByName("authorization", IResearch.class).isAuthorized(batiment,salle,cursus);
