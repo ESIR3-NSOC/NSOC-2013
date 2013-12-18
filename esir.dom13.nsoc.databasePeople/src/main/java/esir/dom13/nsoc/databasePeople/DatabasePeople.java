@@ -61,7 +61,7 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
     }
 
     @Port(name = "getCursus")
-    public String getCursus(String id_rfid) throws SQLException, JSONException {
+    public String getCursus(String id_rfid) {
 
         Connection conn = null;
         Statement stmt = null;
@@ -72,29 +72,48 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
 
         String rfid = id_rfid;
         sql = "SELECT promo, options, specialite FROM IDatabasePeople where id_rfid =\"" + rfid + "\"";
-        ResultSet rs = stmt.executeQuery(sql);
-        stmt = conn.createStatement();
-
-        while(rs.next()){
-            //Retrieve by column name
-            promo  = rs.getString("promo");
-            options = rs.getString("options");
-            specialite = rs.getString("specialite");
-
-            //Display values
-          Log.debug("promo: " + promo);
-          Log.debug("options: " + options);
-          Log.debug("specialite: " + specialite);
+        ResultSet rs = null;
+        try {
+            rs = stmt.executeQuery(sql);
+            stmt = conn.createStatement();
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-        rs.close();
-        stmt.close();
-        conn.close();
+        try {
+            while(rs.next()){
+                //Retrieve by column name
+                promo  = rs.getString("promo");
+                options = rs.getString("options");
+                specialite = rs.getString("specialite");
+
+                //Display values
+              Log.debug("promo: " + promo);
+              Log.debug("options: " + options);
+              Log.debug("specialite: " + specialite);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        try {
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
 
         JSONArray cursus = new JSONArray();
-        cursus.put(0,promo);
-        cursus.put(1, options);
-        cursus.put(2, specialite);
+        try {
+            cursus.put(0,promo);
+            cursus.put(1, options);
+            cursus.put(2, specialite);
+
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
         return cursus.toString();
     }
