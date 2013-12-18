@@ -38,7 +38,7 @@ public class DatabaseBuildings extends AbstractComponentType implements IDatabas
     private String JDBC_DRIVER ,DB_URL;
 
     //  Database credentials
-    private String USER,PASS;
+    private String  USER,PASS;
 
 
     @Start

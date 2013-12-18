@@ -12,5 +12,5 @@ import java.sql.SQLException;
  * To change this template use File | Settings | File Templates.
  */
 public interface IDatabaseBuildings {
-    String getUrlCalendar(String building);
+     String getUrlCalendar(String building);
 }
