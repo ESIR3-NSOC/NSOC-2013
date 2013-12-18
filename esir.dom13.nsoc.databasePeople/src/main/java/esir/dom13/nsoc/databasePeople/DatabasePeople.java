@@ -1,7 +1,15 @@
 package esir.dom13.nsoc.databasePeople;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+import org.kevoree.log.Log;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  * Created by Clement on 18/12/13.
@@ -19,7 +27,6 @@ import org.kevoree.framework.AbstractComponentType;
         @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://localhost/projetnsoc", optional = false),
         @DictionaryAttribute(name = "USER", defaultValue = "PASS", optional = false),
         @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false),
-        @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
 
 })
 @ComponentType
@@ -54,8 +61,42 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
     }
 
     @Port(name = "getCursus")
-    public String getCursus(String id_rfid) {
-        return null;
+    public String getCursus(String id_rfid) throws SQLException, JSONException {
+
+        Connection conn = null;
+        Statement stmt = null;
+        String sql;
+        String promo = null;
+        String options = null;
+        String specialite = null;
+
+        String rfid = id_rfid;
+        sql = "SELECT promo, options, specialite FROM IDatabasePeople where id_rfid =\"" + rfid + "\"";
+        ResultSet rs = stmt.executeQuery(sql);
+        stmt = conn.createStatement();
+
+        while(rs.next()){
+            //Retrieve by column name
+            promo  = rs.getString("promo");
+            options = rs.getString("options");
+            specialite = rs.getString("specialite");
+
+            //Display values
+          Log.debug("promo: " + promo);
+          Log.debug("options: " + options);
+          Log.debug("specialite: " + specialite);
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        JSONArray cursus = new JSONArray();
+        cursus.put(0,promo);
+        cursus.put(1, options);
+        cursus.put(2, specialite);
+
+        return cursus.toString();
     }
 }
 

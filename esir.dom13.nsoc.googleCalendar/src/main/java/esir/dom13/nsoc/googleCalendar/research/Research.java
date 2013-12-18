@@ -1,13 +1,13 @@
 package esir.dom13.nsoc.googleCalendar.research;
 
-import com.google.gdata.client.calendar.CalendarQuery;
 import com.google.gdata.client.calendar.CalendarService;
-import com.google.gdata.data.DateTime;
 import com.google.gdata.data.calendar.CalendarEventEntry;
 import com.google.gdata.data.calendar.CalendarEventFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
+import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -23,11 +23,10 @@ import java.net.URL;
 public class Research extends AbstractComponentType implements IResearch {
     private String mail;
     private String pw;
-    private DateTime start;
-    private DateTime end;
+
 
     @Override
-    public boolean isAuthorized() throws ServiceException, IOException {
+    public boolean isAuthorized() throws IOException, ServiceException {
         boolean isAutho = false;
         URL feedUrl = null;
         try {
@@ -35,40 +34,13 @@ public class Research extends AbstractComponentType implements IResearch {
         } catch (MalformedURLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        CalendarService myService = new CalendarService("Calendar ADE");
-        myService.setUserCredentials(mail, pw);
+        CalendarService service = new CalendarService("NSOC-2013");
+        service.setUserCredentials("projet.nsoc2013@gmail.com", "esir2013");
+        CalendarEventFeed event = service.getFeed(feedUrl, CalendarEventFeed.class);
 
-
-        CalendarQuery myQuery = new CalendarQuery(feedUrl);
-        myQuery.setMinimumStartTime(start);
-        myQuery.setMaximumStartTime(end);
-
-        // Send the request and receive the response:
-        CalendarEventFeed myResultsFeed = myService.query(myQuery,CalendarEventFeed.class);
-        if (myResultsFeed.getEntries().size() > 0) {
-            System.out.println("SIZE : " + myResultsFeed.getEntries().size());
-            for(int i=0; i<myResultsFeed.getEntries().size();i++){
-                CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
-                        myResultsFeed.getEntries().get(i);
-
-                String myEntryTitle = firstMatchEntry.getTitle().getPlainText();
-                String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
-                String myEntryContent = firstMatchEntry.getPlainTextContent();
-                System.out.println("Title: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
-				/*if(myEntryContent.contains(speciality)){
-					System.out.println("AUTHORISED");
-					return true;
-				}else{
-					System.out.println("NOT AUTHORISED");
-					return false;
-				}*/
-            }
-        }else{
-            System.out.println("NOT AUTHORISED");
-            return false;
-        }
         return isAutho;
     }
+
 
 
     @Override
