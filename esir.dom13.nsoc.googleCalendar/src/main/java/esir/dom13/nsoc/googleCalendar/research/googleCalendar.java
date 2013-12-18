@@ -17,7 +17,7 @@ public class googleCalendar {
 
 	/**
 	 * @param args
-	 * @throws com.google.gdata.util.ServiceException
+	 * @throws com.google.g data.util.ServiceException
 	 * @throws java.io.IOException
 	 */
 	public static void main(String[] args) throws IOException, ServiceException {
