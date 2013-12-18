@@ -1,10 +1,12 @@
 package esir.dom13.nsoc.management.roomAccess;
 
+
+import esir.dom13.nsoc.databasePeople.IDatabasePeople;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
-import org.kevoree.log.Log;
 
-import java.sql.*;
 
 /**
  * Created by Clement on 18/12/13.
@@ -17,7 +19,7 @@ import java.sql.*;
 })
 
 @Requires({
-        @RequiredPort(name = "speciality", type = PortType.SERVICE, className = )
+        @RequiredPort(name = "speciality", type = PortType.SERVICE, className = IDatabasePeople.class)
 })
 
 @DictionaryType({
@@ -68,7 +70,13 @@ public class RoomAccess extends AbstractComponentType{
     }
 
     @Port(name = "getRFID")
-    public void getRFID(Object tagRFID){
+    public void getRFID(Object id_rfid) throws JSONException {
+
+        JSONArray cursus = new JSONArray(getPortByName("speciality",IDatabasePeople.class).getCursus(id_rfid.toString()));
+
+        String promo = cursus.getString(0);
+        String option = cursus.getString(1);
+        String parcours = cursus.getString(2);
 
         // Get Spécialité, Option, parcours
 
