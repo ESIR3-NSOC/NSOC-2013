@@ -21,6 +21,12 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 
+/**
+ *    Format des données du port sendMail :
+ *
+ *    {"object":"blablabla","body":"blablabla","receiver":"balbla@bla.ba"}
+ *
+ */
 
 @Library(name = "NSOC2013")
 

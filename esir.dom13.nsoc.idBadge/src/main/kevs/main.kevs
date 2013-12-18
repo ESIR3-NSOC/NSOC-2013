@@ -1,0 +1,28 @@
+ {
+addRepo "http://maven.kevoree.org/release"
+addRepo "http://repo.maven.apache.org/maven2"
+addRepo "https://oss.sonatype.org/content/groups/public/"
+addRepo "http://repository.jetbrains.com/all"
+addRepo "https://oss.sonatype.org/content/repositories/snapshots"
+addRepo "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.idBadge/1.0-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fakeDomo/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/2.0.5'
+addNode node0:JavaSENode
+updateDictionary node0{}
+ {
+  addComponent FakeConso724@node0 : FakeConsole {}
+  addComponent Identific255@node0 : Identification {portCOM_MACOS='/dev/tty.usbserial-A9007UX1',portCOM_Windows='COM7',portCOM_Linux='/dev/ttyUSB0',data_rate='57600'}
+addChannel defMSG512 : defMSG {}
+bind FakeConso724.showText@node0 => defMSG512
+bind Identific255.sendID@node0 => defMSG512
+updateDictionary FakeConso724@node0
+updateDictionary defMSG512
+updateDictionary Identific255@node0
+}
+
+addGroup sync:BasicGroup
+addToGroup sync node0
+}
