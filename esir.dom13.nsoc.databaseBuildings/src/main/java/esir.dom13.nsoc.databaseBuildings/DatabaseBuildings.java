@@ -1,8 +1,5 @@
 package esir.dom13.nsoc.databaseBuildings;
 
-import kotlin.properties.delegation.NotNullVar;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.log.Log;
@@ -25,7 +22,7 @@ import java.sql.Statement;
 
 
 @Provides({
-        @ProvidedPort(name = "getCursus", type = PortType.SERVICE, className = IIdCalendar.class)
+        @ProvidedPort(name = "getCursus", type = PortType.SERVICE, className = IDatabaseBuildings.class)
 })
 
 @DictionaryType({
@@ -36,7 +33,7 @@ import java.sql.Statement;
 
 })
 @ComponentType
-public class IdCalendar extends AbstractComponentType implements IIdCalendar{
+public class DatabaseBuildings extends AbstractComponentType implements IDatabaseBuildings {
     // JDBC driver name and database URL
     private String JDBC_DRIVER ,DB_URL;
 

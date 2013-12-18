@@ -11,6 +11,6 @@ import java.sql.SQLException;
  * Time: 17:01
  * To change this template use File | Settings | File Templates.
  */
-public interface IIdCalendar {
+public interface IDatabaseBuildings {
     String getUrlCalendar(String building);
 }
