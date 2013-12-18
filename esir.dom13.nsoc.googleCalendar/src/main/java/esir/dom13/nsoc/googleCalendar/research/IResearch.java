@@ -16,5 +16,4 @@ public interface IResearch {
 
     public boolean isAuthorized(String batiment, String salle, String cursus);
 
-    public boolean isAvailable();
 }
