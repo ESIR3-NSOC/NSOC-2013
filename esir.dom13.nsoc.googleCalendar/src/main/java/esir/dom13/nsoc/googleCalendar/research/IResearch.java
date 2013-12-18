@@ -14,7 +14,7 @@ import java.io.IOException;
  */
 public interface IResearch {
 
-    public boolean isAuthorized() throws ServiceException, IOException;
+    public boolean isAuthorized(String batiment, String salle, String cursus);
 
     public boolean isAvailable();
 }

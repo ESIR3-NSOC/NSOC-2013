@@ -2,10 +2,13 @@ package esir.dom13.nsoc.management.roomAccess;
 
 
 import esir.dom13.nsoc.databasePeople.IDatabasePeople;
+import esir.dom13.nsoc.googleCalendar.research.IResearch;
+import esir.dom13.nsoc.interfaces.IDatabaseADE;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+import org.kevoree.framework.MessagePort;
 
 
 /**
@@ -19,37 +22,22 @@ import org.kevoree.framework.AbstractComponentType;
 })
 
 @Requires({
-        @RequiredPort(name = "speciality", type = PortType.SERVICE, className = IDatabasePeople.class)
+        @RequiredPort(name = "speciality", type = PortType.SERVICE, className = IDatabasePeople.class),
+        @RequiredPort(name = "openGache", type = PortType.MESSAGE)
 })
 
 @DictionaryType({
-        @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
-        @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://localhost/projetnsoc", optional = false),
-        @DictionaryAttribute(name = "USER", defaultValue = "PASS", optional = false),
-        @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false),
-        @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
         @DictionaryAttribute(name = "Salle", defaultValue = "Salle-001", optional = false),
         @DictionaryAttribute(name = "Batiment", defaultValue = "BAT-7", optional = false),
-
 })
+
 @ComponentType
 public class RoomAccess extends AbstractComponentType{
 
     private String salle,batiment;
 
-    // JDBC driver name and database URL
-    private String JDBC_DRIVER ,DB_URL;
-
-    //  Database credentials
-    private String USER,PASS;
-
-
     @Start
     public void start() {
-        JDBC_DRIVER = getPortByName("JDBC_DRIVER").toString();
-        DB_URL = getPortByName("DB_URL").toString();
-        USER = getPortByName("DB_URL").toString();
-        PASS = getPortByName("PASS").toString();
         salle = getPortByName("Salle").toString();
         batiment = getPortByName("Batiment").toString();
     }
@@ -61,10 +49,6 @@ public class RoomAccess extends AbstractComponentType{
 
     @Update
     public void update() {
-        JDBC_DRIVER = getPortByName("JDBC_DRIVER").toString();
-        DB_URL = getPortByName("DB_URL").toString();
-        USER = getPortByName("DB_URL").toString();
-        PASS = getPortByName("PASS").toString();
         salle = getPortByName("Salle").toString();
         batiment = getPortByName("Batiment").toString();
     }
@@ -72,13 +56,13 @@ public class RoomAccess extends AbstractComponentType{
     @Port(name = "getRFID")
     public void getRFID(Object id_rfid) throws JSONException {
 
-        JSONArray cursus = new JSONArray(getPortByName("speciality",IDatabasePeople.class).getCursus(id_rfid.toString()));
-
-        String promo = cursus.getString(0);
-        String option = cursus.getString(1);
-        String parcours = cursus.getString(2);
-
-        // Get Spécialité, Option, parcours
-
+        String cursus = getPortByName("speciality",IDatabasePeople.class).getCursus(id_rfid.toString());
+        Boolean isAuthorized = getPortByName("authorization", IResearch.class).isAuthorized(batiment,salle,cursus);
+        if(isAuthorized){
+            //TODO Ouvrir gache
+            getPortByName("openGache",MessagePort.class).process("authorized");
+        }else{
+            getPortByName("openGache",MessagePort.class).process("NOTauthorized");
+        }
     }
 }
