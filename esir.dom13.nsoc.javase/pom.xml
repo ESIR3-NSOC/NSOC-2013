@@ -25,6 +25,7 @@
         <module>../esir.dom13.nsoc.scenarii</module>
         <module>../esir.dom13.nsoc.googleCalendar</module>
         <module>../esir.dom13.nsoc.management.roomAccess</module>
+        <module>../esir.dom13.nsoc.idBadge</module>
     </modules>
 
     <dependencies>

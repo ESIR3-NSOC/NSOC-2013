@@ -97,8 +97,7 @@ public class SendEmail extends AbstractComponentType {
         transport.connect
                 (SMTP_HOST_NAME, SMTP_HOST_PORT, SMTP_AUTH_USER, SMTP_AUTH_PWD);
 
-        transport.sendMessage(message,
-                message.getRecipients(Message.RecipientType.TO));
+        transport.sendMessage(message,message.getRecipients(Message.RecipientType.TO));
         transport.close();
     }
 }

@@ -12,6 +12,6 @@ void setup() {
 void loop() {
   if(RFID.isIdAvailable()) {
     tag = RFID.readId();
-    Serial.print(tag.raw);
+    Serial.println(tag.raw);
   }
 }
