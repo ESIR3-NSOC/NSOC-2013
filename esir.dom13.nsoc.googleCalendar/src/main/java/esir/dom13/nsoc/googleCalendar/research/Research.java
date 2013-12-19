@@ -13,6 +13,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+import org.kevoree.framework.MessagePort;
 import org.kevoree.log.Log;
 
 
@@ -48,8 +49,18 @@ public class Research extends AbstractComponentType implements IResearch {
     private String pw;
 
     @Start
+    public void start() {
+    }
+
     @Stop
+    public void stop() {
+
+    }
+
     @Update
+    public void update() {
+
+    }
 
     @Port(name = "Authorization", method = "isAuthorized")
     @Override

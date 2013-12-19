@@ -24,7 +24,7 @@ import java.sql.Statement;
 @DictionaryType({
         @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
         @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://localhost/projetnsoc", optional = false),
-        @DictionaryAttribute(name = "USER", defaultValue = "PASS", optional = false),
+        @DictionaryAttribute(name = "USER", defaultValue = "root", optional = false),
         @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false)
 })
 
