@@ -1,0 +1,51 @@
+ {
+addRepo "http://maven.kevoree.org/release"
+addRepo "http://repo.maven.apache.org/maven2"
+addRepo "http://repository.jetbrains.com/all"
+addRepo "https://oss.sonatype.org/content/groups/public/"
+addRepo "https://oss.sonatype.org/content/repositories/snapshots"
+addRepo "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fakeDomo/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.management.roomAccess/1.0-SNAPSHOT'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.idBadge/1.0-SNAPSHOT'
+addNode node0:JavaSENode
+updateDictionary node0{}
+ {
+  addComponent DatabaseB993@node0 : DatabaseBuildings {USER='PASS',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://localhost/projetnsoc'}
+  addComponent DatabaseP950@node0 : DatabasePeople {USER='PASS',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://localhost/projetnsoc'}
+  addComponent RoomAcces545@node0 : RoomAccess {Batiment='BAT-7',Salle='Salle-001'}
+  addComponent Research871@node0 : Research {id_mail='projet.nsoc2013@gmail.com',password='esir2013'}
+  addComponent Identific255@node0 : Identification {portCOM_MACOS='/dev/tty.usbserial-A9007UX1',portCOM_Windows='COM7',portCOM_Linux='/dev/ttyUSB0',data_rate='57600'}
+  addComponent FakeConso724@node0 : FakeConsole {singleFrame='true'}
+addChannel defMSG512 : defMSG {}
+addChannel defSERVIC987 : defSERVICE {}
+addChannel defSERVIC645 : defSERVICE {}
+addChannel defSERVIC391 : defSERVICE {}
+bind RoomAcces545.speciality@node0 => defSERVIC987
+bind Research871.Authorization@node0 => defSERVIC391
+bind RoomAcces545.authorization@node0 => defSERVIC391
+bind DatabaseP950.getCursus@node0 => defSERVIC987
+bind Identific255.sendID@node0 => defMSG512
+bind FakeConso724.showText@node0 => defMSG512
+bind RoomAcces545.getRFID@node0 => defMSG512
+bind Research871.id_Room@node0 => defSERVIC645
+bind DatabaseB993.getUrlCalendar@node0 => defSERVIC645
+bind RoomAcces545.openGache@node0 => defMSG512
+updateDictionary defMSG512
+updateDictionary Research871@node0
+updateDictionary DatabaseB993@node0
+updateDictionary defSERVIC391
+updateDictionary RoomAcces545@node0
+updateDictionary Identific255@node0
+updateDictionary DatabaseP950@node0
+updateDictionary FakeConso724@node0
+updateDictionary defSERVIC645
+updateDictionary defSERVIC987
+}
+
+addGroup sync:BasicGroup
+addToGroup sync node0
+}

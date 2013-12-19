@@ -8,7 +8,7 @@ import com.google.gdata.data.calendar.CalendarEventEntry;
 import com.google.gdata.data.calendar.CalendarEventFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
-import esir.dom13.nsoc.databaseBuildings.IIdCalendar;
+import esir.dom13.nsoc.databaseBuildings.IDatabaseBuildings;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.kevoree.annotation.*;
@@ -35,7 +35,7 @@ import java.util.Date;
 })
 @Requires({
 
-        @RequiredPort(name = "id_Room", type = PortType.SERVICE, className = IIdCalendar.class)
+        @RequiredPort(name = "id_Room", type = PortType.SERVICE, className = IDatabaseBuildings.class)
 
 })
 @DictionaryType({
@@ -46,6 +46,10 @@ import java.util.Date;
 public class Research extends AbstractComponentType implements IResearch {
     private String mail;
     private String pw;
+
+    @Start
+    @Stop
+    @Update
 
     @Port(name = "Authorization", method = "isAuthorized")
     @Override
@@ -67,7 +71,7 @@ public class Research extends AbstractComponentType implements IResearch {
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        String urlRoom = "https://www.google.com/calendar/feeds/" + getPortByName("id_Room",IIdCalendar.class).getUrlCalendar(batiment) +"/private/full";
+        String urlRoom = "https://www.google.com/calendar/feeds/" + getPortByName("id_Room",IDatabaseBuildings.class).getUrlCalendar(batiment) +"/private/full";
         URL feedUrl = null;
         CalendarService service = new CalendarService("NSOC-2013");
         try {

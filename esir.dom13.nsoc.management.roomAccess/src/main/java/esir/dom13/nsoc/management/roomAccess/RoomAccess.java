@@ -3,15 +3,9 @@ package esir.dom13.nsoc.management.roomAccess;
 
 import esir.dom13.nsoc.databasePeople.IDatabasePeople;
 import esir.dom13.nsoc.googleCalendar.research.IResearch;
-import esir.dom13.nsoc.interfaces.IDatabaseADE;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.framework.MessagePort;
-
-import java.sql.SQLException;
-
 
 /**
  * Created by Clement on 18/12/13.
@@ -25,8 +19,10 @@ import java.sql.SQLException;
 
 @Requires({
         @RequiredPort(name = "speciality", type = PortType.SERVICE, className = IDatabasePeople.class),
-        @RequiredPort(name = "openGache", type = PortType.MESSAGE)
-})
+        @RequiredPort(name = "openGache", type = PortType.MESSAGE),
+        @RequiredPort(name = "authorization", type = PortType.SERVICE, className = IResearch.class),
+
+        })
 
 @DictionaryType({
         @DictionaryAttribute(name = "Salle", defaultValue = "Salle-001", optional = false),

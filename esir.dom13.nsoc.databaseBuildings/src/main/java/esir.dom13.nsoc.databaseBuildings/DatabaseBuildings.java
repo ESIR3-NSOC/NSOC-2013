@@ -22,7 +22,7 @@ import java.sql.Statement;
 
 
 @Provides({
-        @ProvidedPort(name = "getCursus", type = PortType.SERVICE, className = IDatabaseBuildings.class)
+        @ProvidedPort(name = "getUrlCalendar", type = PortType.SERVICE, className = IDatabaseBuildings.class)
 })
 
 @DictionaryType({
@@ -62,7 +62,7 @@ public class DatabaseBuildings extends AbstractComponentType implements IDatabas
         PASS = getDictionary().get("PASS").toString();
     }
 
-    @Port(name = "getUrlCalendar")
+    @Port(name = "getUrlCalendar",method="getUrlCalendar")
     public String getUrlCalendar(String building) {
 
         Connection conn = null;
