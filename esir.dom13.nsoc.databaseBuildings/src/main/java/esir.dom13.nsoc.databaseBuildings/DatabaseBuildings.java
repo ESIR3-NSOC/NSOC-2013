@@ -24,9 +24,9 @@ import java.sql.*;
 
 @DictionaryType({
         @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
-        @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://localhost/projetnsoc", optional = false),
-        @DictionaryAttribute(name = "USER", defaultValue = "root", optional = false),
-        @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false),
+        @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://148.60.11.209/projetnsoc", optional = false),
+        @DictionaryAttribute(name = "USER", defaultValue = "user", optional = false),
+        @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false)
 
 })
 @ComponentType
