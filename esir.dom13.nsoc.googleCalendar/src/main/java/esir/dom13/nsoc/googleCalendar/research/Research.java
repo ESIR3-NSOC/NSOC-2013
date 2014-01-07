@@ -82,7 +82,7 @@ public class Research extends AbstractComponentType implements IResearch {
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        String urlRoom = "https://www.google.com/calendar/feeds/" + getPortByName("id_Room",IDatabaseBuildings.class).getUrlCalendar(batiment) +"/private/full";
+        String urlRoom = "https://www.google.com/calendar/feeds/" + getPortByName("id_Room", IDatabaseBuildings.class).getUrlCalendar(batiment) + "/private/full";
         URL feedUrl = null;
         CalendarService service = new CalendarService("NSOC-2013");
         try {
@@ -100,8 +100,10 @@ public class Research extends AbstractComponentType implements IResearch {
         }
         CalendarQuery myQuery = new CalendarQuery(feedUrl);
 
-        DateTime time = new DateTime(new Date().getTime() + 36000000);
-        DateTime end = new DateTime(time.getValue() + 36006000);
+        DateTime time = new DateTime(new Date().getTime());
+        DateTime end = new DateTime(time.getValue() + 600000);
+
+        Log.debug("GOOGLE_CALENDAR ::: Time start : " + time.toStringRfc822() + "   Time end : " + end.toUiString() + "\n" + end.toString() + "     " + end.toStringRfc822());
         myQuery.setMinimumStartTime(time);
         myQuery.setMaximumStartTime(end);
         CalendarEventFeed myResultsFeed = null;
@@ -122,14 +124,18 @@ public class Research extends AbstractComponentType implements IResearch {
                 String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
                 String myEntryContent = firstMatchEntry.getPlainTextContent();
                 Log.debug("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
-                if (myEntryWhere == salle) {
+                if (myEntryWhere.contains(salle)) {
+                    Log.debug("GOOGLE_CALENDAR ::: myEntryWhere.contains(salle)");
                     if (myEntryContent.contains(promo)) {
+                        Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(promo)");
                         if (myEntryContent.contains(speciality)) {
+                            Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(speciality)");
                             Log.debug("AUTHORISED");
                             isAutho = true;
                             return isAutho;
                         } else {
                             if (myEntryContent.contains(option)) {
+                                Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(option)");
                                 Log.debug("AUTHORISED");
                                 isAutho = true;
                                 return isAutho;

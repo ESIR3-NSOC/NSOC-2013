@@ -6,6 +6,7 @@ import esir.dom13.nsoc.googleCalendar.research.IResearch;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.framework.MessagePort;
+import org.kevoree.log.Log;
 
 /**
  * Created by Clement on 18/12/13.
@@ -55,6 +56,7 @@ public class RoomAccess extends AbstractComponentType{
     public void getRFID(Object id_rfid){
 
         String cursus = getPortByName("speciality",IDatabasePeople.class).getCursus(id_rfid.toString());
+        Log.debug("RoomAccess ::: rfid=\""+id_rfid+"\"  cursus=\""+cursus+"\"");
         Boolean isAuthorized = getPortByName("authorization", IResearch.class).isAuthorized(batiment,salle,cursus);
         if(isAuthorized){
             //TODO Ouvrir gache

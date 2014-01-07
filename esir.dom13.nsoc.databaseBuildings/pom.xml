@@ -12,5 +12,11 @@
 
     <artifactId>esir.dom13.nsoc.databaseBuildings</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.17</version>
+        </dependency>
+    </dependencies>
 </project>

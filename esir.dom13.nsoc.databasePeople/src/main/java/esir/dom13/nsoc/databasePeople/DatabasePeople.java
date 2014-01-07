@@ -6,10 +6,9 @@ import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.log.Log;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.mysql.jdbc.Driver;
+import java.sql.*;
+import java.sql.DriverManager;
 
 /**
  * Created by Clement on 18/12/13.
@@ -42,7 +41,7 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
     public void start() {
         JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
         DB_URL = getDictionary().get("DB_URL").toString();
-        USER = getDictionary().get("DB_URL").toString();
+        USER = getDictionary().get("USER").toString();
         PASS = getDictionary().get("PASS").toString();
     }
 
@@ -56,13 +55,13 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
     public void update() {
         JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
         DB_URL = getDictionary().get("DB_URL").toString();
-        USER = getDictionary().get("DB_URL").toString();
+        USER = getDictionary().get("USER").toString();
         PASS = getDictionary().get("PASS").toString();
     }
 
 
     @Port(name = "getCursus",method = "getCursus")
-    public String getCursus(String id_rfid) {
+    public String getCursus(String id_rfid){
 
         Connection conn = null;
         Statement stmt = null;
@@ -74,11 +73,22 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
         String rfid = id_rfid;
         sql = "SELECT promo, options, specialite FROM IDatabasePeople where id_rfid =\"" + rfid + "\"";
         ResultSet rs = null;
+        Log.debug("IDatabasePeople ::: RFID = \""+rfid+"\"");
         try {
-            rs = stmt.executeQuery(sql);
+            //STEP 2: Register JDBC driver
+            Class.forName(JDBC_DRIVER);
+            //STEP 3: Open a connection
+            Log.debug("Connecting to database ::: IDatabasePeople");
+            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
             stmt = conn.createStatement();
+            rs = stmt.executeQuery(sql);
         } catch (SQLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
         try {
