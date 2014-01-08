@@ -11,22 +11,11 @@
 
 
     <properties>
-        <kevoree.version>2.0.13</kevoree.version>
+        <kevoree.version>1.9.0</kevoree.version>
         <scala.version>2.9.2</scala.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>kevoree-oss</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>jetbrains-release</id>
-            <url>http://repository.jetbrains.com/all</url>
-        </repository>
-
-    </repositories>
 
     <pluginRepositories>
         <pluginRepository>
@@ -47,5 +36,54 @@
 
 
     <name>NSOC :: Library :: Root</name>
+
+
+
+
+    <distributionManagement>
+        <repository>
+            <id>internal</id>
+            <url>http://148.60.11.209:8080/archiva/repository/internal/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <url>http://148.60.11.209:8080/archiva/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>internal</id>
+            <name>Archiva Managed Internal Repository</name>
+            <url>http://148.60.11.209:8080/archiva/repository/internal/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>snapshots</id>
+            <name>Archiva Managed Snapshot Repository</name>
+            <url>http://148.60.11.209:8080/archiva/repository/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+
+        <repository>
+            <id>kevoree-oss</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>jetbrains-release</id>
+            <url>http://repository.jetbrains.com/all</url>
+        </repository>
+    </repositories>
 
 </project>

@@ -27,5 +27,5 @@ public interface IManagementLight {
      */
     void toggle();
 
-    boolean getState();
+    boolean getLightState();
 }

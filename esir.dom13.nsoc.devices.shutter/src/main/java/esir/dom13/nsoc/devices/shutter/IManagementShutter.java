@@ -14,6 +14,6 @@ public interface IManagementShutter {
 
     void setIntermediate(/*Integer position*/);
 
-    int getState();
+    int getShutterState();
 
 }

@@ -2,6 +2,7 @@ package esir.dom13.nsoc.communication.knx;
 
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+
 import org.kevoree.log.Log;
 import tuwien.auto.calimero.GroupAddress;
 import tuwien.auto.calimero.exception.KNXException;

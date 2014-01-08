@@ -78,9 +78,9 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
         Log.info("Lampe "+address +" toggle");
     }
 
-    @Port(name = "CommandLight", method = "getState")
+    @Port(name = "CommandLight", method = "getLightState")
     @Override
-    public boolean getState() {
+    public boolean getLightState() {
         return getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

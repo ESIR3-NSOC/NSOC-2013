@@ -61,6 +61,7 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
 
 
     @Port(name = "getCursus",method = "getCursus")
+    @Override
     public String getCursus(String id_rfid){
 
         Connection conn = null;
