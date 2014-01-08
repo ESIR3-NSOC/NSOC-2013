@@ -19,12 +19,12 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>jetbrains-release</id>
-            <url>http://repository.jetbrains.com/all</url>
+            <id>plugin.kevoree-github</id>
+            <url>http://maven.kevoree.org/release</url>
         </pluginRepository>
         <pluginRepository>
-            <id>kevoree-oss.plugin</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>plugin.kevoree-snapshots</id>
+            <url>http://maven.kevoree.org/snapshots</url>
         </pluginRepository>
     </pluginRepositories>
 
@@ -77,12 +77,12 @@
         </repository>
 
         <repository>
-            <id>kevoree-oss</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
+            <id>kevoree-release</id>
+            <url>http://maven.kevoree.org/release</url>
         </repository>
         <repository>
-            <id>jetbrains-release</id>
-            <url>http://repository.jetbrains.com/all</url>
+            <id>kevoree-snapshots</id>
+            <url>http://maven.kevoree.org/snapshots</url>
         </repository>
     </repositories>
 
