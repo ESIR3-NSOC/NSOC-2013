@@ -24,6 +24,13 @@
             <artifactId>esir.dom13.nsoc.googleCalendar</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.databaseHistory</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 

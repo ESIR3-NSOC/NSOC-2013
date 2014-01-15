@@ -1,5 +1,7 @@
 package esir.dom13.nsoc.databasePeople;
 
+import com.sun.rowset.CachedRowSetImpl;
+import esir.dom13.nsoc.database.IDatabaseConnection;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.kevoree.annotation.*;
@@ -20,29 +22,18 @@ import java.sql.DriverManager;
         @ProvidedPort(name = "getCursus", type = PortType.SERVICE, className = IDatabasePeople.class)
 })
 
-@DictionaryType({
-        @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
-        @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://148.60.11.209/projetnsoc", optional = false),
-        @DictionaryAttribute(name = "USER", defaultValue = "user", optional = false),
-        @DictionaryAttribute(name = "PASS", defaultValue = "", optional = false)
+@Requires({
+        @RequiredPort(name = "connectDatabase", type = PortType.SERVICE, className = IDatabaseConnection.class)
 })
 
 @ComponentType
 public class DatabasePeople extends AbstractComponentType implements IDatabasePeople {
 
-    // JDBC driver name and database URL
-    private String JDBC_DRIVER ,DB_URL;
-
-    //  Database credentials
-    private String USER,PASS;
 
 
     @Start
     public void start() {
-        JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
-        DB_URL = getDictionary().get("DB_URL").toString();
-        USER = getDictionary().get("USER").toString();
-        PASS = getDictionary().get("PASS").toString();
+
     }
 
     @Stop
@@ -53,10 +44,7 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
 
     @Update
     public void update() {
-        JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
-        DB_URL = getDictionary().get("DB_URL").toString();
-        USER = getDictionary().get("USER").toString();
-        PASS = getDictionary().get("PASS").toString();
+
     }
 
 
@@ -64,33 +52,13 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
     @Override
     public String getCursus(String id_rfid){
 
-        Connection conn = null;
-        Statement stmt = null;
-        String sql;
-        String promo = null;
-        String options = null;
-        String specialite = null;
+        String sql = "SELECT promo, options, specialite FROM IDatabasePeople where id_rfid =\"" + id_rfid + "\"";
+        CachedRowSetImpl rs = null;
+        Log.debug("IDatabasePeople ::: RFID = \""+id_rfid+"\"");
 
-        String rfid = id_rfid;
-        sql = "SELECT promo, options, specialite FROM IDatabasePeople where id_rfid =\"" + rfid + "\"";
-        ResultSet rs = null;
-        Log.debug("IDatabasePeople ::: RFID = \""+rfid+"\"");
-        try {
-            //STEP 2: Register JDBC driver
-            Class.forName(JDBC_DRIVER);
-            //STEP 3: Open a connection
-            Log.debug("Connecting to database ::: IDatabasePeople");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+        String promo = null,options = null,specialite = null;
 
-            //STEP 4: Execute a query
-            Log.debug("Creating statement...");
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
 
         try {
             while(rs.next()){
@@ -105,15 +73,7 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
               Log.debug("specialite: " + specialite);
             }
         } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-        try {
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
 
@@ -128,6 +88,38 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
         }
 
         return cursus.toString();
+    }
+
+    @Port(name = "getCursus",method = "getIdPeople")
+    @Override
+    public String getIdPeople(String id_rfid) {
+
+        String sql;
+        String id_people = null;
+
+
+        String rfid = id_rfid;
+        sql = "SELECT id_people FROM IDatabasePeople where id_rfid =\"" + rfid + "\"";
+
+        Log.debug("IDatabasePeople ::: RFID = \""+rfid+"\"");
+
+        //TODO
+        ResultSet rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(sql);
+        try {
+            while(rs.next()){
+                //Retrieve by column name
+                id_people  = rs.getString("id_people");
+
+                //Display values
+                Log.debug("id_people: " + id_people);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+        return id_people;
     }
 }
 

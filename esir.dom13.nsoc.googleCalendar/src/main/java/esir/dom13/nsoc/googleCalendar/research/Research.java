@@ -11,6 +11,7 @@ import com.google.gdata.util.ServiceException;
 import esir.dom13.nsoc.databaseBuildings.IDatabaseBuildings;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.framework.MessagePort;
@@ -64,7 +65,8 @@ public class Research extends AbstractComponentType implements IResearch {
 
     @Port(name = "Authorization", method = "isAuthorized")
     @Override
-    public boolean isAuthorized(String batiment, String salle, String cursus) {
+    public String isAuthorized(String batiment, String salle, String cursus) {
+        Log.debug("Beginning isAuthorized");
         JSONArray cursusArray = null;
         boolean isAutho = false;
         try {
@@ -103,10 +105,12 @@ public class Research extends AbstractComponentType implements IResearch {
         DateTime time = new DateTime(new Date().getTime());
         DateTime end = new DateTime(time.getValue() + 600000);
 
-        Log.debug("GOOGLE_CALENDAR ::: Time start : " + time.toStringRfc822() + "   Time end : " + end.toUiString() + "\n" + end.toString() + "     " + end.toStringRfc822());
+        Log.debug("GOOGLE_CALENDAR ::: Time start : " + time.toStringRfc822() + "   Time end : " + end.toStringRfc822());
         myQuery.setMinimumStartTime(time);
         myQuery.setMaximumStartTime(end);
         CalendarEventFeed myResultsFeed = null;
+        String teacher = "";
+        String lesson = "";
         try {
             myResultsFeed = service.query(myQuery, CalendarEventFeed.class);
         } catch (IOException e) {
@@ -124,31 +128,49 @@ public class Research extends AbstractComponentType implements IResearch {
                 String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
                 String myEntryContent = firstMatchEntry.getPlainTextContent();
                 Log.debug("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
-                if (myEntryWhere.contains(salle)) {
+                if (myEntryWhere.contains(salle) && myEntryWhere.contains(batiment)) {
                     Log.debug("GOOGLE_CALENDAR ::: myEntryWhere.contains(salle)");
                     if (myEntryContent.contains(promo)) {
                         Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(promo)");
                         if (myEntryContent.contains(speciality)) {
                             Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(speciality)");
                             Log.debug("AUTHORISED");
+                                            String[] content = myEntryContent.split("\n");
+                                            teacher = content[content.length-2];
+                                            lesson = myEntryTitle;
                             isAutho = true;
-                            return isAutho;
+
+
                         } else {
                             if (myEntryContent.contains(option)) {
                                 Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(option)");
                                 Log.debug("AUTHORISED");
+                                            String[] content = myEntryContent.split("\n");
+                                            teacher = content[content.length-2];
+                                            lesson = myEntryTitle;
                                 isAutho = true;
-                                return isAutho;
+
                             }
                         }
                     } else {
                         System.out.println("NOT AUTHORISED");
-                        return isAutho;
+                        isAutho = false;
                     }
                 }
             }
-            return isAutho;
+
+        }else{
+            isAutho= false;
         }
-        return isAutho;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("isAutho",isAutho);
+            jsonObject.put("teacher",teacher);
+            jsonObject.put("lesson",lesson);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject.toString();
     }
 }

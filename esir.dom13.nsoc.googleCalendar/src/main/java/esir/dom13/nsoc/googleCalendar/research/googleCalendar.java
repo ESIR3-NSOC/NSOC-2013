@@ -97,6 +97,8 @@ public class googleCalendar {
 				String myEntryTitle = firstMatchEntry.getTitle().getPlainText();
 				String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
 				String myEntryContent = firstMatchEntry.getPlainTextContent();
+                String[] test = myEntryContent.split("\n");
+                System.out.println("prof :::  :::  ::: "+test[test.length-2]);
 				System.out.println("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
 				if(myEntryContent.contains(promo)){
 					if(myEntryContent.contains(speciality)){

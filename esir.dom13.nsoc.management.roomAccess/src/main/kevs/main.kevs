@@ -1,54 +1,67 @@
  {
+addRepo "http://148.60.11.209:8080/archiva/repository/snapshots/"
 addRepo "http://maven.kevoree.org/release"
 addRepo "http://repo.maven.apache.org/maven2"
 addRepo "https://oss.sonatype.org/content/groups/public/"
 addRepo "http://repository.jetbrains.com/all"
 addRepo "https://oss.sonatype.org/content/repositories/snapshots"
 addRepo "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+addRepo "http://maven.kevoree.org/snapshots"
+addRepo "http://148.60.11.209:8080/archiva/repository/internal/"
 merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5'
-merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.idBadge/1.0-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fakeDomo/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
 merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.management.roomAccess/1.0-SNAPSHOT'
 merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/2.0.5'
-merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
-merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fakeDomo/2.0.5'
 addNode node0:JavaSENode
 updateDictionary node0{logLevel="DEBUG",coreLogLevel="DEBUG"}
  {
-  addComponent BDD_Personne@node0 : DatabasePeople {USER='root',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://localhost/projetnsoc'}
-  addComponent RFID_Badge@node0 : Identification {portCOM_MACOS='/dev/tty.usbserial-A9007UX1',portCOM_Windows='COM3',portCOM_Linux='/dev/ttyUSB0',data_rate='57600'}
-  addComponent GooglCalendar@node0 : Research {id_mail='projet.nsoc2013@gmail.com',password='esir2013'}
-  addComponent BDD_Batiment@node0 : DatabaseBuildings {USER='root',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://localhost/projetnsoc'}
-  addComponent BATIMENT_41@node0 : RoomAccess {Batiment='B41',Salle='004'}
-  addComponent FAKE_RFID@node0 : FakeConsole {singleFrame='true'}
-  addComponent FakeConso724@node0 : FakeConsole {singleFrame='true'}
-addChannel defMSG826 : defMSG {}
-addChannel defMSG512 : defMSG {}
-addChannel defSERVIC987 : defSERVICE {}
-addChannel defSERVIC645 : defSERVICE {}
-addChannel defSERVIC391 : defSERVICE {}
-bind BATIMENT_41.getRFID@node0 => defMSG512
-bind GooglCalendar.id_Room@node0 => defSERVIC645
-bind BDD_Batiment.getUrlCalendar@node0 => defSERVIC645
-bind BDD_Personne.getCursus@node0 => defSERVIC987
-bind BATIMENT_41.authorization@node0 => defSERVIC391
-bind FakeConso724.showText@node0 => defMSG826
-bind GooglCalendar.Authorization@node0 => defSERVIC391
-bind BATIMENT_41.speciality@node0 => defSERVIC987
-bind BATIMENT_41.openGache@node0 => defMSG826
-bind RFID_Badge.sendID@node0 => defMSG512
-bind FAKE_RFID.textEntered@node0 => defMSG512
-updateDictionary GooglCalendar@node0 
-updateDictionary FAKE_RFID@node0 
-updateDictionary defSERVIC987 
-updateDictionary RFID_Badge@node0 
-updateDictionary BDD_Batiment@node0 
-updateDictionary defMSG512 
-updateDictionary BATIMENT_41@node0 
-updateDictionary FakeConso724@node0 
-updateDictionary defSERVIC645 
-updateDictionary BDD_Personne@node0 
-updateDictionary defMSG826 
-updateDictionary defSERVIC391 
+  addComponent DatabaseP59@node0 : DatabasePeople {}
+  addComponent FakeRFID@node0 : FakeConsole {singleFrame='true'}
+  addComponent DatabaseH571@node0 : DatabaseHistory {}
+  addComponent DatabaseB731@node0 : DatabaseBuildings {}
+  addComponent RESULTAT@node0 : FakeConsole {singleFrame='true'}
+  addComponent RoomAcces94@node0 : RoomAccess {Batiment='B41',Salle='001'}
+  addComponent DatabaseC719@node0 : DatabaseConnection {PASS='ydr2013.',USER='user',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://148.60.11.209/projetnsoc'}
+  addComponent Research603@node0 : Research {}
+addChannel defSERVIC288 : defSERVICE {}
+addChannel defSERVIC700 : defSERVICE {}
+addChannel defSERVIC255 : defSERVICE {}
+addChannel defSERVIC186 : defSERVICE {}
+addChannel defSERVIC384 : defSERVICE {}
+addChannel defMSG377 : defMSG {}
+addChannel defMSG713 : defMSG {}
+bind Research603.id_Room@node0 => defSERVIC288
+bind RoomAcces94.authorization@node0 => defSERVIC700
+bind FakeRFID.textEntered@node0 => defMSG713
+bind Research603.Authorization@node0 => defSERVIC700
+bind RoomAcces94.databaseHistory@node0 => defSERVIC186
+bind RoomAcces94.openGache@node0 => defMSG377
+bind RoomAcces94.getRFID@node0 => defMSG713
+bind DatabaseP59.connectDatabase@node0 => defSERVIC384
+bind DatabaseB731.getUrlCalendar@node0 => defSERVIC288
+bind RESULTAT.showText@node0 => defMSG377
+bind DatabaseH571.connectDatabase@node0 => defSERVIC384
+bind DatabaseP59.getCursus@node0 => defSERVIC255
+bind DatabaseB731.connectDatabase@node0 => defSERVIC384
+bind DatabaseC719.Request@node0 => defSERVIC384
+bind DatabaseH571.putEntry@node0 => defSERVIC186
+bind RoomAcces94.speciality@node0 => defSERVIC255
+updateDictionary RoomAcces94@node0 
+updateDictionary defSERVIC384 
+updateDictionary defSERVIC288 
+updateDictionary defSERVIC186 
+updateDictionary defSERVIC255 
+updateDictionary defSERVIC700 
+updateDictionary RESULTAT@node0 
+updateDictionary DatabaseP59@node0 
+updateDictionary FakeRFID@node0 
+updateDictionary defMSG713 
+updateDictionary defMSG377 
+updateDictionary DatabaseB731@node0 
+updateDictionary DatabaseH571@node0 
+updateDictionary Research603@node0 
+updateDictionary DatabaseC719@node0 
 }
 
 addGroup sync:BasicGroup

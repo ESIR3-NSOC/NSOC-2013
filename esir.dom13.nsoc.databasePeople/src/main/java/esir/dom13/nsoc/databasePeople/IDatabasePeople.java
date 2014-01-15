@@ -10,4 +10,6 @@ import java.sql.SQLException;
 public interface IDatabasePeople {
 
     String getCursus(String id_rfid);
+
+    String getIdPeople (String id_rfid);
 }

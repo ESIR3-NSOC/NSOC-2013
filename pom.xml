@@ -11,22 +11,11 @@
 
 
     <properties>
-        <kevoree.version>1.9.0</kevoree.version>
+        <kevoree.version>2.0.13</kevoree.version>
         <scala.version>2.9.2</scala.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>plugin.kevoree-github</id>
-            <url>http://maven.kevoree.org/release</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>plugin.kevoree-snapshots</id>
-            <url>http://maven.kevoree.org/snapshots</url>
-        </pluginRepository>
-    </pluginRepositories>
 
     <modules>
        <!-- <module>esir.dom13.nsoc.arduino</module>      -->
@@ -37,8 +26,24 @@
 
     <name>NSOC :: Library :: Root</name>
 
-
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>plugin.kevoree-github</id>
+            <url>http://maven.kevoree.org/release</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>plugin.kevoree-snapshots</id>
+            <url>http://maven.kevoree.org/snapshots</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>jetbrains-release</id>
+            <url>http://repository.jetbrains.com/all</url>
+        </pluginRepository>
+        <pluginRepository>
+            <id>kevoree-oss.plugin</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <distributionManagement>
         <repository>
@@ -84,6 +89,15 @@
             <id>kevoree-snapshots</id>
             <url>http://maven.kevoree.org/snapshots</url>
         </repository>
+        <repository>
+            <id>kevoree-oss</id>
+            <url>https://oss.sonatype.org/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>jetbrains-release</id>
+            <url>http://repository.jetbrains.com/all</url>
+        </repository>
+
     </repositories>
 
 </project>
