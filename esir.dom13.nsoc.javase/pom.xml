@@ -30,6 +30,8 @@
         <module>../esir.dom13.nsoc.databaseBuildings</module>
         <module>../esir.dom13.nsoc.database</module>
         <module>../esir.dom13.nsoc.databaseHistory</module>
+        <module>../esir.dom13.nsoc.led</module>
+        <module>../esir.dom13.nsoc.arduinoLed</module>
     </modules>
 
     <dependencies>

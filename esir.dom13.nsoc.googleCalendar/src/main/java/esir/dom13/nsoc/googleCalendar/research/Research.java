@@ -33,7 +33,8 @@ import java.util.Date;
 
 @Library(name = "NSOC2013")
 @Provides({
-        @ProvidedPort(name = "Authorization", type = PortType.SERVICE, className = IResearch.class)
+        @ProvidedPort(name = "Authorization", type = PortType.SERVICE, className = IResearch.class),
+        @ProvidedPort(name= "Occupation", type= PortType.SERVICE, className = IResearch.class),
 })
 @Requires({
 
@@ -172,5 +173,57 @@ public class Research extends AbstractComponentType implements IResearch {
         }
 
         return jsonObject.toString();
+    }
+
+    @Port(name = "Occupation", method = "isOccupated")
+    @Override
+    public boolean isOccupated(String batiment, String salle){
+        boolean isOccup = false;
+
+        String urlRoom = "https://www.google.com/calendar/feeds/" + getPortByName("id_Room", IDatabaseBuildings.class).getUrlCalendar(batiment) + "/private/full";
+        URL feedUrl = null;
+        CalendarService service = new CalendarService("NSOC-2013");
+        try {
+            feedUrl = new URL(urlRoom);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        try {
+            service.setUserCredentials(getDictionary().get("id_mail").toString(), getDictionary().get("password").toString());
+        } catch (AuthenticationException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        CalendarQuery myQuery = new CalendarQuery(feedUrl);
+
+        DateTime time = new DateTime(new Date().getTime());
+        DateTime end = new DateTime(time.getValue() + 600000);
+
+        Log.debug("GOOGLE_CALENDAR ::: Time start : " + time.toStringRfc822() + "   Time end : " + end.toUiString() + "\n" + end.toString() + "     " + end.toStringRfc822());
+        myQuery.setMinimumStartTime(time);
+        myQuery.setMaximumStartTime(end);
+        CalendarEventFeed myResultsFeed = null;
+
+        try {
+            myResultsFeed = service.query(myQuery,CalendarEventFeed.class);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ServiceException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        if (myResultsFeed.getEntries().size() > 0) {
+            Log.debug("SIZE : " + myResultsFeed.getEntries().size());
+            for (int i = 0; i < myResultsFeed.getEntries().size(); i++) {
+                CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
+                        myResultsFeed.getEntries().get(i);
+                String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
+                if(myEntryWhere == salle){
+                    isOccup = true;
+                }
+            }
+        }
+
+
+        return isOccup;
     }
 }
