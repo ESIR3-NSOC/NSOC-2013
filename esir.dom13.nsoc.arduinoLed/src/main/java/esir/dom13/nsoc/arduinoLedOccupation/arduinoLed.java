@@ -7,6 +7,7 @@ import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.framework.MessagePort;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Enumeration;
 
@@ -18,14 +19,14 @@ import java.util.Enumeration;
  * To change this template use File | Settings | File Templates.
  */
 
-@Requires({
-        @RequiredPort(name = "lightOccupation", type = PortType.MESSAGE),
+@Provides({
+        @ProvidedPort(name = "lightOccupation", type = PortType.MESSAGE),
 })
 @DictionaryType({
-                @DictionaryAttribute(name = "portCOM_Windows", defaultValue = "COM3", optional = false),
-                @DictionaryAttribute(name = "portCOM_Linux", defaultValue = "/dev/ttyUSB0", optional = false),
-                @DictionaryAttribute(name = "portCOM_MACOS", defaultValue = "/dev/tty.usbserial-A9007UX1", optional = false),
-                @DictionaryAttribute(name = "data_rate", defaultValue = "9600", optional = false)
+        @DictionaryAttribute(name = "portCOM_Windows", defaultValue = "COM3", optional = false),
+        @DictionaryAttribute(name = "portCOM_Linux", defaultValue = "/dev/ttyUSB0", optional = false),
+        @DictionaryAttribute(name = "portCOM_MACOS", defaultValue = "/dev/tty.usbserial-A9007UX1", optional = false),
+        @DictionaryAttribute(name = "data_rate", defaultValue = "9600", optional = false)
 })
 
 @ComponentType
@@ -58,7 +59,7 @@ public class arduinoLed extends AbstractComponentType {
     @Start
     public void start() {
 
-        getPortByName("sendID", MessagePort.class).process("START COMPONENT");
+        getPortByName("lightOccupation", MessagePort.class).process("START COMPONENT");
         PORT_NAMES[0] = getDictionary().get("portCOM_MACOS").toString();
         PORT_NAMES[1] = getDictionary().get("portCOM_Linux").toString();
         PORT_NAMES[2] = getDictionary().get("portCOM_Windows").toString();
@@ -115,5 +116,31 @@ public class arduinoLed extends AbstractComponentType {
             return;
         }
 
+    }
+
+    @Port(name = "lightOccupation")
+    public void sendMessageToArduino(Object object) {
+        boolean result = false;
+        if (object instanceof Boolean) {
+            result = ((Boolean) object).booleanValue();
+        }
+
+        if (serialPort != null) {
+            if (result) {
+                //TODO Allume
+                try {
+                    output.write(1);
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            } else {
+                //TODO eteindre
+                try {
+                    output.write(0);
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        }
     }
 }
