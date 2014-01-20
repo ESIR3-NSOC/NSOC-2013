@@ -78,9 +78,13 @@ public class RoomAccess extends AbstractComponentType {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        // Just for debug
+        /*
         isAuthorized=true;
         teacher="BOURCIER Johann";
         lesson="NSOC";
+        */
         if (isAuthorized) {
             //TODO Ouvrir gache
             getPortByName("openGache", MessagePort.class).process("authorized");

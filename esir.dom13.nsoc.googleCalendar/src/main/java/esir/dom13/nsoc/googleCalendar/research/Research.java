@@ -34,7 +34,6 @@ import java.util.Date;
 @Library(name = "NSOC2013")
 @Provides({
         @ProvidedPort(name = "Authorization", type = PortType.SERVICE, className = IResearch.class),
-        @ProvidedPort(name= "Occupation", type= PortType.SERVICE, className = IResearch.class),
 })
 @Requires({
 
@@ -175,7 +174,7 @@ public class Research extends AbstractComponentType implements IResearch {
         return jsonObject.toString();
     }
 
-    @Port(name = "Occupation", method = "isOccupated")
+    @Port(name = "Authorization", method = "isOccupated")
     @Override
     public boolean isOccupated(String batiment, String salle){
         boolean isOccup = false;

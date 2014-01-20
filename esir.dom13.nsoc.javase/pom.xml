@@ -32,6 +32,7 @@
         <module>../esir.dom13.nsoc.databaseHistory</module>
         <module>../esir.dom13.nsoc.led</module>
         <module>../esir.dom13.nsoc.arduinoLed</module>
+        <module>../esir.dom13.nsoc.serverWeb</module>
     </modules>
 
     <dependencies>
