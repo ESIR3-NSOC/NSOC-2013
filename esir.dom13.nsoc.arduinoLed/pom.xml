@@ -12,5 +12,12 @@
 
     <artifactId>esir.dom13.nsoc.arduinoLed</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.rxtx</groupId>
+            <artifactId>rxtx</artifactId>
+            <version>2.1.7</version>
+        </dependency>
+    </dependencies>
 
 </project>

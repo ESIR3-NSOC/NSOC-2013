@@ -34,10 +34,7 @@ public class TestArduino extends AbstractPeriodicArduinoComponent {
     @Override
     public void generatePeriodic(ArduinoGenerator arduinoGenerator)
     {
-
         getGenerator().appendNativeStatement("serial_rport(\"Test Arduino\");");
         getGenerator().appendNativeStatement("free(\"Test Arduino\");");
-
-
     }
 }

@@ -9,20 +9,20 @@ package esir.dom13.nsoc.objects;
  */
 public class Screen {
 
-    private String adress;
+    private String address;
     private String protocol;
 
-    public Screen(String adress, String protocol) {
-        this.adress = adress;
+    public Screen(String address, String protocol) {
+        this.address = address;
         this.protocol = protocol;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getProtocol() {
