@@ -1,14 +1,13 @@
 package esir.dom13.nsoc.idBadge;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
+import gnu.io.*;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.framework.MessagePort;
+import org.kevoree.log.Log;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.Enumeration;
@@ -19,11 +18,16 @@ import java.util.Enumeration;
 
 @Library(name = "NSOC2013")
 
+@Provides({
+        @ProvidedPort(name = "openGache", type = PortType.MESSAGE),
+        @ProvidedPort(name = "lightOccupation", type = PortType.MESSAGE)
+})
+
 @Requires({
-        @RequiredPort(name = "sendID", type = PortType.MESSAGE, optional = false)
+        @RequiredPort(name = "sendID", type = PortType.MESSAGE, optional = true)
 })
 @DictionaryType({
-        @DictionaryAttribute(name = "portCOM_Windows", defaultValue = "COM3", optional = false),
+        @DictionaryAttribute(name = "portCOM_Windows", defaultValue = "COM7", optional = true),
         @DictionaryAttribute(name = "portCOM_Linux", defaultValue = "/dev/ttyUSB0", optional = false),
         @DictionaryAttribute(name = "portCOM_MACOS", defaultValue = "/dev/tty.usbserial-A9007UX1", optional = false),
         @DictionaryAttribute(name = "data_rate", defaultValue = "9600", optional = false)
@@ -44,7 +48,7 @@ public class Identification extends AbstractComponentType implements SerialPortE
     /**
      * The output stream to the port
      */
-    private OutputStream output;
+    public static OutputStream output;
     /**
      * Milliseconds to block while waiting for port open
      */
@@ -88,6 +92,45 @@ public class Identification extends AbstractComponentType implements SerialPortE
 
     }
 
+    @Port(name = "openGache")
+    public void openGache(Object authorization)  {
+        String data = "rien pour l'instant";
+        String authorized = authorization.toString();
+        Log.info("authorization = " + authorized);
+
+        if(authorized.contains("authorized"))
+        {
+        try {
+            data ="2";
+            output.write(data.getBytes());
+            try {
+                Thread.sleep(2000);
+            } catch(InterruptedException e) {
+            }
+            data = "3";
+            output.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        }
+    }
+
+    @Port(name = "lightOccupation")
+    public void isOccupated(Object isOccupated)
+    {
+        String data = "0";
+        boolean  isOccup = Boolean.parseBoolean(isOccupated.toString());
+        Log.info("The room is occupated : " + isOccup + "    message sent = " + isOccupated);
+
+        if(isOccup)
+            data = "1";
+
+        try {
+            output.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+    }
 
     public void initialize() {
         CommPortIdentifier portId = null;
@@ -126,9 +169,11 @@ public class Identification extends AbstractComponentType implements SerialPortE
             // add event listeners
             serialPort.addEventListener(this);
             serialPort.notifyOnDataAvailable(true);
+
         } catch (Exception e) {
             System.err.println(e.toString());
         }
+
     }
 
     /**
