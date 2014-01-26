@@ -1,0 +1,35 @@
+ {
+addRepo "http://148.60.11.209:8080/archiva/repository/snapshots/"
+addRepo "http://maven.kevoree.org/archiva/repository/daum/snapshots"
+addRepo "http://maven.kevoree.org/release"
+addRepo "http://repo.maven.apache.org/maven2"
+addRepo "http://maven.kevoree.org/daum/release"
+addRepo "http://repository.jetbrains.com/all"
+addRepo "https://oss.sonatype.org/content/groups/public/"
+addRepo "https://oss.sonatype.org/content/repositories/snapshots"
+addRepo "http://repo.typesafe.com/typesafe/releases/"
+addRepo "http://maven.kevoree.org/snapshots"
+addRepo "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+addRepo "http://148.60.11.209:8080/archiva/repository/internal/"
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.serverWeb/1.0-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fakeDomo/2.0.5'
+addNode node0:JavaSENode
+updateDictionary node0{logLevel="DEBUG",coreLogLevel="DEBUG"}
+ {
+  addComponent ServerWeb94@node0 : ServerWeb {port='8888'}
+  addComponent FakeConso90@node0 : FakeConsole {}
+addChannel defMSG494 : defMSG {}
+bind ServerWeb94.fakeConsole@node0 => defMSG494
+bind FakeConso90.showText@node0 => defMSG494
+updateDictionary ServerWeb94@node0
+updateDictionary FakeConso90@node0
+updateDictionary defMSG494
+}
+
+addGroup sync:BasicGroup
+addToGroup sync node0
+}

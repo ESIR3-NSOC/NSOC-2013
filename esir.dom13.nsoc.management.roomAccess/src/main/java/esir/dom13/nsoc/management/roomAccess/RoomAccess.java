@@ -89,7 +89,7 @@ public class RoomAccess extends AbstractComponentType {
             //TODO Ouvrir gache
             getPortByName("openGache", MessagePort.class).process("authorized");
 
-            //TODO enregistrer personne dans l'historique
+            //DONE enregistrer personne dans l'historique
             String id_people = getPortByName("speciality", IDatabasePeople.class).getIdPeople(id_rfid.toString());
 
 
@@ -104,3 +104,4 @@ public class RoomAccess extends AbstractComponentType {
         }
     }
 }
+

@@ -2,8 +2,10 @@ package esir.dom13.nsoc.googleCalendar.research;
 
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
+import org.json.JSONArray;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,5 +18,6 @@ public interface IResearch {
 
     String isAuthorized(String batiment, String salle, String cursus);
     public boolean isOccupated(String batiment, String salle);
+
 
 }

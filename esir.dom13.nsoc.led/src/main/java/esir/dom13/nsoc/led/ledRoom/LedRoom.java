@@ -16,15 +16,13 @@ import org.quartz.impl.StdSchedulerFactory;
  * To change this template use File | Settings | File Templates.
  */
 @Requires({
-        @RequiredPort(name = "Occupation", type = PortType.SERVICE, className = IResearch.class)
-})
+        @RequiredPort(name = "Occupation", type = PortType.SERVICE, className = IResearch.class),
 
-@Provides({
-        @ProvidedPort(name = "lightOccupation", type = PortType.MESSAGE),
+        @RequiredPort(name = "lightOccupation", type = PortType.MESSAGE),
 })
 @DictionaryType({
         @DictionaryAttribute(name = "Salle", defaultValue = "001", optional = false),
-        @DictionaryAttribute(name = "Batiment", defaultValue = "B7", optional = false),
+        @DictionaryAttribute(name = "Batiment", defaultValue = "B41", optional = false),
         @DictionaryAttribute(name = "Heure_de_debut", defaultValue = "8", optional = false),
         @DictionaryAttribute(name = "Heure_de_fin", defaultValue = "18", optional = false),
         @DictionaryAttribute(name = "frequence_en_minute", defaultValue = "15", optional = false),
@@ -76,7 +74,8 @@ public class LedRoom extends AbstractComponentType implements Job{
     }
 
     private void initialized(){
-        JobDetail job = JobBuilder.newJob(LedRoom.class)
+
+        JobDetail job = JobBuilder.newJob(this.getClass())
                 .withIdentity("trigger3", "group1").build();
         Trigger trigger = TriggerBuilder
                 .newTrigger()

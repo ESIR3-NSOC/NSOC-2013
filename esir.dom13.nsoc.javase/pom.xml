@@ -33,6 +33,7 @@
         <module>../esir.dom13.nsoc.led</module>
         <module>../esir.dom13.nsoc.arduinoLed</module>
         <module>../esir.dom13.nsoc.serverWeb</module>
+        <module>../esir.dom13.nsoc.management.conflict</module>
     </modules>
 
     <dependencies>
@@ -51,16 +52,7 @@
             <artifactId>org.kevoree.library.javase.javaseNode</artifactId>
             <version>2.0.5</version>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.6.4</version>
-        </dependency>
+
         <dependency>
             <groupId>org.kevoree.log</groupId>
             <artifactId>org.kevoree.log</artifactId>

@@ -25,9 +25,9 @@
             <version>2.0.5-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.daum.planrouge</groupId>
-            <artifactId>org.daum.planrouge.server</artifactId>
-            <version>2.0.1-SNAPSHOT</version>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.googleCalendar</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

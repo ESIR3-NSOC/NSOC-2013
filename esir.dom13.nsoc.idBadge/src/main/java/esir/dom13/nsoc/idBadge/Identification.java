@@ -67,6 +67,8 @@ public class Identification extends AbstractComponentType implements SerialPortE
         PORT_NAMES[2] = getDictionary().get("portCOM_Windows").toString();
         DATA_RATE = Integer.parseInt(getDictionary().get("data_rate").toString());
 
+
+         /*
         initialize();
         Thread t = new Thread() {
             public void run() {
@@ -80,6 +82,7 @@ public class Identification extends AbstractComponentType implements SerialPortE
         };
         t.start();
         System.out.println("Started");
+         */
     }
 
     @Stop
@@ -96,9 +99,9 @@ public class Identification extends AbstractComponentType implements SerialPortE
     public void openGache(Object authorization)  {
         String data = "rien pour l'instant";
         String authorized = authorization.toString();
-        Log.info("authorization = " + authorized);
+        Log.info("authorization = " + authorized + authorized.equals("authorized"));
 
-        if(authorized.contains("authorized"))
+        if(authorized.equals("authorized"))
         {
         try {
             data ="2";
@@ -120,7 +123,8 @@ public class Identification extends AbstractComponentType implements SerialPortE
     {
         String data = "0";
         boolean  isOccup = Boolean.parseBoolean(isOccupated.toString());
-        Log.info("The room is occupated : " + isOccup + "    message sent = " + isOccupated);
+        boolean b = ((Boolean) isOccupated).booleanValue();
+        Log.info("The room is occupated : " + isOccup +"   "+b+ "    message sent = " + isOccupated);
 
         if(isOccup)
             data = "1";
