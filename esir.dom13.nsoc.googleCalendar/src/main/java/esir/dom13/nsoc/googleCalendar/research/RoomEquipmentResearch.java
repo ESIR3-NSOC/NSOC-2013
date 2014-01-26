@@ -34,7 +34,7 @@ import java.util.Date;
 
 @Library(name = "NSOC2013")
 @Provides({
-        @ProvidedPort(name = "roomAvailable", type = PortType.MESSAGE, className = IRoomEquipmentResearch.class)
+        @ProvidedPort(name = "roomAvailable", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
 })
 @Requires({
         @RequiredPort(name = "connectDatabase", type = PortType.SERVICE, className = IDatabaseConnection.class)
