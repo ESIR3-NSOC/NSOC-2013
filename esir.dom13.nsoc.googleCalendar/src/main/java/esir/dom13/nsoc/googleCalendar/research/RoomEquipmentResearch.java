@@ -65,21 +65,30 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
     @Port(name = "roomAvailable", method = "roomAvailable")
     @Override
-    public String roomAvailable(String equipment, DateTime start, DateTime end){
+    public JSONObject roomAvailable(Date start, Date end,JSONArray equipments){
         Log.debug("Beginning roomAvailable");
-        String roomAvailable = null;
         String nameRoom = null;
         String id_Building = null;
         String request = null;
 
+        String nameRoomAvailable = null;
+        String nameBuildingAvailable = null;
+        Boolean isAvailable = false;
+        String nameBuilding = null;
+
 
         JSONArray equipmentArray = null;
+        JSONObject roomArray = new JSONObject();
 
         try {
-            equipmentArray = new JSONArray(equipment);
+            equipmentArray = new JSONArray(equipments);
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+
+        Log.debug("RoomEquipmentResearch ::: Il y a " + equipmentArray.length() + "équipements");
+
+
 
         if(equipmentArray.length()==0){
             request = "SELECT nameRoom, id_Building FROM IDatabaseRoom where nameEquipment = \"\"";
@@ -112,14 +121,19 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
         CachedRowSetImpl rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(request);
 
         try {
-            while(rs.next()){
+            while(rs.next() /*&& !isAvailable*/){
                 //Retrieve by column name
                 nameRoom  = rs.getString("nameRoom");
-                id_Building  = rs.getString("id_Building");
+                id_Building = rs.getString("id_Building");
 
-                //Display values
-                Log.debug("Room name: " + nameRoom);
-                Log.debug("Building url: " + id_Building);
+                String sqlNomBat = "SELECT nameBuilding FROM IDatabaseBuilding where id_building = \"" + rs.getString("id_Building") + "\"";
+                CachedRowSetImpl rs2 = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(sqlNomBat);
+
+                while(rs2.next()){
+                    nameBuilding = rs2.getString("nameBuilding");
+                    System.out.println("nameBuilding: " + nameBuilding);
+                }
+                rs2.close();
 
                 String urlRoom = "https://www.google.com/calendar/feeds/" + id_Building + "/private/full";
                 URL feedUrl = null;
@@ -127,7 +141,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                 try {
                     feedUrl = new URL(urlRoom);
                 } catch (MalformedURLException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
                 }
 
                 try {
@@ -135,47 +149,92 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
 
                 } catch (AuthenticationException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
                 }
                 CalendarQuery myQuery = new CalendarQuery(feedUrl);
 
-                Log.debug("GOOGLE_CALENDAR ::: Time start : " + start + "   Time end : " + end);
-                myQuery.setMinimumStartTime(start);
-                myQuery.setMaximumStartTime(end);
+                Log.debug("GOOGLE_CALENDAR ::: Time start : " + start + " Time end : " + end);
+                myQuery.setMinimumStartTime(new DateTime(start));
+                myQuery.setMaximumStartTime(new DateTime(end));
                 CalendarEventFeed myResultsFeed = null;
 
                 try {
                     myResultsFeed = service.query(myQuery, CalendarEventFeed.class);
                 } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
                 } catch (ServiceException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                    e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
                 }
 
+
+                boolean salleDispo = true;
                 if (myResultsFeed.getEntries().size() > 0) {
                     System.out.println("SIZE : " + myResultsFeed.getEntries().size());
-                    for(int i=0; i<myResultsFeed.getEntries().size();i++){
-                        CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
-                                myResultsFeed.getEntries().get(i);
 
-                        String myEntryTitle = firstMatchEntry.getTitle().getPlainText();
-                        String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
-                        String myEntryContent = firstMatchEntry.getPlainTextContent();
-                        Log.debug("RoomEquipmentResearch ::: Title: " + myEntryTitle + " Where: " + myEntryWhere + " Description: " + myEntryContent);
-                        if(myEntryWhere.contains(nameRoom)){
-                            Log.debug("RoomEquipmentResearch ::: Room " + nameRoom + "NOT available from " + start.toString() + " to " + end.toString());
-                        }else{
-                            Log.debug("RoomEquipmentResearch ::: Room " + nameRoom + "available from " + start.toString() + " to " + end.toString());
-                            roomAvailable = nameRoom;
-                            return roomAvailable;
+                    for(int i=0; i<myResultsFeed.getEntries().size();i++){
+                        if(salleDispo){
+                            CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
+                                    myResultsFeed.getEntries().get(i);
+
+                            String myEntryTitle = firstMatchEntry.getTitle().getPlainText();
+                            String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
+                            String myEntryContent = firstMatchEntry.getPlainTextContent();
+                            //System.out.println("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
+                            if(myEntryWhere.contains(nameRoom)){
+                                //System.out.println("RoomEquipmentResearch ::: Room " + nameRoom + "NOT available from " + min.toString() + " to " + max.toString());
+                                salleDispo = false;
+                                System.out.println("FAUX");
+                            }else{
+                                //System.out.println("RoomEquipmentResearch ::: Room " + nameRoom + "available from " + min.toString() + " to " + max.toString());
+                            }
                         }
                     }
+                    if(salleDispo){
+                        System.out.println("YES");
+
+                        try {
+                            roomArray.put("salle",nameRoom);
+                            roomArray.put("batiment",nameBuilding);
+                            roomArray.put("isAvailable",isAvailable);
+                        } catch (JSONException e) {
+                            // TODO Auto-generated catch block
+                            e.printStackTrace();
+                        }
+                        return roomArray;
+                    }
+                }else{
+
+                    try {
+                        roomArray.put("salle",nameRoom);
+                        roomArray.put("batiment",nameBuilding);
+                        roomArray.put("isAvailable",isAvailable);
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                    return roomArray;
                 }
             }
-            return null;
+
+            //STEP 6: Clean-up environment
+            rs.close();
+
+
+
+            try {
+                roomArray.put("salle","");
+                roomArray.put("batiment","");
+                roomArray.put("isAvailable",false);
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            return roomArray;
         } catch (SQLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        return null;
+
+        return roomArray;
+
     }
 }
