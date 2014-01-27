@@ -21,7 +21,7 @@ import com.sun.rowset.CachedRowSetImpl;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Date;
 
 /**
@@ -36,14 +36,19 @@ import java.util.Date;
 @Provides({
         @ProvidedPort(name = "roomAvailable", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
 })
+/*
 @Requires({
-        @RequiredPort(name = "connectDatabase", type = PortType.SERVICE, className = IDatabaseConnection.class)
-})
+        @RequiredPort(name = "connectDatabase", type = PortType.SERVICE, className = IDatabaseBuildings.class)
+}) */
 
 @DictionaryType({
-        @DictionaryAttribute(name = "id_mail", defaultValue = "projet.nsoc2013@gmail.com", optional = false),
-        @DictionaryAttribute(name = "password", defaultValue = "esir2013", optional = false)
+        @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
+        @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://148.60.11.209/projetnsoc", optional = false),
+        @DictionaryAttribute(name = "USER", defaultValue = "user", optional = false),
+        @DictionaryAttribute(name = "PASS", defaultValue = "ydr2013.", optional = false)
 })
+
+
 @ComponentType
 public class RoomEquipmentResearch extends AbstractComponentType implements IRoomEquipmentResearch {
     private String mail;
@@ -88,6 +93,32 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
         Log.debug("RoomEquipmentResearch ::: Il y a " + equipmentArray.length() + "équipements");
 
+        /* Connexion database */
+            // JDBC driver name and database URL
+            String JDBC_DRIVER, DB_URL;
+
+            //  Database credentials
+            String USER, PASS;
+            Connection connection = null;
+            JDBC_DRIVER = getDictionary().get("JDBC_DRIVER").toString();
+            DB_URL = getDictionary().get("DB_URL").toString();
+            USER = getDictionary().get("USER").toString();
+            PASS = getDictionary().get("PASS").toString();
+            //STEP 2: Register JDBC driver
+            try {
+                Class.forName(JDBC_DRIVER);
+                //STEP 3: Open a connection
+                Log.debug("Connecting to database...");
+                connection = DriverManager.getConnection(DB_URL, USER, PASS);
+                Log.debug("Connecting to database...  OK");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        /*Fin connexion Database*/
+
+
 
 
         if(equipmentArray.length()==0){
@@ -118,7 +149,22 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
             request = "SELECT nameRoom, id_Building FROM IDatabaseRoom where nameEquipment IN (" + equipementsRequete +") GROUP BY nameRoom, id_Building HAVING COUNT(DISTINCT nameEquipment) = " + equipmentArray.length() + ";";
             Log.debug("RoomEquipmentResearch ::: requete sql = \""+request+"\"");
         }
-        CachedRowSetImpl rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(request);
+        /*Execution requete*/
+        Statement stmt = null;
+        ResultSet rs = null;
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: " + request);
+            rs = stmt.executeQuery(request);
+
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        /*Fin execution requete*/
+
+        //CachedRowSetImpl rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(request);
 
         try {
             while(rs.next() /*&& !isAvailable*/){
@@ -127,7 +173,22 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                 id_Building = rs.getString("id_Building");
 
                 String sqlNomBat = "SELECT nameBuilding FROM IDatabaseBuilding where id_building = \"" + rs.getString("id_Building") + "\"";
-                CachedRowSetImpl rs2 = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(sqlNomBat);
+
+                /*Execution requete*/
+                Statement stmt2 = null;
+                ResultSet rs2 = null;
+                try {
+                    //STEP 4: Execute a query
+                    Log.debug("Creating statement...");
+                    stmt2 = connection.createStatement();
+                    Log.debug("Execution of :: " + request);
+                    rs2 = stmt2.executeQuery(request);
+
+                } catch (SQLException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+        /*Fin execution requete*/
+                //CachedRowSetImpl rs2 = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(sqlNomBat);
 
                 while(rs2.next()){
                     nameBuilding = rs2.getString("nameBuilding");
