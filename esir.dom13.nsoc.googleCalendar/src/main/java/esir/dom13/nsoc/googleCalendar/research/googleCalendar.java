@@ -134,7 +134,7 @@ public class googleCalendar {
 	public static void createEvent(String mail, String pw, String title, String content, String where, DateTime start, DateTime end) throws IOException, ServiceException{
 		URL postUrl;
 		
-		postUrl = new URL("https://www.google.com/calendar/feeds/default/private/full");
+		postUrl = new URL("https://www.google.com/calendar/feeds/9u96e3jug29acreg69kc80c00s@group.calendar.google.com/private/full");
 		CalendarService myService = new CalendarService("Calendar ADE");
 		myService.setUserCredentials(mail, pw);
 		

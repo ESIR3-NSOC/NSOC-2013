@@ -70,9 +70,45 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
         String roomAvailable = null;
         String nameRoom = null;
         String id_Building = null;
+        String request = null;
 
-        String request= "SELECT nameRoom, id_Building FROM IDatabaseRoom where nameEquipment =\"" + equipment + "\"";;
-        Log.debug("RoomEquipmentResearch ::: requete sql = \""+request+"\"");
+
+        JSONArray equipmentArray = null;
+
+        try {
+            equipmentArray = new JSONArray(equipment);
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        if(equipmentArray.length()==0){
+            request = "SELECT nameRoom, id_Building FROM IDatabaseRoom where nameEquipment = \"\"";
+            Log.debug("RoomEquipmentResearch ::: requete sql = \""+request+"\"");
+        }else{
+
+            String equipementsRequete = "";
+            for(int i=0;i<equipmentArray.length();i++){
+                if(i<equipmentArray.length()-1){
+                    try {
+                        equipementsRequete = equipementsRequete + "\"" + equipmentArray.getString(i) + "\",";
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        equipementsRequete = equipementsRequete + "\"" + equipmentArray.getString(i) + "\"";
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+            request = "SELECT nameRoom, id_Building FROM IDatabaseRoom where nameEquipment IN (" + equipementsRequete +") GROUP BY nameRoom, id_Building HAVING COUNT(DISTINCT nameEquipment) = " + equipmentArray.length() + ";";
+            Log.debug("RoomEquipmentResearch ::: requete sql = \""+request+"\"");
+        }
         CachedRowSetImpl rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(request);
 
         try {

@@ -1,6 +1,6 @@
 package esir.dom13.nsoc.serverWeb;
 
-import esir.dom13.nsoc.googleCalendar.research.IResearch;
+
 import esir.dom13.nsoc.handler.HandlerWebSocket;
 import org.json.JSONArray;
 import org.json.JSONException;

@@ -31,7 +31,7 @@
         public void start() {
             DateTime startTime = DateTime.parseDateTime("2014-01-20T08:00:00");
             DateTime endTime = DateTime.parseDateTime("2014-01-20T10:00:00");
-            String room = getPortByName("Request",RoomEquipmentResearch.class).roomAvailable("ordinateur", startTime, endTime);
+            String room = getPortByName("Request",RoomEquipmentResearch.class).roomAvailable("[ordinateur,videoprojecteur]", startTime, endTime);
             Log.info("TestRoomEquipmentResearch ::: Room  ::  "+room);
         }
 
