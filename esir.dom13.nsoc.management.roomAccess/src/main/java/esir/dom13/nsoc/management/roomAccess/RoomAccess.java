@@ -86,7 +86,7 @@ public class RoomAccess extends AbstractComponentType {
         lesson="NSOC";
         */
         if (isAuthorized) {
-            //TODO Ouvrir gache
+            //DONE Ouvrir gache
             getPortByName("openGache", MessagePort.class).process("authorized");
 
             //DONE enregistrer personne dans l'historique

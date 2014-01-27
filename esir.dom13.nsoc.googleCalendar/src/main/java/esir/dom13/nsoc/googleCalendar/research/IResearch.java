@@ -18,6 +18,6 @@ public interface IResearch {
 
     String isAuthorized(String batiment, String salle, String cursus);
     public boolean isOccupated(String batiment, String salle);
-
+    String ManagementConflict();
 
 }

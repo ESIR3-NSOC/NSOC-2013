@@ -83,7 +83,7 @@ public class SendEmail extends AbstractComponentType {
         Properties props = new Properties();
 
         props.put("mail.transport.protocol", "smtps");
-        props.put("mail.smtps.host", SMTP_HOST_NAME);
+        props.put("mail.smtps.host", "smtp.gmail.com");
         props.put("mail.smtps.auth", "true");
         // props.put("mail.smtps.quitwait", "false");
 
@@ -101,7 +101,7 @@ public class SendEmail extends AbstractComponentType {
                 new InternetAddress(receiver));
 
         transport.connect
-                (SMTP_HOST_NAME, SMTP_HOST_PORT, SMTP_AUTH_USER, SMTP_AUTH_PWD);
+                ("smtp.gmail.com", 465, "projet.nsoc2013@gmail.com", "esir2013");
 
         transport.sendMessage(message,message.getRecipients(Message.RecipientType.TO));
         transport.close();

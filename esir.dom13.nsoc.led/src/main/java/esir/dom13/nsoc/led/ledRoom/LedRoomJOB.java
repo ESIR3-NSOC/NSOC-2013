@@ -9,6 +9,7 @@ import org.kevoree.log.Log;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -61,16 +62,12 @@ public class LedRoomJOB extends AbstractComponentType{
         TimerTask task = new TimerTask() {
             public void run() {
                 Log.info("LedRoomJOB :::  EXECUTE");
-               // boolean light = getPortByName("Occupation", IResearch.class).isOccupated(batiment, salle);
-                getPortByName("lightOccupation", MessagePort.class).process("true");
-                Log.info("LedRoomJOB :::  etat light : "+true);
+                boolean light = getPortByName("Occupation", IResearch.class).isOccupated(batiment, salle);
+                getPortByName("lightOccupation", MessagePort.class).process(light);
+                Log.info("LedRoomJOB :::  etat light : " + light);
             }
         };
-        timer.scheduleAtFixedRate(task, 0, 10* 1000);
-
-        Object object = new Object();
-
-
+        timer.scheduleAtFixedRate(task, new Date(new Date().getTime()+30000), 60* 1000);
     }
 }
 

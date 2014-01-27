@@ -121,5 +121,36 @@ public class DatabasePeople extends AbstractComponentType implements IDatabasePe
 
         return id_people;
     }
+
+
+    @Port(name = "getCursus",method = "getMailPeople")
+    @Override
+    public String getMailPeople(String id_people) {
+
+        String sql;
+        String emailAddress = null;
+
+
+        sql = "SELECT emailAddress FROM IDatabasePeople where id_people =\"" + id_people + "\"";
+
+        Log.debug("IDatabasePeople ::: id_people = \""+id_people+"\"");
+
+        //TODO
+        ResultSet rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(sql);
+        try {
+            while(rs.next()){
+                //Retrieve by column name
+                emailAddress  = rs.getString("emailAddress");
+
+                //Display values
+                Log.debug("emailAddress: " + emailAddress);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        return emailAddress;
+    }
+
 }
 

@@ -61,7 +61,7 @@ public class Identification extends AbstractComponentType implements SerialPortE
     @Start
     public void start() {
 
-        getPortByName("sendID", MessagePort.class).process("START COMPONENT");
+       // getPortByName("sendID", MessagePort.class).process("START COMPONENT");
         PORT_NAMES[0] = getDictionary().get("portCOM_MACOS").toString();
         PORT_NAMES[1] = getDictionary().get("portCOM_Linux").toString();
         PORT_NAMES[2] = getDictionary().get("portCOM_Windows").toString();

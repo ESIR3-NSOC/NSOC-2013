@@ -11,6 +11,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>esir.dom13.nsoc.management.conflict</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.googleCalendar</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.databasePeople</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 
 
 </project>

@@ -118,6 +118,8 @@ public class ServerWeb extends AbstractComponentType implements WebSocketHandler
             jsonResponse.put("date",date);
             jsonResponse.put("isAvailable",true);
             connection.send(jsonResponse.toString());
+
+            //TODO creer salle
         } else{
             JSONObject jsonResponse = new JSONObject();
             jsonResponse.put("isAvailable",false);
