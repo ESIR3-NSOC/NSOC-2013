@@ -68,7 +68,7 @@ public class Identification extends AbstractComponentType implements SerialPortE
         DATA_RATE = Integer.parseInt(getDictionary().get("data_rate").toString());
 
 
-         /*
+
         initialize();
         Thread t = new Thread() {
             public void run() {
@@ -82,7 +82,7 @@ public class Identification extends AbstractComponentType implements SerialPortE
         };
         t.start();
         System.out.println("Started");
-         */
+
     }
 
     @Stop
@@ -115,6 +115,18 @@ public class Identification extends AbstractComponentType implements SerialPortE
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+        }
+        else
+        {
+            data ="4";
+            try {
+                output.write(data.getBytes());
+                Thread.sleep(1500);
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } catch (InterruptedException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
         }
     }
 
