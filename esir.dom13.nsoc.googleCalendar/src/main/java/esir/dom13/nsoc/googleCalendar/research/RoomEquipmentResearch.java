@@ -34,7 +34,7 @@ import java.util.Date;
 
 @Library(name = "NSOC2013")
 @Provides({
-        @ProvidedPort(name = "roomAvailable", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
+        @ProvidedPort(name = "roomAvailable", type = PortType.MESSAGE, className = IRoomEquipmentResearch.class)
 })
 /*
 @Requires({
@@ -45,7 +45,9 @@ import java.util.Date;
         @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
         @DictionaryAttribute(name = "DB_URL", defaultValue = "jdbc:mysql://148.60.11.209/projetnsoc", optional = false),
         @DictionaryAttribute(name = "USER", defaultValue = "user", optional = false),
-        @DictionaryAttribute(name = "PASS", defaultValue = "ydr2013.", optional = false)
+        @DictionaryAttribute(name = "PASS", defaultValue = "ydr2013.", optional = false),
+        @DictionaryAttribute(name = "id_mail", defaultValue = "projet.nsoc2013@gmail.com", optional = false),
+        @DictionaryAttribute(name = "password", defaultValue = "esir2013", optional = false)
 })
 
 
@@ -195,6 +197,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                     System.out.println("nameBuilding: " + nameBuilding);
                 }
                 rs2.close();
+                stmt2.close();
 
                 String urlRoom = "https://www.google.com/calendar/feeds/" + id_Building + "/private/full";
                 URL feedUrl = null;
@@ -207,8 +210,6 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
                 try {
                     service.setUserCredentials(getDictionary().get("id_mail").toString(), getDictionary().get("password").toString());
-
-
                 } catch (AuthenticationException e) {
                     e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
                 }
@@ -242,17 +243,29 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                             String myEntryContent = firstMatchEntry.getPlainTextContent();
                             //System.out.println("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
                             if(myEntryWhere.contains(nameRoom)){
-                                //System.out.println("RoomEquipmentResearch ::: Room " + nameRoom + "NOT available from " + min.toString() + " to " + max.toString());
                                 salleDispo = false;
-                                System.out.println("FAUX");
-                            }else{
-                                //System.out.println("RoomEquipmentResearch ::: Room " + nameRoom + "available from " + min.toString() + " to " + max.toString());
-                            }
+                             }
                         }
                     }
                     if(salleDispo){
-                        System.out.println("YES");
-
+                        if(verificationResa(nameRoom, nameBuilding, start, end)){
+                            roomArray = new JSONObject();
+                            isAvailable = true;
+                            try {
+                                roomArray.put("salle",nameRoom);
+                                roomArray.put("batiment",nameBuilding);
+                                roomArray.put("isAvailable",isAvailable);
+                            } catch (JSONException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            return roomArray;
+                        }
+                    }
+                }else{
+                    if(verificationResa(nameRoom, nameBuilding, start, end)){
+                        roomArray = new JSONObject();
+                        isAvailable = true;
                         try {
                             roomArray.put("salle",nameRoom);
                             roomArray.put("batiment",nameBuilding);
@@ -263,24 +276,12 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                         }
                         return roomArray;
                     }
-                }else{
-
-                    try {
-                        roomArray.put("salle",nameRoom);
-                        roomArray.put("batiment",nameBuilding);
-                        roomArray.put("isAvailable",isAvailable);
-                    } catch (JSONException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                    return roomArray;
                 }
             }
 
             //STEP 6: Clean-up environment
             rs.close();
-
-
+            stmt.close();
 
             try {
                 roomArray.put("salle","");
@@ -297,5 +298,56 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
         return roomArray;
 
+    }
+
+    public boolean verificationResa(String nameRoom, String nameBuilding, Date min, Date max){
+        boolean isAvailable = true;
+
+		/* Connexion au calendrier */
+        URL feedUrl = null;
+        try {
+            feedUrl = new URL("https://www.google.com/calendar/feeds/9u96e3jug29acreg69kc80c00s@group.calendar.google.com/private/full");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        CalendarService myService = new CalendarService("Calendar Reservations");
+        try {
+            myService.setUserCredentials(getDictionary().get("id_mail").toString(), getDictionary().get("password").toString());
+        } catch (AuthenticationException e) {
+            e.printStackTrace(); //To change body of catch statement use File | Settings | File Templates.
+        }
+
+		/* Préparation de la requête */
+        CalendarQuery myQuery = new CalendarQuery(feedUrl);
+        myQuery.setMinimumStartTime(new DateTime(min));
+        myQuery.setMaximumStartTime(new DateTime(max));
+
+		/* Réponse */
+        CalendarEventFeed myResultsFeed = null;
+        try {
+            myResultsFeed = myService.query(myQuery,CalendarEventFeed.class);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ServiceException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        if (myResultsFeed.getEntries().size() > 0) {
+            System.out.println("SIZE CALENDAR RESA : " + myResultsFeed.getEntries().size());
+
+            for(int i=0; i<myResultsFeed.getEntries().size();i++){
+                if(isAvailable){
+                    CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
+                            myResultsFeed.getEntries().get(i);
+
+                    String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
+                    if(myEntryWhere.contains(nameRoom) & myEntryWhere.contains(nameBuilding)){
+                        isAvailable = false;
+                        return isAvailable;
+                    }
+                }
+            }
+        }
+        return isAvailable;
     }
 }

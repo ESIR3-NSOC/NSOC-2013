@@ -16,4 +16,5 @@ import java.util.Date;
 public interface IRoomEquipmentResearch {
 
     JSONObject roomAvailable(Date start, Date end, JSONArray equipments);
+    boolean verificationResa(String nameRoom, String nameBuilding, Date min, Date max);
 }
