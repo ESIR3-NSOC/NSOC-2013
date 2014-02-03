@@ -1,6 +1,5 @@
 package esir.dom13.nsoc.googleCalendar.research;
 
-import com.google.gdata.data.DateTime;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,6 +14,6 @@ import java.util.Date;
  */
 public interface IRoomEquipmentResearch {
 
-    JSONObject roomAvailable(Date start, Date end, JSONArray equipments);
-    boolean verificationResa(String nameRoom, String nameBuilding, Date min, Date max);
+    String roomAvailable(String start, String end, String equipments);
+
 }

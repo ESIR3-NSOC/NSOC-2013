@@ -8,15 +8,12 @@ import com.google.gdata.data.calendar.CalendarEventEntry;
 import com.google.gdata.data.calendar.CalendarEventFeed;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
-import esir.dom13.nsoc.database.IDatabaseConnection;
-import esir.dom13.nsoc.databaseBuildings.IDatabaseBuildings;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.log.Log;
-import com.sun.rowset.CachedRowSetImpl;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -34,7 +31,7 @@ import java.util.Date;
 
 @Library(name = "NSOC2013")
 @Provides({
-        @ProvidedPort(name = "roomAvailable", type = PortType.MESSAGE, className = IRoomEquipmentResearch.class)
+        @ProvidedPort(name = "room_Available", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
 })
 /*
 @Requires({
@@ -52,7 +49,7 @@ import java.util.Date;
 
 
 @ComponentType
-public class RoomEquipmentResearch extends AbstractComponentType implements IRoomEquipmentResearch {
+public class RoomEquipmentResearch extends AbstractComponentType implements IRoomEquipmentResearch{
     private String mail;
     private String pw;
 
@@ -70,9 +67,18 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
     }
 
-    @Port(name = "roomAvailable", method = "roomAvailable")
+
+    @Port(name = "room_Available", method = "roomAvailable")
     @Override
-    public JSONObject roomAvailable(Date start, Date end,JSONArray equipments){
+    public String roomAvailable(String _start, String _end,String equipment){
+        Date start = new Date(_start);
+        Date end = new Date(_end);
+        JSONArray equipments = null;
+        try {
+            equipments = new JSONArray(equipment);
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
         Log.debug("Beginning roomAvailable");
         String nameRoom = null;
         String id_Building = null;
@@ -95,7 +101,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
         Log.debug("RoomEquipmentResearch ::: Il y a " + equipmentArray.length() + "équipements");
 
-        /* Connexion database */
+        // Connexion database /
             // JDBC driver name and database URL
             String JDBC_DRIVER, DB_URL;
 
@@ -118,7 +124,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-        /*Fin connexion Database*/
+        //Fin connexion Database/
 
 
 
@@ -151,7 +157,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
             request = "SELECT nameRoom, id_Building FROM IDatabaseRoom where nameEquipment IN (" + equipementsRequete +") GROUP BY nameRoom, id_Building HAVING COUNT(DISTINCT nameEquipment) = " + equipmentArray.length() + ";";
             Log.debug("RoomEquipmentResearch ::: requete sql = \""+request+"\"");
         }
-        /*Execution requete*/
+        //Execution requete/
         Statement stmt = null;
         ResultSet rs = null;
         try {
@@ -164,19 +170,19 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
         } catch (SQLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        /*Fin execution requete*/
+        //Fin execution requete
 
         //CachedRowSetImpl rs = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(request);
 
         try {
-            while(rs.next() /*&& !isAvailable*/){
+            while(rs.next() ){          //&& !isAvailable/
                 //Retrieve by column name
                 nameRoom  = rs.getString("nameRoom");
                 id_Building = rs.getString("id_Building");
 
                 String sqlNomBat = "SELECT nameBuilding FROM IDatabaseBuilding where id_building = \"" + rs.getString("id_Building") + "\"";
 
-                /*Execution requete*/
+                //Execution requete/
                 Statement stmt2 = null;
                 ResultSet rs2 = null;
                 try {
@@ -189,7 +195,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                 } catch (SQLException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
-        /*Fin execution requete*/
+        //Fin execution requete/
                 //CachedRowSetImpl rs2 = getPortByName("connectDatabase",IDatabaseConnection.class).sendRequestToDatabase(sqlNomBat);
 
                 while(rs2.next()){
@@ -259,7 +265,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
                             }
-                            return roomArray;
+                            return roomArray.toString();
                         }
                     }
                 }else{
@@ -274,7 +280,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                             // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
-                        return roomArray;
+                        return roomArray.toString();
                     }
                 }
             }
@@ -291,16 +297,16 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            return roomArray;
+            return roomArray.toString();
         } catch (SQLException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-        return roomArray;
+        return roomArray.toString();
 
-    }
+    }         //  */
 
-    public boolean verificationResa(String nameRoom, String nameBuilding, Date min, Date max){
+    private boolean verificationResa(String nameRoom, String nameBuilding, Date min, Date max){
         boolean isAvailable = true;
 
 		/* Connexion au calendrier */
@@ -350,4 +356,5 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
         }
         return isAvailable;
     }
+
 }

@@ -37,7 +37,12 @@ public class testRoomResearch extends AbstractComponentType {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-        JSONObject a = getPortByName("testRoomResearch",IRoomEquipmentResearch.class).roomAvailable(startTime, endTime, equipment);
+        JSONObject a = null;
+        try {
+            a = new JSONObject(getPortByName("testRoomResearch", IRoomEquipmentResearch.class).roomAvailable(startTime.toString(), endTime.toString(), equipment.toString()));
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
 
 
         try {
