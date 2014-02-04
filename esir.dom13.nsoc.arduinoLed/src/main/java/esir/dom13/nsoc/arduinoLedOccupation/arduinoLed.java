@@ -121,6 +121,7 @@ public class arduinoLed extends AbstractComponentType {
     @Port(name = "lightOccupation")
     public void sendMessageToArduino(Object object) {
         boolean result = false;
+        char value;
         if (object instanceof Boolean) {
             result = ((Boolean) object).booleanValue();
         }
@@ -128,15 +129,17 @@ public class arduinoLed extends AbstractComponentType {
         if (serialPort != null) {
             if (result) {
                 //TODO Allume
+                value = 1;
                 try {
-                    output.write(1);
+                    output.write(value);
                 } catch (IOException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             } else {
                 //TODO eteindre
+                value = 0;
                 try {
-                    output.write(0);
+                    output.write(value);
                 } catch (IOException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }

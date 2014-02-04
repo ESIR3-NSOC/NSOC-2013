@@ -34,6 +34,10 @@
         <module>../esir.dom13.nsoc.arduinoLed</module>
         <module>../esir.dom13.nsoc.serverWeb</module>
         <module>../esir.dom13.nsoc.management.conflict</module>
+        <module>../esir.dom13.nsoc.adminDatabasePeople</module>
+        <module>../esir.dom13.nsoc.adminDatabaseBuilding</module>
+        <module>../esir.dom13.nsoc.adminDatabaseRoom</module>
+        <module>../esir.dom13.nsoc.adminDatabaseEquipment</module>
     </modules>
 
     <dependencies>
