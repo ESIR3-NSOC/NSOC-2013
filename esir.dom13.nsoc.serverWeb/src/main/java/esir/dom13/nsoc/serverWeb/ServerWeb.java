@@ -1,6 +1,8 @@
 package esir.dom13.nsoc.serverWeb;
 
 
+import esir.dom13.nsoc.googleCalendar.research.IResearch;
+import esir.dom13.nsoc.googleCalendar.research.IRoomEquipmentResearch;
 import esir.dom13.nsoc.handler.HandlerWebSocket;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,10 +27,12 @@ import java.util.Date;
  */
 
 
-@Library(name = "NSOC")
+@Library(name = "NSOC2013")
 
 @Requires({
         @RequiredPort(name = "fakeConsole", type = PortType.MESSAGE),
+        @RequiredPort(name = "roomAvailable", type = PortType.SERVICE, className = IRoomEquipmentResearch.class),
+        @RequiredPort(name = "bookingRoom", type = PortType.SERVICE,className = IResearch.class),
 })
 @DictionaryType({
         @DictionaryAttribute(name = "port", defaultValue = "8080", optional = false)
@@ -75,7 +79,7 @@ public class ServerWeb extends AbstractComponentType implements WebSocketHandler
     public void onOpen(WebSocketConnection connection) {
         //connection.send("Other connection :: "+connexion );
 
-        Log.info("START SOCKET  :)  ");
+        Log.info("START SOCKET  :  ");
     }
 
     public void onClose(WebSocketConnection connection) {
@@ -90,22 +94,26 @@ public class ServerWeb extends AbstractComponentType implements WebSocketHandler
         String id_people = jsonObject.getString("id_people");
         String date = jsonObject.getString("date");
         String heure = jsonObject.getString("time");
-        int duration = jsonObject.getInt("duration");
+        int duration = Integer.parseInt(jsonObject.getString("duration"));
         JSONArray equipements = jsonObject.getJSONArray("equipment");
-        heure.replace("h",":");
+        heure = heure.replace("h",":");
 
         DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         Date dateBegin = null;
+        Date dateEnd =null;
         try {
             dateBegin =  df.parse(date+" "+heure);
+            long timeEnd = dateBegin.getTime()+duration*60000;
+            dateEnd = new Date(timeEnd);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        long timeEnd = dateBegin.getTime()+duration*60000;
 
-        Date dateEnd = new Date(timeEnd);
-        JSONObject availableRoom =   new JSONObject();
-                //new JSONObject(getPortByName("",IResearch.class).findAvailableRoom(dateBegin, dateEnd, equipements));
+        Log.info("----------------------------------------------"+dateBegin.toString());
+
+        String roomAvailable = getPortByName("roomAvailable",IRoomEquipmentResearch.class).roomAvailable(dateBegin.getTime(), dateEnd.getTime(), equipements.toString());
+        JSONObject availableRoom =   new JSONObject(roomAvailable);
+
         //TODO Chercher une salle libre
 
         // TODO Si salle libre la réserver et envoyé notification Accepté ou non
@@ -113,13 +121,14 @@ public class ServerWeb extends AbstractComponentType implements WebSocketHandler
             JSONObject jsonResponse = new JSONObject();
             jsonResponse.put("salle",availableRoom.getString("salle"));
             jsonResponse.put("batiment",availableRoom.getString("batiment"));
-            jsonResponse.put("duration",duration);
-            jsonResponse.put("heure",heure);
-            jsonResponse.put("date",date);
+            jsonResponse.put("start",dateBegin.toString());
+            jsonResponse.put("end",dateEnd.toString());
+            jsonResponse.put("id_people",id_people);
             jsonResponse.put("isAvailable",true);
             connection.send(jsonResponse.toString());
 
             //TODO creer salle
+            getPortByName("bookingRoom", IResearch.class).bookingRoom(dateBegin.getTime(),dateEnd.getTime(),availableRoom.getString("salle"),availableRoom.getString("batiment"),id_people);
         } else{
             JSONObject jsonResponse = new JSONObject();
             jsonResponse.put("isAvailable",false);

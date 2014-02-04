@@ -14,6 +14,6 @@ import java.util.Date;
  */
 public interface IRoomEquipmentResearch {
 
-    String roomAvailable(String start, String end, String equipments);
+    String roomAvailable(Long start, Long end, String equipments);
 
 }

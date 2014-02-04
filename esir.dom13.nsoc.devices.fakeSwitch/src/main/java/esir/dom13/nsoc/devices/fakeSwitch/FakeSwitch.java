@@ -76,6 +76,7 @@ public class FakeSwitch extends AbstractComponentType {
 
             this.onText = onText;
             this.offText = offText;
+
             //setPreferredSize(new Dimension(SWITCH_WIDTH, SWITCH_HEIGHT));
             //setLayout(new FlowLayout());
             on = new JButton(onText);

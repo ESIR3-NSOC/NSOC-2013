@@ -70,7 +70,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
 
     @Port(name = "room_Available", method = "roomAvailable")
     @Override
-    public String roomAvailable(String _start, String _end,String equipment){
+    public String roomAvailable(Long _start, Long _end,String equipment){
         Date start = new Date(_start);
         Date end = new Date(_end);
         JSONArray equipments = null;
@@ -94,7 +94,7 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
         JSONObject roomArray = new JSONObject();
 
         try {
-            equipmentArray = new JSONArray(equipments);
+            equipmentArray = new JSONArray(equipment);
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -189,8 +189,8 @@ public class RoomEquipmentResearch extends AbstractComponentType implements IRoo
                     //STEP 4: Execute a query
                     Log.debug("Creating statement...");
                     stmt2 = connection.createStatement();
-                    Log.debug("Execution of :: " + request);
-                    rs2 = stmt2.executeQuery(request);
+                    Log.debug("Execution of :: " + sqlNomBat);
+                    rs2 = stmt2.executeQuery(sqlNomBat);
 
                 } catch (SQLException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.

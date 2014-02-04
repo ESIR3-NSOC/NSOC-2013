@@ -39,7 +39,7 @@ public class testRoomResearch extends AbstractComponentType {
 
         JSONObject a = null;
         try {
-            a = new JSONObject(getPortByName("testRoomResearch", IRoomEquipmentResearch.class).roomAvailable(startTime.toString(), endTime.toString(), equipment.toString()));
+            a = new JSONObject(getPortByName("testRoomResearch", IRoomEquipmentResearch.class).roomAvailable(startTime.getTime(), endTime.getTime(), equipment.toString()));
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

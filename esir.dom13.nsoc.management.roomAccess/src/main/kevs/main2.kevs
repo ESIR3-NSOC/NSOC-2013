@@ -1,0 +1,100 @@
+ {
+addRepo "http://148.60.11.209:8080/archiva/repository/snapshots/"
+addRepo "http://maven.kevoree.org/release"
+addRepo "http://repo.maven.apache.org/maven2"
+addRepo "https://oss.sonatype.org/content/groups/public/"
+addRepo "http://repository.jetbrains.com/all"
+addRepo "https://oss.sonatype.org/content/repositories/snapshots"
+addRepo "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+addRepo "http://maven.kevoree.org/snapshots"
+addRepo "http://148.60.11.209:8080/archiva/repository/internal/"
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.serverWeb/1.0-SNAPSHOT'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.management.email/1.0-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.led/1.0-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.fakeDomo/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.management.roomAccess/1.0-SNAPSHOT'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.idBadge/1.0-SNAPSHOT'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.management.conflict/1.0-SNAPSHOT'
+addNode node0:JavaSENode
+updateDictionary node0{logLevel="DEBUG",coreLogLevel="DEBUG"}
+ {
+  addComponent Managemen442@node0 : ManagementConflict {}
+  addComponent LedRoomJO447@node0 : LedRoomJOB {Batiment='B5',Salle='Salle 925'}
+  addComponent SendEmail79@node0 : SendEmail {SMTP_HOST_PORT='465',SMTP_HOST_NAME='smtp.gmail.com',SMTP_AUTH_PWD='esir2013',SMTP_AUTH_USER='projet.nsoc2013@gmail.com'}
+  addComponent DatabaseP19@node0 : DatabasePeopleBIS {PASS='ydr2013.',USER='user',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://148.60.11.209/projetnsoc'}
+  addComponent RoomAcces205@node0 : RoomAccess {Batiment='B5',Salle='Salle 925'}
+  addComponent FakeConso802@node0 : FakeConsole {}
+  addComponent DatabaseB323@node0 : DatabaseBuildingsBIS {PASS='ydr2013.',USER='user',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://148.60.11.209/projetnsoc'}
+  addComponent RoomEquip155@node0 : RoomEquipmentResearch {id_mail='projet.nsoc2013@gmail.com',PASS='ydr2013.',password='esir2013',USER='user',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://148.60.11.209/projetnsoc'}
+  addComponent Research121@node0 : Research {id_mail='projet.nsoc2013@gmail.com',password='esir2013'}
+  addComponent ServerWeb463@node0 : ServerWeb {port='8888'}
+  addComponent FakeRFID@node0 : FakeConsole {singleFrame='true'}
+  addComponent Identific144@node0 : Identification {portCOM_MACOS='/dev/tty.usbserial-A9007UX1',portCOM_Windows='COM7',portCOM_Linux='/dev/ttyUSB0',data_rate='57600'}
+  addComponent DatabaseH544@node0 : DatabaseHistoryBIS {PASS='ydr2013.',USER='user',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://148.60.11.209/projetnsoc'}
+addChannel defSERVIC62 : defSERVICE {}
+addChannel defSERVIC415 : defSERVICE {}
+addChannel defMSG140 : defMSG {}
+addChannel defMSG251 : defMSG {}
+addChannel defMSG184 : defMSG {}
+addChannel defMSG643 : defMSG {}
+addChannel defSERVIC365 : defSERVICE {}
+addChannel defSERVIC861 : defSERVICE {}
+addChannel defSERVIC340 : defSERVICE {}
+addChannel defMSG26 : defMSG {}
+bind ServerWeb463.fakeConsole@node0 => defMSG643
+bind Managemen442.conflict@node0 => defSERVIC861
+bind RoomAcces205.openGache@node0 => defMSG184
+bind LedRoomJO447.Occupation@node0 => defSERVIC861
+bind Managemen442.SendMail@node0 => defMSG251
+bind LedRoomJO447.lightOccupation@node0 => defMSG140
+bind ServerWeb463.roomAvailable@node0 => defSERVIC62
+bind RoomAcces205.databaseHistory@node0 => defSERVIC340
+bind FakeConso802.showText@node0 => defMSG643
+bind RoomAcces205.getRFID@node0 => defMSG26
+bind Research121.id_Room@node0 => defSERVIC415
+bind Identific144.openGache@node0 => defMSG184
+bind Managemen442.emailAddress@node0 => defSERVIC365
+bind DatabaseH544.putEntry@node0 => defSERVIC340
+bind Identific144.sendID@node0 => defMSG26
+bind SendEmail79.sendMail@node0 => defMSG251
+bind RoomEquip155.room_Available@node0 => defSERVIC62
+bind RoomAcces205.authorization@node0 => defSERVIC861
+bind Identific144.lightOccupation@node0 => defMSG140
+bind ServerWeb463.bookingRoom@node0 => defSERVIC861
+bind RoomAcces205.speciality@node0 => defSERVIC365
+bind FakeRFID.textEntered@node0 => defMSG26
+bind DatabaseB323.getUrlCalendar@node0 => defSERVIC415
+bind DatabaseP19.getCursus@node0 => defSERVIC365
+bind Research121.Authorization@node0 => defSERVIC861
+updateDictionary ServerWeb463@node0 
+updateDictionary SendEmail79@node0 
+updateDictionary DatabaseH544@node0 
+updateDictionary DatabaseB323@node0 
+updateDictionary RoomAcces205@node0 
+updateDictionary RoomEquip155@node0 
+updateDictionary FakeRFID@node0 
+updateDictionary Identific144@node0 
+updateDictionary DatabaseP19@node0 
+updateDictionary defSERVIC861 
+updateDictionary Research121@node0 
+updateDictionary defSERVIC340 
+updateDictionary defMSG643 
+updateDictionary defSERVIC62 
+updateDictionary defMSG140 
+updateDictionary LedRoomJO447@node0 
+updateDictionary defSERVIC365 
+updateDictionary defMSG184 
+updateDictionary Managemen442@node0 
+updateDictionary defMSG26 
+updateDictionary defMSG251 
+updateDictionary FakeConso802@node0 
+updateDictionary defSERVIC415 
+}
+
+addGroup sync:BasicGroup
+addToGroup sync node0
+}

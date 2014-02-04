@@ -20,4 +20,6 @@ public interface IResearch {
     public boolean isOccupated(String batiment, String salle);
     String ManagementConflict();
 
+    void bookingRoom(Long start, Long end, String salle, String batiment, String id_people);
+
 }

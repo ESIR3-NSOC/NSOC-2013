@@ -4,9 +4,11 @@ package esir.dom13.nsoc.googleCalendar.research;
 import com.google.gdata.client.calendar.CalendarQuery;
 import com.google.gdata.client.calendar.CalendarService;
 import com.google.gdata.data.DateTime;
+import com.google.gdata.data.PlainTextConstruct;
 import com.google.gdata.data.calendar.CalendarEventEntry;
 import com.google.gdata.data.calendar.CalendarEventFeed;
 import com.google.gdata.data.extensions.When;
+import com.google.gdata.data.extensions.Where;
 import com.google.gdata.util.AuthenticationException;
 import com.google.gdata.util.ServiceException;
 import esir.dom13.nsoc.databaseBuildings.IDatabaseBuildings;
@@ -232,7 +234,7 @@ public class Research extends AbstractComponentType implements IResearch {
     public String ManagementConflict() {
         Log.debug("Beginning isAuthorized");
         JSONArray jsonArray = new JSONArray();
-        String urlRoom = "https://www.google.com/calendar/feeds/" + "projet.nsoc2013@gmail.com" + "/private/full";
+        String urlRoom = "https://www.google.com/calendar/feeds/" + "9u96e3jug29acreg69kc80c00s@group.calendar.google.com" + "/private/full";
         URL feedUrl = null;
         CalendarService service = new CalendarService("NSOC-2013");
         try {
@@ -312,6 +314,46 @@ public class Research extends AbstractComponentType implements IResearch {
         return jsonArray.toString();
     }
 
+    @Port(name = "Authorization", method = "bookingRoom")
+    @Override
+    public void bookingRoom(Long start, Long end, String salle, String batiment, String id_people) {
+        URL postUrl = null;
+        CalendarService myService;
+        try {
+            postUrl = new URL("https://www.google.com/calendar/feeds/"+ "9u96e3jug29acreg69kc80c00s@group.calendar.google.com"+"/private/full");
+            myService = new CalendarService("Calendar ADE");
+            myService.setUserCredentials(getDictionary().get("id_mail").toString(), getDictionary().get("password").toString());
+
+
+        CalendarEventEntry myEntry = new CalendarEventEntry();
+
+        myEntry.setTitle(new PlainTextConstruct(id_people));
+        myEntry.setContent(new PlainTextConstruct("Réservation de la salle de "+id_people));
+
+        When eventTimes = new When();
+        eventTimes.setStartTime(new DateTime(new Date(start+3600000)));
+        eventTimes.setEndTime(new DateTime(new Date(end+3600000)));
+        myEntry.addTime(eventTimes);
+
+        Where location = new Where();
+        location.setValueString(batiment+"/"+salle);
+        myEntry.addLocation(location);
+
+        // Send the request and receive the response:
+        CalendarEventEntry insertedEntry = myService.insert(postUrl, myEntry);
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     private boolean conflict(String batiment, String salle, Date dateBegin, Date dateEnd) {
 
@@ -365,4 +407,6 @@ public class Research extends AbstractComponentType implements IResearch {
 
    //TODO Gestion authorization avec notre calendar
    //TODO gestion occupation avec notre calendar
+
+
 }

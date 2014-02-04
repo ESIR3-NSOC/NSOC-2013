@@ -61,7 +61,7 @@ public class RoomAccess extends AbstractComponentType {
 
     @Port(name = "getRFID")
     public void getRFID(Object id_rfid) {
-
+        if(id_rfid.toString().length()<2){return;}
         String cursus = getPortByName("speciality", IDatabasePeople.class).getCursus(id_rfid.toString());
         Log.debug("RoomAccess ::: rfid=\"" + id_rfid + "\"  cursus=\"" + cursus + "\"");
 
