@@ -1,3 +1,5 @@
+package esir.dom13.nsoc.adminDatabaseOption;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Yvan

@@ -1,3 +1,5 @@
+package esir.dom13.nsoc.adminDatabaseBuilding;
+
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
 import org.kevoree.annotation.*;

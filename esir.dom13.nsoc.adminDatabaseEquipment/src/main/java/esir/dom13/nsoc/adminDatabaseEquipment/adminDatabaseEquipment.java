@@ -1,3 +1,5 @@
+package esir.dom13.nsoc.adminDatabaseEquipment;
+
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
 import org.kevoree.annotation.*;
@@ -5,13 +7,14 @@ import org.kevoree.framework.AbstractComponentType;
 
 /**
  * Created with IntelliJ IDEA.
- * User: Yvan
- * Date: 04/02/14
- * Time: 18:25
+ * User: Renaud
+ * Date: 27/01/14
+ * Time: 22:08
  * To change this template use File | Settings | File Templates.
  */
+
 @Provides({
-        @ProvidedPort(name = "setDatabasePromo", type = PortType.SERVICE, className = IadminDatabasePromo.class)
+        @ProvidedPort(name = "setDatabaseEquipment", type = PortType.SERVICE, className = IadminDatabaseEquipment.class)
 })
 
 @Requires({
@@ -19,7 +22,7 @@ import org.kevoree.framework.AbstractComponentType;
 })
 
 @ComponentType
-public class adminDatabasePromo extends AbstractComponentType implements IadminDatabasePromo {
+public class adminDatabaseEquipment extends AbstractComponentType implements IadminDatabaseEquipment {
 
     @Start
     public void start() {
@@ -39,20 +42,20 @@ public class adminDatabasePromo extends AbstractComponentType implements IadminD
 
     }
 
-    @Port(name = "setDatabasePromo", method = "addPromo")
+    @Port(name = "setDatabaseEquipment", method = "addEquipment")
     @Override
-    public void addPromo(String namePromo) {
+    public void addEquipment(String nameEquipment) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "INSERT INTO `IDatabasePromo` (`promo`) VALUES ('" +  namePromo + "')";
+        String sql = "INSERT INTO `idatabaseequipment` (`nameEquipment`) VALUES ('" +  nameEquipment + "')";
         CachedRowSetImpl rs = null;
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
 
-    @Port(name = "setDatabasePromo", method = "deletePromo")
+    @Port(name = "setDatabaseEquipment", method = "deleteEquipment")
     @Override
-    public void deletePromo(String namePromo) {
+    public void deleteEquipment(String nameEquipment) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "DELETE FROM `IDatabasePromo` WHERE promo = '"+ namePromo + "')";
+        String sql = "DELETE FROM `idatabaseequipment` WHERE nameEquipment = '"+ nameEquipment + "')";
         CachedRowSetImpl rs = null;
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }

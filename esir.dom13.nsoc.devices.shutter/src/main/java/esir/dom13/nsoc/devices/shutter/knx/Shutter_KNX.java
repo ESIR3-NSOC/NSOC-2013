@@ -54,7 +54,7 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
     @Override
     public void setUp() {
         boolean value = false;
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address, value);
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeKNXBoolean(address, value);
         Log.info("Shutter "+address +" set up");
     }
 
@@ -62,7 +62,7 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
     @Override
     public void setDown() {
         boolean value = true;
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address, value);
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeKNXBoolean(address, value);
         Log.info("Shutter "+address +" set down");
     }
 
@@ -88,7 +88,7 @@ public class Shutter_KNX extends AbstractComponentType implements IManagementShu
     @Port(name = "CommandShutter", method = "getShutterState")
     @Override
     public int getShutterState() {
-        boolean value = getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);
+        boolean value = getPortByName("Com_KNX",ICommunicationKNX.class).readKNXBoolean(address);
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

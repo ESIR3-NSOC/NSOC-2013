@@ -20,8 +20,8 @@
     <modules>
        <!-- <module>esir.dom13.nsoc.arduino</module>      -->
         <module>esir.dom13.nsoc.javase</module>
-        <module>esir.dom13.nsoc.adminDatabaseOption</module>
-        <module>esir.dom13.nsoc.adminDatabasePromo</module>
+        <module>esir.dom13.nsoc.esir.dom13.nsoc.adminDatabaseOption.adminDatabaseOption</module>
+        <module>esir.dom13.nsoc.esir.dom13.nsoc.adminDatabasePromo.adminDatabasePromo</module>
     </modules>
 
 

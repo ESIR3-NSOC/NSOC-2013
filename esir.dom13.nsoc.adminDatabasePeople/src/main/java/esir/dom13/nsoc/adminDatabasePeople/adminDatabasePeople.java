@@ -1,3 +1,5 @@
+package esir.dom13.nsoc.adminDatabasePeople;
+
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
 import org.kevoree.annotation.*;
@@ -20,7 +22,7 @@ import org.kevoree.framework.AbstractComponentType;
 })
 
 @ComponentType
-public class adminDatabasePeople extends AbstractComponentType   implements IadminDatabasePeople{
+public class adminDatabasePeople extends AbstractComponentType   implements IadminDatabasePeople {
 
     @Start
     public void start() {

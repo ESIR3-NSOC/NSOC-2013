@@ -1,3 +1,5 @@
+package esir.dom13.nsoc.adminDatabaseEquipment;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Renaud
