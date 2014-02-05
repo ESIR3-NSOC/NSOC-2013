@@ -21,7 +21,7 @@ import java.util.Date;
  */
 
 @Requires({
-        @RequiredPort(name = "testRoomResearch", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
+        @RequiredPort(name = "room_Available", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
 })
 
 public class testRoomResearch extends AbstractComponentType {
