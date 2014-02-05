@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:bootstrapbutton="http://schemas.android.com/apk/res-auto"
+                xmlns:fontawesometext="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+        >
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:id="@+id/relative_header"
+            android:background="#333333">
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            >
+
+        <com.beardedhen.androidbootstrap.FontAwesomeText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fontawesometext:fa_icon="fa-hand-o-right"
+                android:textSize="25sp"
+                android:textColor="#ecf0f1"
+                android:id="@+id/logo_header_right"
+                />
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Gestion de la salle"
+                android:id="@+id/title_header"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:textColor="#ecf0f1"
+                android:textSize="20sp"
+                android:layout_toRightOf="@id/logo_header_right"
+                />
+        <com.beardedhen.androidbootstrap.FontAwesomeText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                fontawesometext:fa_icon="fa-hand-o-left"
+                android:textSize="25sp"
+                android:layout_toRightOf="@id/title_header"
+                android:textColor="#ecf0f1"
+                android:id="@+id/logo1"
+                />
+
+
+    </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/relative_header"
+            android:layout_centerHorizontal="true">
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Scénario Entrée"
+                bootstrapbutton:bb_icon_left="fa-home"
+                bootstrapbutton:bb_type="success"
+                android:id="@+id/button_scenario_entree"
+                bootstrapbutton:bb_roundedCorners="true"
+                />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/button_scenario_sortie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Scénario Sortie"
+                bootstrapbutton:bb_icon_left="fa-power-off"
+                bootstrapbutton:bb_type="danger"
+                android:layout_below="@id/button_scenario_entree"
+                bootstrapbutton:bb_roundedCorners="true"
+                />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/button_volet_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/button_scenario_sortie"
+                android:text="Volet"
+                bootstrapbutton:bb_icon_left="fa-chevron-circle-up"
+                bootstrapbutton:bb_type="info"
+                bootstrapbutton:bb_roundedCorners="true"
+                />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/button_volet_down"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_scenario_sortie"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toRightOf="@id/button_volet_up"
+                android:text="Volet"
+                bootstrapbutton:bb_icon_left="fa-chevron-circle-down"
+                bootstrapbutton:bb_type="info"
+                bootstrapbutton:bb_roundedCorners="true"
+                />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/button_lampe_on"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_volet_up"
+                android:layout_margin="5dp"
+                android:text="On"
+                bootstrapbutton:bb_icon_left="fa-lightbulb-o"
+                bootstrapbutton:bb_type="info"
+                bootstrapbutton:bb_roundedCorners="true"
+                />
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+                android:id="@+id/button_lampe_off"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_below="@id/button_volet_up"
+                android:layout_toRightOf="@id/button_lampe_on"
+                android:text="Off"
+                bootstrapbutton:bb_icon_left="fa-lightbulb-o"
+                bootstrapbutton:bb_type="info"
+                bootstrapbutton:bb_roundedCorners="true"
+                />
+
+    </RelativeLayout>
+
+</RelativeLayout>
+

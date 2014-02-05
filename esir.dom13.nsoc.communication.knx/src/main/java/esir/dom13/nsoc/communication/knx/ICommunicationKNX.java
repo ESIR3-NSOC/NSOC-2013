@@ -9,13 +9,13 @@ package esir.dom13.nsoc.communication.knx;
  */
 public interface ICommunicationKNX {
 
-   void writeBoolean(String address, Boolean value);
+   void writeKNXBoolean(String address, Boolean value);
 
-   Boolean readBoolean(String address);
+   Boolean readKNXBoolean(String address);
 
-   public void writeFloat(String address, Float value);
+   public void writeKNXFloat(String address, Float value);
 
-   public Float readFloat(String address);
+   public Float readKNXFloat(String address);
 
 
 

@@ -64,8 +64,8 @@ public class CommunicationKNX extends AbstractComponentType implements ICommunic
 
 
     @Override
-    @Port(name = "ComKNX", method = "writeBoolean")
-    public void writeBoolean(String address, Boolean value) {
+    @Port(name = "ComKNX", method = "writeKNXBoolean")
+    public void writeKNXBoolean(String address, Boolean value) {
         try {
             connect();
             pc.write(new GroupAddress(address),value);
@@ -78,9 +78,9 @@ public class CommunicationKNX extends AbstractComponentType implements ICommunic
     }
 
 
-    @Port(name = "ComKNX", method = "readBoolean")
+    @Port(name = "ComKNX", method = "readKNXBoolean")
     @Override
-    public Boolean readBoolean(String address) {
+    public Boolean readKNXBoolean(String address) {
         boolean value = false;
         try {
             connect();
@@ -96,8 +96,8 @@ public class CommunicationKNX extends AbstractComponentType implements ICommunic
     }
 
     @Override
-    @Port(name = "ComKNX", method = "writeFloat")
-    public void writeFloat(String address, Float value) {
+    @Port(name = "ComKNX", method = "writeKNXFloat")
+    public void writeKNXFloat(String address, Float value) {
         try {
             connect();
             pc.write(new GroupAddress(address),value);
@@ -110,9 +110,9 @@ public class CommunicationKNX extends AbstractComponentType implements ICommunic
     }
 
 
-    @Port(name = "ComKNX", method = "readFloat")
+    @Port(name = "ComKNX", method = "readKNXFloat")
     @Override
-    public float readFloat(String address) {
+    public Float readKNXFloat(String address) {
         float value = 0;
         try {
             connect();

@@ -55,7 +55,7 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
     @Override
     public void turnOn() {
 
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,true);
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeKNXBoolean(address,true);
         Log.info("Lampe "+address +" allumé");
     }
 
@@ -63,7 +63,7 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
     @Override
     public void turnOff() {
 
-        getPortByName("Com_KNX",ICommunicationKNX.class).writeBoolean(address,false);
+        getPortByName("Com_KNX",ICommunicationKNX.class).writeKNXBoolean(address,false);
         Log.info("Lampe "+address +" etteinte");
     }
 
@@ -72,15 +72,15 @@ public class Light_KNX extends AbstractComponentType implements IManagementLight
     public void toggle() {
         Log.info("Start Toggle ");
 
-        boolean state = getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);
+        boolean state = getPortByName("Com_KNX",ICommunicationKNX.class).readKNXBoolean(address);
         Log.debug("state ::: "+state);
-        getPortByName("Com_KNX", ICommunicationKNX.class).writeBoolean(address,!state);
+        getPortByName("Com_KNX", ICommunicationKNX.class).writeKNXBoolean(address,!state);
         Log.info("Lampe "+address +" toggle");
     }
 
     @Port(name = "CommandLight", method = "getLightState")
     @Override
     public boolean getLightState() {
-        return getPortByName("Com_KNX",ICommunicationKNX.class).readBoolean(address);  //To change body of implemented methods use File | Settings | File Templates.
+        return getPortByName("Com_KNX",ICommunicationKNX.class).readKNXBoolean(address);  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

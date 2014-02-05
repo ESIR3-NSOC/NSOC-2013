@@ -15,7 +15,7 @@ import org.kevoree.log.Log;
  */
 @Library(name = "NSOC2013")
 @Provides({
-        @ProvidedPort(name = "StartScenario", type = PortType.MESSAGE)
+        @ProvidedPort(name = "scenarii", type = PortType.SERVICE, className = IScenarii.class),
 })
 @Requires({
         @RequiredPort(name = "CommandShutter", type = PortType.SERVICE, className = IManagementShutter.class),
@@ -23,7 +23,7 @@ import org.kevoree.log.Log;
 })
 
 @ComponentType
-public class GetIn_Room extends AbstractComponentType {
+public class GetIn_Room extends AbstractComponentType implements IScenarii {
 
     @Start
     public void start() {
@@ -42,15 +42,17 @@ public class GetIn_Room extends AbstractComponentType {
 
     }
 
-    @Port(name="StartScenario")
-    public void startScenario(Object object){
-        Log.debug(object.toString());
-
-            String message = object.toString();
-
-                getPortByName("CommandLight", IManagementLight.class).turnOn();
-                getPortByName("CommandShutter", IManagementShutter.class).setUp();
-
+    @Port(name="scenarii",method = "scenarii_entree")
+    @Override
+    public void scenarii_entree() {
+        getPortByName("CommandLight", IManagementLight.class).turnOn();
+        getPortByName("CommandShutter", IManagementShutter.class).setUp();
     }
 
+    @Port(name="scenarii",method = "scenarii_sortie")
+    @Override
+    public void scenarii_sortie() {
+        getPortByName("CommandLight", IManagementLight.class).turnOff();
+        getPortByName("CommandShutter", IManagementShutter.class).setDown();
+    }
 }
