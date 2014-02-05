@@ -68,6 +68,7 @@ public class Research extends AbstractComponentType implements IResearch {
 
     @Port(name = "Authorization", method = "isAuthorized")
     @Override
+    //Example : isAuthorized("B5", "Salle 929", "[ESIR3, DOM, DOM-NSH, "12002998"]")
     public String isAuthorized(String batiment, String salle, String cursus) {
         Log.debug("Beginning isAuthorized");
         JSONArray cursusArray = null;
@@ -80,10 +81,12 @@ public class Research extends AbstractComponentType implements IResearch {
         String promo = null;
         String speciality = null;
         String option = null;
+        String id = null;
         try {
             promo = cursusArray.getString(0);
             speciality = cursusArray.getString(1);
             option = cursusArray.getString(2);
+            id = cursusArray.getString(3);
         } catch (JSONException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
@@ -122,7 +125,7 @@ public class Research extends AbstractComponentType implements IResearch {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         if (myResultsFeed.getEntries().size() > 0) {
-            Log.debug("SIZE : " + myResultsFeed.getEntries().size());
+            System.out.println("SIZE : " + myResultsFeed.getEntries().size());
             for (int i = 0; i < myResultsFeed.getEntries().size(); i++) {
                 CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
                         myResultsFeed.getEntries().get(i);
@@ -130,30 +133,32 @@ public class Research extends AbstractComponentType implements IResearch {
                 String myEntryTitle = firstMatchEntry.getTitle().getPlainText();
                 String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
                 String myEntryContent = firstMatchEntry.getPlainTextContent();
-                Log.debug("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
+                System.out.println("\n\nTitle: " + myEntryTitle + "\nWhere: " + myEntryWhere + "\nDescription: " + myEntryContent);
                 if (myEntryWhere.contains(salle) && myEntryWhere.contains(batiment)) {
-                    Log.debug("GOOGLE_CALENDAR ::: myEntryWhere.contains(salle)");
-                    if (myEntryContent.contains(promo)) {
-                        Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(promo)");
-                        if (myEntryContent.contains(speciality)) {
-                            Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(speciality)");
-                            Log.debug("AUTHORISED");
+                    System.out.println("GOOGLE_CALENDAR ::: myEntryWhere.contains(salle)");
+                    if (myEntryContent.contains(promo) && promo!="") {
+                        System.out.println("GOOGLE_CALENDAR ::: myEntryContent.contains(promo)");
+                        if (myEntryContent.contains(speciality) && speciality!="") {
+                            System.out.println("GOOGLE_CALENDAR ::: myEntryContent.contains(speciality)");
+                            System.out.println("AUTHORISED");
                             String[] content = myEntryContent.split("\n");
                             teacher = content[content.length - 2];
                             lesson = myEntryTitle;
-                            isAutho = true;
+                            //isAutho = true;
 
-
-                        } else {
-                            if (myEntryContent.contains(option)) {
-                                Log.debug("GOOGLE_CALENDAR ::: myEntryContent.contains(option)");
-                                Log.debug("AUTHORISED");
-                                String[] content = myEntryContent.split("\n");
-                                teacher = content[content.length - 2];
+                            if (myEntryContent.contains(option) && option!="") {
+                                System.out.println("GOOGLE_CALENDAR ::: myEntryContent.contains(option)");
+                                System.out.println("AUTHORISED");
+                                String[] content1 = myEntryContent.split("\n");
+                                teacher = content1[content1.length - 2];
                                 lesson = myEntryTitle;
                                 isAutho = true;
-
+                            }else{
+                                isAutho = false;
                             }
+
+                        } else {
+                            isAutho = false;
                         }
                     } else {
                         System.out.println("NOT AUTHORISED");
@@ -165,6 +170,56 @@ public class Research extends AbstractComponentType implements IResearch {
         } else {
             isAutho = false;
         }
+
+        //Test Calendrier des réservations
+
+        String urlCalendrierReservations = "https://www.google.com/calendar/feeds/9u96e3jug29acreg69kc80c00s@group.calendar.google.com/private/full";
+        URL feedUrlCalendrierReservations = null;
+
+        try {
+            feedUrlCalendrierReservations = new URL(urlCalendrierReservations);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        CalendarQuery myQuery2 = new CalendarQuery(feedUrlCalendrierReservations);
+        myQuery2.setMinimumStartTime(time);
+        myQuery2.setMaximumStartTime(end);
+
+        CalendarEventFeed myResultsFeed2 = null;
+
+        try {
+            myResultsFeed2 = service.query(myQuery2, CalendarEventFeed.class);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (ServiceException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        if (myResultsFeed2.getEntries().size() > 0) {
+            System.out.println("SIZE : " + myResultsFeed2.getEntries().size());
+            for (int i = 0; i < myResultsFeed2.getEntries().size(); i++) {
+                CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
+                        myResultsFeed2.getEntries().get(i);
+
+                String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
+                String myEntryContent = firstMatchEntry.getPlainTextContent();
+
+                if (myEntryWhere.contains(salle) && myEntryWhere.contains(batiment)) {
+                    System.out.println("GOOGLE_CALENDAR ::: myEntryWhere.contains(salle)");
+                    if (myEntryContent.contains(id)) {
+                        System.out.println("GOOGLE_CALENDAR ::: myEntryContent.contains(id)");
+                        isAutho = true;
+                    }else{
+                        isAutho = false;
+                    }
+                }
+            }
+        }
+
+        //Fin Test Calendrier des réservations
+
+        // Mise en forme du résultat
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("isAutho", isAutho);
