@@ -27,7 +27,7 @@ import java.sql.*;
 })
 
 @ComponentType
-public class DatabaseConnection extends AbstractComponentType implements IDatabaseConnection {
+public class xDatabaseConnection extends AbstractComponentType implements IDatabaseConnection {
 
     // JDBC driver name and database URL
     private String JDBC_DRIVER, DB_URL;
