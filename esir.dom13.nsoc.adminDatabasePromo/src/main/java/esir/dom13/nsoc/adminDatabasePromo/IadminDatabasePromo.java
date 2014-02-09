@@ -10,4 +10,5 @@ package esir.dom13.nsoc.adminDatabasePromo;
 public interface IadminDatabasePromo {
     public void addPromo(String namePromo);
     public void deletePromo(String namePromo);
+    public String getPromo();
 }

@@ -2,8 +2,11 @@ package esir.dom13.nsoc.adminDatabaseBuilding;
 
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
+import org.json.JSONArray;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+
+import java.sql.SQLException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -79,4 +82,27 @@ public class adminDatabaseBuilding extends AbstractComponentType implements Iadm
         CachedRowSetImpl rs = null;
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
+
+    @Port(name = "setDatabaseBuilding", method = "getName")
+    @Override
+    public String getName(){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT `nameBuilding` FROM `idatabasebuilding`";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            while (rs.next()){
+                value = rs.getString("nameBuilding");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                tableau.put(value);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
+    }
+
 }

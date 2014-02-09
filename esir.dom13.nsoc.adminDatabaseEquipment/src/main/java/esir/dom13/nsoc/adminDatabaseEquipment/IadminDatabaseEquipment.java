@@ -12,4 +12,5 @@ public interface IadminDatabaseEquipment {
 
     public void addEquipment(String nameEquipment);
     public void deleteEquipment(String nameEquipment);
+    public String getNameEquipment();
     }

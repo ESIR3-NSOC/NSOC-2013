@@ -49,5 +49,30 @@
             <artifactId>esir.dom13.nsoc.adminDatabaseEquipment</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.adminDatabasePeople</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.adminDatabaseBuilding</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.adminDatabaseOption</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.adminDatabasePromo</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>esir.dom13.nsoc</groupId>
+            <artifactId>esir.dom13.nsoc.adminDatabaseRoom</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 </project>

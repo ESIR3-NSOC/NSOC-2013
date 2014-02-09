@@ -2,8 +2,11 @@ package esir.dom13.nsoc.adminDatabaseEquipment;
 
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
+import org.json.JSONArray;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+
+import java.sql.SQLException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -58,5 +61,27 @@ public class adminDatabaseEquipment extends AbstractComponentType implements Iad
         String sql = "DELETE FROM `idatabaseequipment` WHERE nameEquipment = '"+ nameEquipment + "')";
         CachedRowSetImpl rs = null;
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+    }
+
+    @Port(name = "setDatabaseEquipment", method = "getNameEquipment")
+    @Override
+    public String getNameEquipment(){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT `nameEquipment` FROM `idatabaseequipment`";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            while (rs.next()){
+               value = rs.getString("nameEquipment");
+               tableau.put(value);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
     }
 }

@@ -38,6 +38,8 @@
         <module>../esir.dom13.nsoc.adminDatabaseBuilding</module>
         <module>../esir.dom13.nsoc.adminDatabaseRoom</module>
         <module>../esir.dom13.nsoc.adminDatabaseEquipment</module>
+        <module>../esir.dom13.nsoc.adminDatabaseOption</module>
+        <module>../esir.dom13.nsoc.adminDatabasePromo</module>
     </modules>
 
     <dependencies>

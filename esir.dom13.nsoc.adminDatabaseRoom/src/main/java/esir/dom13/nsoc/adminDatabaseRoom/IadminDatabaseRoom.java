@@ -10,7 +10,8 @@ package esir.dom13.nsoc.adminDatabaseRoom;
 public interface IadminDatabaseRoom {
 
     public void addRoom(String nameRoom, String id_building, String nameEquipment);
-    public void deleteRoom(String nameRoom);
+    public void deleteRoom(String nameRoom, String nameBuilding);
     public void setId_building(String nameRoom, String id_building);
-    public void setNameEquipment(String nameRoom, String nameEquipment);
+    public void setNameEquipment(String nameBuilding, String nameRoom, String nameEquipment);
+    public String getName(String nameBuilding);
 }

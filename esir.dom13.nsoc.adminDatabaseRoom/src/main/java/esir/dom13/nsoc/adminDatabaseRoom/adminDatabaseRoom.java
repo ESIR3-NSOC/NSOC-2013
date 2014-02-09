@@ -2,8 +2,11 @@ package esir.dom13.nsoc.adminDatabaseRoom;
 
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
+import org.json.JSONArray;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
+
+import java.sql.SQLException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,9 +57,9 @@ public class adminDatabaseRoom extends AbstractComponentType implements IadminDa
 
     @Port(name = "setDatabaseRoom", method = "deleteRoom")
     @Override
-    public void deleteRoom(String nameRoom) {
+    public void deleteRoom(String nameRoom, String nameBuilding) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "DELETE FROM `idatabaseroom` WHERE nameRoom = '"+ nameRoom + "')";
+        String sql = "DELETE FROM `idatabaseroom` WHERE nameRoom = '"+ nameRoom + "' AND nameBuilding = '" + nameBuilding +"')";
         CachedRowSetImpl rs = null;
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
@@ -75,11 +78,33 @@ public class adminDatabaseRoom extends AbstractComponentType implements IadminDa
 
     @Port(name = "setDatabaseRoom", method = "setNameEquipment")
     @Override
-    public void setNameEquipment(String nameRoom, String nameEquipment) {
+    public void setNameEquipment(String nameBuilding, String nameRoom, String nameEquipment) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "UPDATE `idatabaseroom` SET `nameEquipment` = '" + nameEquipment +"' WHERE nameRoom = '" + nameRoom + "'";
+    String sql = "UPDATE `idatabaseroom` SET `nameEquipment` = '" + nameEquipment +"' WHERE nameRoom = '" + nameRoom + "' AND nameBuilding = '" + nameBuilding + "'";
         //peut etre pas de guillemmet pour la valeur de remplacement
         CachedRowSetImpl rs = null;
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+    }
+
+    @Port(name = "setDatabaseRoom", method = "getName")
+    @Override
+    public String getName(String nameBuilding){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT `nameRoom` FROM `idatabaseroom` WHERE nameBuilding = '" + nameBuilding + "'";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            while (rs.next()){
+                value = rs.getString("nameRoom");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                tableau.put(value);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
     }
 }
