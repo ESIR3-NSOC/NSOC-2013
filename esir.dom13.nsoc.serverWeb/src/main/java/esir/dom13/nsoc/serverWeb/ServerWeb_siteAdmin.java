@@ -763,6 +763,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                 JSONArray JSONnom = new JSONArray(nomBatiment);
                 JSONObject reponse = new JSONObject();
+                reponse.put("type", "pasFait");
                 reponse.put("batiment", JSONnom);
                 connection.send(reponse.toString());
             }
@@ -773,6 +774,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String buildingValue  =  getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getBuilding(nameBuilding);
                 JSONArray building = new JSONArray(buildingValue);
                 JSONObject reponse = new JSONObject();
+                reponse.put("type", "fait");
                 reponse.put("valeur", building);
                 connection.send(reponse.toString());
             }
@@ -929,7 +931,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 connection.send(reponse.toString());
             }
         }
-        else if(pageWeb.equals("enseignant")){
+        else if(pageWeb.equals("historique")){
 
             String appelHistorique = jsonObject.getString("appelHistorique");
 
