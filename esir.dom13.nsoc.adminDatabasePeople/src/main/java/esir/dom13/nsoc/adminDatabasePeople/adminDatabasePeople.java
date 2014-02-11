@@ -46,7 +46,7 @@ public class adminDatabasePeople extends AbstractComponentType   implements Iadm
     }
 
     @Port(name = "setDatabasePeople",method = "addPeople")
-
+    @Override
     public void addPeople(String surname,String firstname, String id_people, String id_rfid,String promo, String options, String specialite, String emailAddress, String statut, String administrator)  {
         String sql = "INSERT INTO `idatabasepeople` (`id_people`, `id_rfid`, `firstname`, `surname`, `promo`, `options`, `specialite`, `emailAddress`, `statut`, `administrator`)" +
                 " VALUES ('" +  id_people + "', '" + id_rfid + "', '" + firstname + "', '" + surname + "', '" + promo + "', '" + options + "', '" + specialite + "', '" + emailAddress + "', '" + statut + "', '" + administrator + "')";
@@ -179,7 +179,7 @@ public class adminDatabasePeople extends AbstractComponentType   implements Iadm
         return tableau.toString();
     }
 
-    @Port(name = "setDatabasePeople", method = "getFirstname")
+    @Port(name = "setDatabasePeople", method = "getPeople")
     @Override
     public String getPeople(String nom , String prenom){
 

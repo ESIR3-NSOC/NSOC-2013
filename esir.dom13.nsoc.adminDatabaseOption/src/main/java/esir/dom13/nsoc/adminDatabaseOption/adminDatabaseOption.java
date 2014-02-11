@@ -44,8 +44,7 @@ public class adminDatabaseOption extends AbstractComponentType implements Iadmin
 
     }
 
-    @Port(name = "setDatabaseOption",method = "addOption")
-
+    @Port(name = "setDatabaseOption",method = "addSpecialite")
     public void addSpecialite(String option, String specialite)  {
         String sql = "INSERT INTO `idatabaseoption` (`options`, `specialite`)" +
                 " VALUES ('" +  option + "', '" + specialite + "')";
@@ -53,6 +52,7 @@ public class adminDatabaseOption extends AbstractComponentType implements Iadmin
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
 
+    @Port(name = "setDatabaseOption",method = "addOption")
     public void addOption(String option)  {
 
         String specialite = "";

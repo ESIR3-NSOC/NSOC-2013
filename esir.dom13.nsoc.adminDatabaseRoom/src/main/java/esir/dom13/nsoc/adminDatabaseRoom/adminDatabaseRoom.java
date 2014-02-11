@@ -108,7 +108,7 @@ public class adminDatabaseRoom extends AbstractComponentType implements IadminDa
         return tableau.toString();
     }
 
-    @Port(name = "setDatabaseBuilding", method = "getBuilding")
+    @Port(name = "setDatabaseRoom", method = "getSalle")
     @Override
     public String getSalle(String nameBuilding, String nameSalle){
 

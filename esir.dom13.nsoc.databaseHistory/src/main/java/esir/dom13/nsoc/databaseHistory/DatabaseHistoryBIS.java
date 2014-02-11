@@ -2,6 +2,7 @@ package esir.dom13.nsoc.databaseHistory;
 
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
+import org.json.JSONArray;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.log.Log;
@@ -116,6 +117,13 @@ public class DatabaseHistoryBIS extends AbstractComponentType implements IDataba
         }
 
         Log.debug("Put Enrty FIN");
+    }
+
+    @Port(name = "putEntry",method = "getHistory")
+    @Override
+    public String getHistory(String id_people) {
+
+        return null;
     }
 }
 

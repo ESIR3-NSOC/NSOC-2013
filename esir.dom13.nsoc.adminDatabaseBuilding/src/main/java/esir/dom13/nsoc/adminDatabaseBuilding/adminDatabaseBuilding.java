@@ -55,6 +55,7 @@ public class adminDatabaseBuilding extends AbstractComponentType implements Iadm
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
 
+    @Port(name = "setDatabaseBuilding", method = "deleteBuilding")
     @Override
     public void deleteBuilding(String nameBuilding) {
         //To change body of implemented methods use File | Settings | File Templates.
@@ -83,9 +84,9 @@ public class adminDatabaseBuilding extends AbstractComponentType implements Iadm
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
 
-    @Port(name = "setDatabaseBuilding", method = "getName")
+    @Port(name = "setDatabaseBuilding", method = "getNameBuilding")
     @Override
-    public String getName(){
+    public String getNameBuilding(){
 
         String value = null;
         JSONArray tableau = new JSONArray();

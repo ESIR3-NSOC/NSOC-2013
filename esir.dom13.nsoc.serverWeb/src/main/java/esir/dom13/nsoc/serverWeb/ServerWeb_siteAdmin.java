@@ -88,7 +88,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
     private void createWebServer() {
         port = Integer.parseInt(getDictionary().get("port").toString());
         webServer = WebServers.createWebServer(port);
-        webServer.add("/socket", this)
+        webServer.add("/admin", this)
                 .add(new StaticFileHandler("/web"));
     }
 
@@ -477,7 +477,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
         else if(pageWeb.equals("setBatiment")){
             if(type.equals("appelBdd")){
 
-                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                 JSONArray JSONnom = new JSONArray(nomBatiment);
                 JSONObject reponse = new JSONObject();
                 reponse.put("batiment", JSONnom);
@@ -506,7 +506,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
             if(type.equals("appelBdd")){
 
-                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                 JSONArray JSONnom = new JSONArray(nomBatiment);
                 JSONObject reponse = new JSONObject();
                 reponse.put("batiment", JSONnom);
@@ -525,7 +525,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
             if(type.equals("appelBdd")){
 
                 String nomEquipement = getPortByName("setDatabaseEquipment", IadminDatabaseEquipment.class).getNameEquipment();
-                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                 JSONArray JSONequipement = new JSONArray(nomEquipement);
                 JSONArray JSONbatiment = new JSONArray(nomBatiment);
                 JSONObject reponse = new JSONObject();
@@ -551,7 +551,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
                 if(salleParBatiment.equals("pasFait")){
 
-                    String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                    String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                     JSONArray JSONbatiment = new JSONArray(nameBatiment);
                     JSONObject reponse = new JSONObject();
                     reponse.put("batiment", JSONbatiment);
@@ -596,7 +596,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
                 if(salleParBatiment.equals("pasFait")){
 
-                    String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                    String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                     JSONArray JSONbatiment = new JSONArray(nameBatiment);
                     JSONObject reponse = new JSONObject();
                     reponse.put("batiment", JSONbatiment);
@@ -760,7 +760,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
             if(salleParBatiment.equals("pasFait")){
 
-                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                 JSONArray JSONnom = new JSONArray(nomBatiment);
                 JSONObject reponse = new JSONObject();
                 reponse.put("batiment", JSONnom);
@@ -784,7 +784,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
             if(salleParBatiment.equals("pasFait")){
 
-                        String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                        String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getNameBuilding();
                         JSONArray JSONbatiment = new JSONArray(nameBatiment);
                         JSONObject reponse = new JSONObject();
                         reponse.put("batiment", JSONbatiment);

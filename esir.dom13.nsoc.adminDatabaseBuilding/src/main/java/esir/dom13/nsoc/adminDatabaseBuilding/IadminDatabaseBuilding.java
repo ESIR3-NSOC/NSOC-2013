@@ -13,6 +13,6 @@ public interface IadminDatabaseBuilding {
     public void deleteBuilding(String nameBuilding) ;
     public void setId_building(String nameBuilding, String id_building) ;
     public void setNumberOfRoom(String nameBuilding, String numberOfRoom) ;
-    public String getName();
+    public String getNameBuilding();
     public String getBuilding(String nameBuilding);
 }
