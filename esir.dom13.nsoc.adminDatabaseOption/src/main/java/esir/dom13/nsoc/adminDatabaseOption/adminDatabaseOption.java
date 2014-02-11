@@ -15,6 +15,9 @@ import java.sql.SQLException;
  * Time: 17:26
  * To change this template use File | Settings | File Templates.
  */
+
+@Library(name = "NSOC2013")
+
 @Provides({
         @ProvidedPort(name = "setDatabaseOption", type = PortType.SERVICE, className = IadminDatabaseOption.class)
 })
