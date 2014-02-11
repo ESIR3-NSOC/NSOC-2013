@@ -280,6 +280,44 @@ public class Research extends AbstractComponentType implements IResearch {
             }
         }
 
+        //Vérification calendrier réservations
+        if(!isOccup){
+            String urlCalendrierReservations = "https://www.google.com/calendar/feeds/9u96e3jug29acreg69kc80c00s@group.calendar.google.com/private/full";
+            URL feedUrlCalendrierReservations = null;
+
+            try {
+                feedUrlCalendrierReservations = new URL(urlCalendrierReservations);
+            } catch (MalformedURLException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
+            CalendarQuery myQuery2 = new CalendarQuery(feedUrlCalendrierReservations);
+            myQuery2.setMinimumStartTime(time);
+            myQuery2.setMaximumStartTime(end);
+
+            CalendarEventFeed myResultsFeed2 = null;
+
+            try {
+                myResultsFeed2 = service.query(myQuery2, CalendarEventFeed.class);
+            } catch (IOException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            } catch (ServiceException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+
+            if (myResultsFeed2.getEntries().size() > 0) {
+                Log.debug("SIZE : " + myResultsFeed2.getEntries().size());
+                for (int i = 0; i < myResultsFeed2.getEntries().size(); i++) {
+                    CalendarEventEntry firstMatchEntry = (CalendarEventEntry)
+                            myResultsFeed2.getEntries().get(i);
+                    String myEntryWhere = firstMatchEntry.getLocations().get(0).getValueString();
+                    if (myEntryWhere.contains(salle)) {
+                        isOccup = true;
+                    }
+                }
+            }
+        }
+
 
         return isOccup;
     }
