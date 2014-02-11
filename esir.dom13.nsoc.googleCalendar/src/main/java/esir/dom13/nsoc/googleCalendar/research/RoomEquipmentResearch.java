@@ -29,7 +29,7 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 
-@Library(name = "NSOC2013")
+@Library(name = "NrsSOC2013")
 @Provides({
         @ProvidedPort(name = "room_Available", type = PortType.SERVICE, className = IRoomEquipmentResearch.class)
 })
