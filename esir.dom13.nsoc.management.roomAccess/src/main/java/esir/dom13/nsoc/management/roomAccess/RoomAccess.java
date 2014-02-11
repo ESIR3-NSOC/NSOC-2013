@@ -4,6 +4,7 @@ package esir.dom13.nsoc.management.roomAccess;
 import esir.dom13.nsoc.databaseHistory.IDatabaseHistory;
 import esir.dom13.nsoc.databasePeople.IDatabasePeople;
 import esir.dom13.nsoc.googleCalendar.research.IResearch;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.kevoree.annotation.*;
@@ -63,9 +64,18 @@ public class RoomAccess extends AbstractComponentType {
     public void getRFID(Object id_rfid) {
         if(id_rfid.toString().length()<2){return;}
         String cursus = getPortByName("speciality", IDatabasePeople.class).getCursus(id_rfid.toString());
+        String idPeople = getPortByName("speciality", IDatabasePeople.class).getIdPeople(id_rfid.toString());
+        JSONArray array = null;
+        try {
+            array = new JSONArray(cursus);
+            array.put(3,idPeople);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         Log.debug("RoomAccess ::: rfid=\"" + id_rfid + "\"  cursus=\"" + cursus + "\"");
 
-        String result_google = getPortByName("authorization", IResearch.class).isAuthorized(batiment, salle, cursus);
+        String result_google = getPortByName("authorization", IResearch.class).isAuthorized(batiment, salle, array.toString());
         Log.debug("RESULTAT isAuthorized :::    " + result_google);
         JSONObject jsonObject = null;
         boolean isAuthorized = false;
