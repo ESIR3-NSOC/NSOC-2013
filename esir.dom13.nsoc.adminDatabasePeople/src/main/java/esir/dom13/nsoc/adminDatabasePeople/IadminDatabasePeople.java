@@ -11,6 +11,7 @@ public interface IadminDatabasePeople {
     public void addPeople(String surname,String firstname, String id_people, String id_rfid,String promo, String options, String specialite, String emailAddress, String statut, String administrator);
     public void deletePeople(String firstname, String surname);
     public void setId_people(String id_people, String firstname, String surname);
+    public void setId_badge(String id_badge, String firstname, String surname);
     public void setPromo(String promo, String firstname, String surname) ;
     public void setOptions(String options, String firstname, String surname);
     public void setSpecialite(String specialite, String firstname, String surname);
@@ -18,4 +19,6 @@ public interface IadminDatabasePeople {
     public void setAdmin(String admin, String firstname, String surname);
     public String getFirstname(String statut);
     public String getSurname(String statut);
+    public String getID(String nom, String prenom);
+    public String getPeople(String nom , String prenom);
 }

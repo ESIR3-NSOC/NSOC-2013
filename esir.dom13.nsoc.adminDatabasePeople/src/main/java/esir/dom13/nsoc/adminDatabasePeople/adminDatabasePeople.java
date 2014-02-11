@@ -71,6 +71,13 @@ public class adminDatabasePeople extends AbstractComponentType   implements Iadm
         rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
     }
 
+    @Port(name = "setDatabasePeople",method = "setId_badge")
+    public void setId_badge(String id_badge, String firstname, String surname){
+        String sql = "UPDATE `idatabasepeople` SET `id_rfid` = '" + id_badge +"' WHERE firstname = '" + firstname +"' AND surname = '" + surname + "'";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+    }
+
     @Port(name = "setDatabasePeople",method = "setPromo")
     public void setPromo(String promo , String firstname, String surname){
         String sql = "UPDATE `idatabasepeople` SET `promo` = '" + promo +"' WHERE firstname = '" + firstname +"' AND surname = '" + surname + "'";
@@ -150,4 +157,60 @@ public class adminDatabasePeople extends AbstractComponentType   implements Iadm
         return tableau.toString();
     }
 
+    @Port(name = "setDatabasePeople", method = "getID")
+    @Override
+    public String getID(String nom, String prenom){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT `id_people` FROM `idatabasepeople` WHERE firstname = '" + prenom + "' AND surname = '"+nom+"'";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            while (rs.next()){
+                value = rs.getString("id_people");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                tableau.put(value);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
+    }
+
+    @Port(name = "setDatabasePeople", method = "getFirstname")
+    @Override
+    public String getPeople(String nom , String prenom){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT * FROM `idatabasepeople` WHERE firstname = '" + prenom + "' AND surname = '"+ nom +"'";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            while(rs.next()){
+            value = rs.getString("id_people");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            value = rs.getString("id_rfid");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            value = rs.getString("promo");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            value = rs.getString("options");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            value = rs.getString("specialite");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            value = rs.getString("emailAddress");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            value = rs.getString("administrator");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
+    }
 }

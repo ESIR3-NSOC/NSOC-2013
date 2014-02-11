@@ -107,4 +107,25 @@ public class adminDatabaseRoom extends AbstractComponentType implements IadminDa
 
         return tableau.toString();
     }
+
+    @Port(name = "setDatabaseBuilding", method = "getBuilding")
+    @Override
+    public String getSalle(String nameBuilding, String nameSalle){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT * FROM `idatabaseroom` WHERE nameRoom = '" + nameSalle + "' AND nameBuilding = '" + nameBuilding + "'";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            value = rs.getString("nameEquipment");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+            tableau.put(value);
+        }
+        catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
+    }
 }

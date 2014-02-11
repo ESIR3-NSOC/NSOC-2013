@@ -105,4 +105,28 @@ public class adminDatabaseBuilding extends AbstractComponentType implements Iadm
         return tableau.toString();
     }
 
+    @Port(name = "setDatabaseBuilding", method = "getBuilding")
+    @Override
+    public String getBuilding(String nameBuilding){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String sql = "SELECT * FROM `idatabasebuilding` WHERE nameBuilding = '" + nameBuilding + "'";
+        CachedRowSetImpl rs = null;
+        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+
+        try {
+            while(rs.next()){
+            value = rs.getString("id_building");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                tableau.put(value);
+                value = rs.getString("numberOfRoom");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                tableau.put(value);
+            }
+            }
+         catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
+    }
 }

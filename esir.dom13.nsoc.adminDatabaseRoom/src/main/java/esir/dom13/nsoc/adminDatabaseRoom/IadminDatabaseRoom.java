@@ -14,4 +14,5 @@ public interface IadminDatabaseRoom {
     public void setId_building(String nameRoom, String id_building);
     public void setNameEquipment(String nameBuilding, String nameRoom, String nameEquipment);
     public String getName(String nameBuilding);
+    public String getSalle(String nameBuilding,String nameSalle);
 }

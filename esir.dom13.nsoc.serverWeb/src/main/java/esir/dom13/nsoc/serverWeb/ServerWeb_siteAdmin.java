@@ -15,6 +15,7 @@ import esir.dom13.nsoc.adminDatabaseOption.IadminDatabaseOption;
 import esir.dom13.nsoc.adminDatabasePeople.IadminDatabasePeople;
 import esir.dom13.nsoc.adminDatabasePromo.IadminDatabasePromo;
 import esir.dom13.nsoc.adminDatabaseRoom.IadminDatabaseRoom;
+import esir.dom13.nsoc.databaseHistory.IDatabaseHistory;
 import esir.dom13.nsoc.handler.HandlerWebSocket;
 
 import org.json.JSONArray;
@@ -46,6 +47,7 @@ import org.webbitserver.handler.StaticFileHandler;
         @RequiredPort(name = "setDatabaseOption", type =PortType.SERVICE, className = IadminDatabaseOption.class),
         @RequiredPort(name = "setDatabasePromo", type =PortType.SERVICE, className = IadminDatabasePromo.class),
         @RequiredPort(name = "setDatabaseRoom", type =PortType.SERVICE, className = IadminDatabaseRoom.class),
+        @RequiredPort(name = "putEntry", type =PortType.SERVICE, className = IDatabaseHistory.class),
 })
 
 @DictionaryType({
@@ -169,15 +171,17 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
             if(type.equals("appelBdd")){
 
+                String optionChoisi = jsonObject.getString("optionChoisi");
 
+                if(optionChoisi.equals("pasFait")){
 
-                String nom = getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Etudiant");
-                String prenom = getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Etudiant");
+                    String nom = getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Etudiant");
+                    String prenom = getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Etudiant");
 
-                JSONArray JSONnom = new JSONArray(nom);
-                JSONArray JSONprenom = new JSONArray(prenom);
-                JSONArray tableau = new JSONArray();
-                JSONObject valeur = null;
+                    JSONArray JSONnom = new JSONArray(nom);
+                    JSONArray JSONprenom = new JSONArray(prenom);
+                    JSONArray tableau = new JSONArray();
+                    JSONObject valeur = null;
 
                     for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
                         valeur = new JSONObject();
@@ -185,10 +189,6 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                         valeur.put("prenom", JSONprenom.getString(i));
                         tableau.put(valeur);
                     }
-
-                String optionChoisi = jsonObject.getString("optionChoisi");
-
-                if(optionChoisi.equals("pasFait")){
 
                     String nameOption = getPortByName("setDatabaseOption", IadminDatabaseOption.class).getOption();
                     String namePromo = getPortByName("setDatabasePromo", IadminDatabasePromo.class).getPromo();
@@ -226,11 +226,12 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                     if(valeur != null){
                         switch (i){
                             case 2 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_people(valeur,prenom,nom); break;
-                            case 3 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setPromo(valeur,prenom,nom); break;
-                            case 4 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setOptions(valeur,prenom,nom); break;
-                            case 5 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setSpecialite(valeur,prenom,nom); break;
-                            case 6 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom); break;
-                            case 7 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom); break;
+                            case 3 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom); break;
+                            case 4 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setPromo(valeur,prenom,nom); break;
+                            case 5 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setOptions(valeur,prenom,nom); break;
+                            case 6 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setSpecialite(valeur,prenom,nom); break;
+                            case 7 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom); break;
+                            case 8 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom); break;
                             default:;
                         }
                     }
@@ -325,8 +326,9 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                     if(valeur != null){
                         switch (i){
                             case 2 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_people(valeur,prenom,nom); break;
-                            case 3 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom); break;
-                            case 4 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom); break;
+                            case 3 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom); break;
+                            case 4 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom); break;
+                            case 5 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom); break;
                             default:;
                         }
                     }
@@ -419,8 +421,9 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                     if(valeur != null){
                         switch (i){
                             case 2 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_people(valeur,prenom,nom); break;
-                            case 3 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom); break;
-                            case 4 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom); break;
+                            case 3 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom); break;
+                            case 4 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom); break;
+                            case 5 : getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom); break;
                             default:;
                         }
                     }
@@ -751,7 +754,218 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 }
             }
         }
+       else if(pageWeb.equals("batiment")) {
 
+            String salleParBatiment = jsonObject.getString("salleParBatiment");
+
+            if(salleParBatiment.equals("pasFait")){
+
+                String nomBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                JSONArray JSONnom = new JSONArray(nomBatiment);
+                JSONObject reponse = new JSONObject();
+                reponse.put("batiment", JSONnom);
+                connection.send(reponse.toString());
+            }
+            else if(salleParBatiment.equals("fait")) {
+
+                jsonArray = jsonObject.getJSONArray("tableau");
+                String nameBuilding = jsonArray.getString(0);
+                String buildingValue  =  getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getBuilding(nameBuilding);
+                JSONArray building = new JSONArray(buildingValue);
+                JSONObject reponse = new JSONObject();
+                reponse.put("valeur", building);
+                connection.send(reponse.toString());
+            }
+        }
+        else if(pageWeb.equals("salle")) {
+
+            String nameBuilding = "";
+            String salleParBatiment = jsonObject.getString("salleParBatiment");
+
+            if(salleParBatiment.equals("pasFait")){
+
+                        String nameBatiment = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getName();
+                        JSONArray JSONbatiment = new JSONArray(nameBatiment);
+                        JSONObject reponse = new JSONObject();
+                        reponse.put("batiment", JSONbatiment);
+                        connection.send(reponse.toString());
+            }
+            else if(salleParBatiment.equals("salle"))   {
+
+
+                        jsonArray = jsonObject.getJSONArray("tableau");
+                        String nameBatiment = jsonArray.getString(0);
+                        String nameSalle = getPortByName("setDatabaseRoom", IadminDatabaseRoom.class).getName(nameBatiment);
+                        JSONArray JSONsalle = new JSONArray(nameSalle);
+                        JSONObject reponse = new JSONObject();
+                        reponse.put("salle", JSONsalle);
+                        connection.send(reponse.toString());
+            }
+
+            else if(salleParBatiment.equals("fait")){
+
+                jsonArray = jsonObject.getJSONArray("tableau");
+                String nameSalle = jsonArray.getString(0);
+                String salleValue  =  getPortByName("setDatabaseRoom", IadminDatabaseRoom.class).getSalle(nameBuilding,nameSalle);
+                JSONArray salle = new JSONArray(salleValue);
+                JSONObject reponse = new JSONObject();
+                reponse.put("valeur", salle);
+                connection.send(reponse.toString());
+            }
+        }
+        else if(pageWeb.equals("equipement")){
+
+            String equipementValue  =  getPortByName("setDatabaseEquipment", IadminDatabaseEquipment.class).getNameEquipment();
+            JSONArray equipement = new JSONArray(equipementValue);
+            JSONObject reponse = new JSONObject();
+            reponse.put("equipement", equipement);
+            connection.send(reponse.toString());
+        }
+        else if(pageWeb.equals("etudiant")){
+
+            String personneChoisi = jsonObject.getString("personneChoisi");
+
+            if(personneChoisi.equals("pasFait")){
+
+                String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Etudiant");
+                String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Etudiant");
+                JSONArray JSONnom = new JSONArray(nom);
+                JSONArray JSONprenom = new JSONArray(prenom);
+                JSONArray tableau = new JSONArray();
+                JSONObject valeur = null;
+
+                for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
+                    valeur = new JSONObject();
+                    valeur.put("nom",JSONnom.getString(i));
+                    valeur.put("prenom", JSONprenom.getString(i));
+                    tableau.put(valeur);
+                }
+                JSONObject reponse = new JSONObject();
+                reponse.put("enseignant", tableau);
+                connection.send(reponse.toString());
+            }
+
+            else if(personneChoisi.equals("fait")){
+
+                jsonArray = jsonObject.getJSONArray("tableau");
+                String nom = jsonArray.getString(0);
+                String prenom = jsonArray.getString(1);
+                String etudiantValue  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getPeople(nom,prenom);
+                JSONArray etudiant = new JSONArray(etudiantValue);
+                JSONObject reponse = new JSONObject();
+                reponse.put("valeur", etudiant);
+                connection.send(reponse.toString());
+            }
+        }
+        else if(pageWeb.equals("personnel")){
+
+            String personneChoisi = jsonObject.getString("personneChoisi");
+
+            if(personneChoisi.equals("pasFait")){
+
+                String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Personnel");
+                String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Personnel");
+                JSONArray JSONnom = new JSONArray(nom);
+                JSONArray JSONprenom = new JSONArray(prenom);
+                JSONArray tableau = new JSONArray();
+                JSONObject valeur = null;
+
+                for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
+                    valeur = new JSONObject();
+                    valeur.put("nom",JSONnom.getString(i));
+                    valeur.put("prenom", JSONprenom.getString(i));
+                    tableau.put(valeur);
+                }
+                JSONObject reponse = new JSONObject();
+                reponse.put("enseignant", tableau);
+                connection.send(reponse.toString());
+            }
+
+            else if(personneChoisi.equals("fait")){
+
+                jsonArray = jsonObject.getJSONArray("tableau");
+                String nom = jsonArray.getString(0);
+                String prenom = jsonArray.getString(1);
+                String personnelValue  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getPeople(nom,prenom);
+                JSONArray personnel = new JSONArray(personnelValue);
+                JSONObject reponse = new JSONObject();
+                reponse.put("valeur", personnel);
+                connection.send(reponse.toString());
+            }
+        }
+        else if(pageWeb.equals("enseignant")){
+
+            String personneChoisi = jsonObject.getString("personneChoisi");
+
+            if(personneChoisi.equals("pasFait")){
+
+                String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Enseignant");
+                String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Enseignant");
+                JSONArray JSONnom = new JSONArray(nom);
+                JSONArray JSONprenom = new JSONArray(prenom);
+                JSONArray tableau = new JSONArray();
+                JSONObject valeur = null;
+
+                for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
+                    valeur = new JSONObject();
+                    valeur.put("nom",JSONnom.getString(i));
+                    valeur.put("prenom", JSONprenom.getString(i));
+                    tableau.put(valeur);
+                }
+                JSONObject reponse = new JSONObject();
+                reponse.put("enseignant", tableau);
+                connection.send(reponse.toString());
+            }
+
+            else if(personneChoisi.equals("fait")){
+
+                jsonArray = jsonObject.getJSONArray("tableau");
+                String nom = jsonArray.getString(0);
+                String prenom = jsonArray.getString(1);
+                String enseignantValue  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getPeople(nom,prenom);
+                JSONArray enseignant = new JSONArray(enseignantValue);
+                JSONObject reponse = new JSONObject();
+                reponse.put("valeur", enseignant);
+                connection.send(reponse.toString());
+            }
+        }
+        else if(pageWeb.equals("enseignant")){
+
+            String appelHistorique = jsonObject.getString("appelHistorique");
+
+            if(appelHistorique.equals("pasFait")){
+
+                String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Enseignant");
+                String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Enseignant");
+                JSONArray JSONnom = new JSONArray(nom);
+                JSONArray JSONprenom = new JSONArray(prenom);
+                JSONArray tableau = new JSONArray();
+                JSONObject valeur = null;
+
+                for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
+                    valeur = new JSONObject();
+                    valeur.put("nom",JSONnom.getString(i));
+                    valeur.put("prenom", JSONprenom.getString(i));
+                    tableau.put(valeur);
+                }
+                JSONObject reponse = new JSONObject();
+                reponse.put("people", tableau);
+                connection.send(reponse.toString());
+            }
+
+            else if(appelHistorique.equals("fait")){
+
+                jsonArray = jsonObject.getJSONArray("tableau");
+                String nom = jsonArray.getString(0);
+                String prenom = jsonArray.getString(1);
+                String id_people = getPortByName("setDatabasePeople", IadminDatabasePeople.class).getID(nom,prenom);
+                String historyValue  =  getPortByName("putEntry", IDatabaseHistory.class).getHistory(id_people);
+                JSONObject history = new JSONObject(historyValue);
+                JSONObject reponse = new JSONObject();
+                reponse.put("valeur", history);
+                connection.send(reponse.toString());
+            }
+        }
 
         getPortByName("fakeConsole", MessagePort.class).process(message);
     }
