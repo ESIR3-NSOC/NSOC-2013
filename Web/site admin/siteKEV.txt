@@ -1,0 +1,77 @@
+{
+addRepo "http://148.60.11.209:8080/archiva/repository/snapshots/"
+addRepo "http://maven.kevoree.org/release"
+addRepo "http://repo.maven.apache.org/maven2"
+addRepo "https://oss.sonatype.org/content/groups/public/"
+addRepo "http://repository.jetbrains.com/all"
+addRepo "https://oss.sonatype.org/content/repositories/snapshots"
+addRepo "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+addRepo "http://maven.kevoree.org/snapshots"
+addRepo "http://148.60.11.209:8080/archiva/repository/internal/"
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.javaseNode/2.0.5'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.defaultChannels/2.0.5'
+merge 'mvn:esir.dom13.nsoc/esir.dom13.nsoc.serverWeb/1.0-SNAPSHOT'
+merge 'mvn:org.kevoree.corelibrary.javase/org.kevoree.library.javase.jexxus/2.0.5'
+addNode node0:JavaSENode
+updateDictionary node0{coreLogLevel="DEBUG",logLevel="DEBUG"}
+ {
+  addComponent adminData5@node0 : adminDatabasePeople {}
+  addComponent adminData700@node0 : adminDatabaseEquipment {}
+  addComponent adminData207@node0 : adminDatabaseOption {}
+  addComponent DatabaseC530@node0 : DatabaseConnection {PASS='ydr2013.',USER='user',JDBC_DRIVER='com.mysql.jdbc.Driver',DB_URL='jdbc:mysql://148.60.11.209/projetnsoc'}
+  addComponent adminData330@node0 : adminDatabasePromo {}
+  addComponent ServerWeb108@node0 : ServerWeb_siteAdmin {port='9000'}
+  addComponent adminData511@node0 : adminDatabaseBuilding {}
+  addComponent adminData45@node0 : adminDatabaseRoom {}
+addChannel defSERVIC861 : defSERVICE {}
+addChannel defSERVIC489 : defSERVICE {}
+addChannel defSERVIC877 : defSERVICE {}
+addChannel defSERVIC43 : defSERVICE {}
+addChannel defMSG806 : defMSG {}
+addChannel defSERVIC378 : defSERVICE {}
+addChannel defSERVIC638 : defSERVICE {}
+addChannel defSERVIC135 : defSERVICE {}
+addChannel defSERVIC809 : defSERVICE {}
+bind ServerWeb108.setDatabaseEquipment@node0 => defSERVIC809
+bind ServerWeb108.setDatabasePeople@node0 => defSERVIC638
+bind adminData207.setDatabaseOption@node0 => defSERVIC135
+bind adminData5.connectDatabase@node0 => defSERVIC861
+bind ServerWeb108.setDatabaseOption@node0 => defSERVIC135
+bind ServerWeb108.setDatabaseRoom@node0 => defSERVIC43
+bind ServerWeb108.putEntry@node0 => defSERVIC877
+bind adminData5.setDatabasePeople@node0 => defSERVIC638
+bind adminData330.connectDatabase@node0 => defSERVIC861
+bind adminData700.setDatabaseEquipment@node0 => defSERVIC809
+bind ServerWeb108.setDatabasePromo@node0 => defSERVIC489
+bind ServerWeb108.setDatabaseBuilding@node0 => defSERVIC378
+bind adminData45.setDatabaseRoom@node0 => defSERVIC43
+bind DatabaseC530.Request@node0 => defSERVIC861
+bind adminData511.setDatabaseBuilding@node0 => defSERVIC378
+bind ServerWeb108.fakeConsole@node0 => defMSG806
+bind adminData700.connectDatabase@node0 => defSERVIC861
+bind adminData330.setDatabasePromo@node0 => defSERVIC489
+bind adminData511.connectDatabase@node0 => defSERVIC861
+bind adminData207.connectDatabase@node0 => defSERVIC861
+bind adminData45.connectDatabase@node0 => defSERVIC861
+updateDictionary adminData330@node0 
+updateDictionary adminData207@node0 
+updateDictionary defSERVIC378 
+updateDictionary defMSG806 
+updateDictionary adminData45@node0 
+updateDictionary defSERVIC861 
+updateDictionary defSERVIC638 
+updateDictionary defSERVIC809 
+updateDictionary defSERVIC877 
+updateDictionary adminData511@node0 
+updateDictionary DatabaseC530@node0 
+updateDictionary defSERVIC489 
+updateDictionary defSERVIC135 
+updateDictionary adminData5@node0 
+updateDictionary defSERVIC43 
+updateDictionary adminData700@node0 
+updateDictionary ServerWeb108@node0 
+}
+
+addGroup sync:BasicGroup
+addToGroup sync node0
+}

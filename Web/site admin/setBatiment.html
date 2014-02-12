@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="setForm.css"/>
+<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="reconnecting-websocket.min.js"></script>
+<script type="text/javascript" src="setBatiment.js"></script>
+<title>Bâtiment</title>
+</head>
+<body>
+<h1 align="center">MODIFIER BATIMENT</h1>
+
+<nav>
+	<ul id = "menu">
+		<li>
+			<a href="accueilAdmin.html">ACCUEIL</a>
+		</li>
+		<li>
+			<a href ="etudiant.html">ETUDIANT</a>
+				<ul>
+				<li><a href ="getEtudiant.html">HISTORIQUE</a></li>
+				<li><a href ="newEtudiant.html">CREER</a></li>
+				<li><a href ="setEtudiant.html">MODIFIER</a></li>
+				<li><a href ="deleteEtudiant.html">SUPPRIMER</a></li>
+				</ul>
+		</li>
+		<li>
+			<a href ="personnel.html">PERSONNEL</a>
+				<ul>
+				<li><a href ="newPersonnel.html">CREER</a></li>
+				<li><a href ="setPersonnel.html">MODIFIER</a></li>
+				<li><a href ="deletePersonnel.html">SUPPRIMER</a></li>
+				</ul>
+		</li>
+		<li>
+			<a href ="enseignant.html">ENSEIGNANT</a>
+				<ul>
+				<li><a href ="newEnseignant.html">CREER</a></li>
+				<li><a href ="setEnseignant.html">MODIFIER</a></li>
+				<li><a href ="deleteEnseignant.html">SUPPRIMER</a></li>
+				</ul>
+		</li>
+		<li>
+			<a href ="batiment.html">BATIMENT</a>
+				<ul>
+				<li><a href ="newBatiment.html">CREER</a></li>
+				<li><a href ="setBatiment.html">MODIFIER</a></li>
+				<li><a href ="deleteBatiment.html">SUPPRIMER</a></li>
+				</ul>
+		</li>
+		<li>
+			<a href ="salle.html">SALLE</a>
+				<ul>
+				<li><a href ="newSalle.html">CREER</a></li>
+				<li><a href ="setSalle.html">MODIFIER</a></li>
+				<li><a href ="deleteSalle.html">SUPPRIMER</a></li>
+				</ul>
+		</li>
+		<li>
+			<a href ="equipement.html">EQUIPEMENT</a>
+				<ul>
+				<li><a href ="newEquipement.html">CREER</a></li>
+				<li><a href ="deleteEquipement.html">SUPPRIMER</a></li>
+				</ul>
+		</li>
+		<li>
+			<a href ="autres.html">AUTRES</a>
+				<ul>
+				<li><a href ="specialite.html">SPECIALITE</a></li>
+				<li><a href ="option.html">OPTION</a></li>
+				<li><a href ="promo.html">PROMO</a></li>
+				</ul>
+		</li>
+	</ul>
+	</nav>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	
+	<section id ="formulaire">
+		<article id = "solution">
+		<form method="post" > <!-- voir avec clément pour le serveur pour ajouter action = ""-->
+			
+			<p><div>Veuillez donner le nom du bâtiment à modifier</div><br />
+			<div id = "id_nom_js">
+			</div>			
+			<br /><br />
+			</p>
+			
+			<p><div>Veuillez choisir l'élément à modifier dans la base de données</div><br />
+			<input type = "radio" name = "setBatiment" value = "id_batiment" id = "id_batiment" onClick='batiment_js()'/> <label for = "id_batiment">Identifiant du bâtiment</label><br />	
+			<input type = "radio" name = "setBatiment" value = "id_nbRoom" id = "id_nbRoom" onClick='nbRoom_js()'/> <label for = "id_nbRoom">Nombre de salle</label><br />	
+
+			<br />
+	
+		<div id ="building">
+		</div>
+		</form>
+	</article>
+
+	</section>
+	
+	
+</body>
+</html>
