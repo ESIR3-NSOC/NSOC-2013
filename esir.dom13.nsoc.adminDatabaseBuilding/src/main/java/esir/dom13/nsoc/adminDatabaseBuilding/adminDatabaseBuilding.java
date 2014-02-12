@@ -22,9 +22,6 @@ import java.sql.*;
         @ProvidedPort(name = "setDatabaseBuilding", type = PortType.SERVICE, className = IadminDatabaseBuilding.class)
 })
 
-@Requires({
-        @RequiredPort(name = "connectDatabase", type = PortType.SERVICE, className = IDatabaseConnection.class)
-})
 
 @DictionaryType({
         @DictionaryAttribute(name = "JDBC_DRIVER", defaultValue = "com.mysql.jdbc.Driver", optional = false),
