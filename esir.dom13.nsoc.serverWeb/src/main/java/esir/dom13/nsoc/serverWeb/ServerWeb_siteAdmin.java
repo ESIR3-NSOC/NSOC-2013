@@ -972,12 +972,13 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
                 for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
                     valeur = new JSONObject();
-                    valeur.put("type" , "pasFait");
+
                     valeur.put("nom",JSONnom.getString(i));
                     valeur.put("prenom", JSONprenom.getString(i));
                     tableau.put(valeur);
                 }
                 JSONObject reponse = new JSONObject();
+                reponse.put("type" , "pasFait");
                 reponse.put("enseignant", tableau);
                 connection.send(reponse.toString());
             }
@@ -1015,8 +1016,8 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 JSONObject reponse = new JSONObject();
                 reponse.put("type" , "pasFait");
                 reponse.put("people", tableau);
-                Log.debug("reponse :"+reponse);
                 connection.send(reponse.toString());
+                Log.debug("envoie :" + reponse.toString());
             }
 
             else if(type.equals("fait")){
@@ -1025,8 +1026,10 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String nom = jsonArray.getString(0);
                 String prenom = jsonArray.getString(1);
                 String id_people = getPortByName("setDatabasePeople", IadminDatabasePeople.class).getID(nom,prenom);
+                JSONArray id = new JSONArray(id_people);
+                id_people = id.getString(0);
                 String historyValue  =  getPortByName("putEntry", IDatabaseHistory.class).getHistory(id_people);
-                JSONObject history = new JSONObject(historyValue);
+                JSONArray history = new JSONArray(historyValue);
                 JSONObject reponse = new JSONObject();
                 reponse.put("type", "fait");
                 reponse.put("valeur", history);

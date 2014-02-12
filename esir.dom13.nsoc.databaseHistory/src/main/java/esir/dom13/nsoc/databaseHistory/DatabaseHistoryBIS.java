@@ -3,6 +3,8 @@ package esir.dom13.nsoc.databaseHistory;
 import com.sun.rowset.CachedRowSetImpl;
 import esir.dom13.nsoc.database.IDatabaseConnection;
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.kevoree.annotation.*;
 import org.kevoree.framework.AbstractComponentType;
 import org.kevoree.log.Log;
@@ -121,9 +123,46 @@ public class DatabaseHistoryBIS extends AbstractComponentType implements IDataba
 
     @Port(name = "putEntry",method = "getHistory")
     @Override
-    public String getHistory(String id_people) {
+    public String getHistory(String id_people){
 
-        return null;
+        String value = null;
+
+        JSONArray tableau = new JSONArray();
+        String request = "SELECT * FROM `idatabasehistory` WHERE id_people = '" + id_people + "'";
+        Log.debug(request);
+        Statement stmt = null;
+
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: "+request);
+
+            ResultSet rs = stmt.executeQuery(request);
+
+            while(rs.next()){
+
+                JSONArray nombre = new JSONArray();
+                value = rs.getString("name_room");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                nombre.put(value);
+                value = rs.getString("name_building");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                nombre.put(value);
+                value = rs.getString("date_hours");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                nombre.put(value);
+                value = rs.getString("name_lesson");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                nombre.put(value);
+                value = rs.getString("name_teacher");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                nombre.put(value);
+
+                    tableau.put( nombre);
+                      }
+            stmt.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
     }
 }
 
