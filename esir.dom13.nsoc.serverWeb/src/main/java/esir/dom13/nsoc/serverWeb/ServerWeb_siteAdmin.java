@@ -39,6 +39,10 @@ import org.webbitserver.handler.StaticFileHandler;
 
 @Library(name = "NSOC2013")
 
+@Provides({
+        @ProvidedPort(name = "recupIdBadge", type = PortType.MESSAGE)
+})
+
 @Requires({
         @RequiredPort(name = "fakeConsole", type = PortType.MESSAGE),
         @RequiredPort(name = "setDatabaseEquipment", type =PortType.SERVICE, className = IadminDatabaseEquipment.class),
@@ -58,7 +62,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
     private WebServer webServer;
     private HandlerWebSocket handlerWebSocket;
-
+    private Peers peers;
     private int port;
 
     @Start
@@ -94,12 +98,12 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
     public void onOpen(WebSocketConnection connection) {
         //connection.send("Other connection :: "+connexion );
-
+        peers.addPeer(connection);
         Log.info("START SOCKET  :  ");
     }
 
     public void onClose(WebSocketConnection connection) {
-
+        peers.removePeer(connection);
         Log.info("STOP SOCKET  :  ");
     }
 
@@ -1054,6 +1058,20 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
     @Override
     public void onPong(WebSocketConnection connection, byte[] msg) throws Throwable {
         Log.info("STOP SOCKET  :  ");
+    }
+
+    @Port(name = "recupIdBadge")
+    public void recupIdBadge(Object object){
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("type","badge");
+            jsonObject.put("badge",object.toString());
+            peers.broadcast(jsonObject.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
     }
 }
 
