@@ -31,6 +31,7 @@ import java.util.Date;
         @RequiredPort(name = "openGache", type = PortType.MESSAGE),
         @RequiredPort(name = "authorization", type = PortType.SERVICE, className = IResearch.class),
         @RequiredPort(name = "databaseHistory", type = PortType.SERVICE, className = IDatabaseHistory.class),
+        @RequiredPort(name = "serverAdmin", type = PortType.MESSAGE),
 })
 
 @DictionaryType({
@@ -63,6 +64,11 @@ public class RoomAccess extends AbstractComponentType {
     @Port(name = "getRFID")
     public void getRFID(Object id_rfid) {
         if(id_rfid.toString().length()<2){return;}
+        if(id_rfid.toString().startsWith("programmation")){
+            // Mode programmation
+            getPortByName("serverAdmin",MessagePort.class).process(id_rfid.toString().replace("programmation",""));
+           return;
+        }
         String cursus = getPortByName("speciality", IDatabasePeople.class).getCursus(id_rfid.toString());
         String idPeople = getPortByName("speciality", IDatabasePeople.class).getIdPeople(id_rfid.toString());
         JSONArray array = null;
