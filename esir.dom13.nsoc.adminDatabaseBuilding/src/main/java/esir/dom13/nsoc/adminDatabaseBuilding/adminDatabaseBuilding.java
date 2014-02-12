@@ -100,39 +100,98 @@ public class adminDatabaseBuilding extends AbstractComponentType implements Iadm
     @Override
     public void addBuilding(String id_building, String nameBuilding, String numberOfRoom) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "INSERT INTO `idatabasebuilding` (`id_building`, `nameBuilding`, `numberOfRoom`)" +
+        String request = "INSERT INTO `idatabasebuilding` (`id_building`, `nameBuilding`, `numberOfRoom`)" +
                 " VALUES ('" +  id_building + "', '" + nameBuilding + "', '" + numberOfRoom + "')";
-        CachedRowSetImpl rs = null;
-        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+        Log.debug(request);
+        Statement stmt = null;
+
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: "+request);
+
+            stmt.executeUpdate(request);
+
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+
+        try {
+
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Port(name = "setDatabaseBuilding", method = "deleteBuilding")
     @Override
     public void deleteBuilding(String nameBuilding) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "DELETE FROM `idatabasebuilding` WHERE nameBuilding = '"+ nameBuilding + "')";
-        CachedRowSetImpl rs = null;
-        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+        String request = "DELETE FROM `idatabasebuilding` WHERE nameBuilding = '"+ nameBuilding + "'";
+        Log.debug(request);
+        Statement stmt = null;
+
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: "+request);
+
+            stmt.executeUpdate(request);
+
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Port(name = "setDatabaseBuilding", method = "setId_building")
     @Override
     public void setId_building(String nameBuilding, String id_building) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "UPDATE `idatabasebuilding` SET `id_building` = '" + id_building +"' WHERE nameBuilding = '" + nameBuilding + "'";
+        String request = "UPDATE `idatabasebuilding` SET `id_building` = '" + id_building +"' WHERE nameBuilding = '" + nameBuilding + "'";
         //peut etre pas de guillemmet pour la valeur de remplacement
-        CachedRowSetImpl rs = null;
-        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+        Log.debug(request);
+        Statement stmt = null;
+
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: "+request);
+
+            stmt.executeUpdate(request);
+
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Port(name = "setDatabaseBuilding", method = "setNumberOfRoom")
     @Override
     public void setNumberOfRoom(String nameBuilding, String numberOfRoom) {
         //To change body of implemented methods use File | Settings | File Templates.
-        String sql = "UPDATE `idatabasebuilding` SET `numberOfRoom` = '" + numberOfRoom +"' WHERE nameBuilding = '" + nameBuilding + "'";
+        String request = "UPDATE `idatabasebuilding` SET `numberOfRoom` = '" + numberOfRoom +"' WHERE nameBuilding = '" + nameBuilding + "'";
         //peut etre pas de guillemmet pour la valeur de remplacement
-        CachedRowSetImpl rs = null;
-        rs = getPortByName("connectDatabase", IDatabaseConnection.class).sendRequestToDatabase(sql);
+        Log.debug(request);
+        Statement stmt = null;
+
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: "+request);
+
+            stmt.executeUpdate(request);
+
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Port(name = "setDatabaseBuilding", method = "getNameBuilding")
@@ -156,6 +215,37 @@ public class adminDatabaseBuilding extends AbstractComponentType implements Iadm
 
             while (rs.next()){
                 value = rs.getString("nameBuilding");   //voir si cela fonctionne et qu'on récupère valeur Bdd
+                tableau.put(value);
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
+        return tableau.toString();
+    }
+
+    @Port(name = "setDatabaseBuilding", method = "getIdBuilding")
+    @Override
+    public String getIdBuilding(String nameBuilding){
+
+        String value = null;
+        JSONArray tableau = new JSONArray();
+        String request = "SELECT `id_building` FROM `idatabasebuilding` WHERE nameBuilding = '"+ nameBuilding + "'";
+        Log.debug(request);
+        Statement stmt = null;
+
+        try {
+            //STEP 4: Execute a query
+            Log.debug("Creating statement...");
+            stmt = connection.createStatement();
+            Log.debug("Execution of :: "+request);
+
+            ResultSet rs = stmt.executeQuery(request);
+
+
+            while (rs.next()){
+                value = rs.getString("id_building");   //voir si cela fonctionne et qu'on récupère valeur Bdd
                 tableau.put(value);
             }
             stmt.close();
