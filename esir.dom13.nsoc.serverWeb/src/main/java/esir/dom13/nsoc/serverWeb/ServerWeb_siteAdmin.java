@@ -227,28 +227,39 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 for(int i = 2; i<jsonArray.length(); i++){
 
                     valeur = jsonArray.getString(i);
+
+                    if(!valeur.equals("null")){
+
                     String modifier = jsonObject.getString("modifier");
 
                     if(modifier.equals("1")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_people(valeur,prenom,nom);
+                        Log.debug("modif : 1 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setId_people(valeur,nom,prenom);
                     }
                     else if(modifier.equals("2")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom);
+                        Log.debug("modif : 2 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setId_badge(valeur,nom,prenom);
                     }
                     else if(modifier.equals("3")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setPromo(valeur,prenom,nom);
+                        Log.debug("modif : 3 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setPromo(valeur,nom,prenom);
                     }
                     else if(modifier.equals("4")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setOptions(valeur,prenom,nom);
+                        Log.debug("modif : 4 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setOptions(valeur,nom,prenom);
                     }
                     else if(modifier.equals("5")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setSpecialite(valeur,prenom,nom);
+                        Log.debug("modif : 5 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setSpecialite(valeur,nom,prenom);
                     }
                     else if(modifier.equals("6")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom);
+                        Log.debug("modif : 6 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setEmailAddress(valeur,nom,prenom);
                     }
                     else if(modifier.equals("7")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom);
+                        Log.debug("modif : 7 " + valeur + " " + prenom + " " + nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setAdmin(valeur,nom,prenom);
+                    }
                     }
 
                 }
@@ -339,21 +350,23 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 for(int i = 2; i<jsonArray.length(); i++){
 
                     valeur = jsonArray.getString(i);
+                    if(!valeur.equals("null")){
+
                     String modifier = jsonObject.getString("modifier");
                     if(modifier.equals("1")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_people(valeur,prenom,nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setId_people(valeur,prenom,nom);
                     }
                     else if(modifier.equals("2")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom);
                     }
                     else if(modifier.equals("3")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom);
                     }
                     else if(modifier.equals("4")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom);
                     }
 
-
+                    }
                 }
             }
         }
@@ -440,21 +453,23 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 for(int i = 2; i<jsonArray.length(); i++){
 
                     valeur = jsonArray.getString(i);
+                    if(!valeur.equals("null")){
+
                     String modifier = jsonObject.getString("modifier");
 
                     if(modifier.equals("1")){
-                       getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_people(valeur,prenom,nom);
+                       getPortByName("setDatabasePeople", IadminDatabasePeople.class).setId_people(valeur,prenom,nom);
                     }
                     else if(modifier.equals("2")){
-                       getPortByName("setDatabasePeole", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom);
+                       getPortByName("setDatabasePeople", IadminDatabasePeople.class).setId_badge(valeur,prenom,nom);
                     }
                     else if(modifier.equals("3")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setEmailAddress(valeur,prenom,nom);
                     }
                     else if(modifier.equals("4")){
-                        getPortByName("setDatabasePeole", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom);
+                        getPortByName("setDatabasePeople", IadminDatabasePeople.class).setAdmin(valeur,prenom,nom);
                     }
-
+                    }
                 }
             }
         }
@@ -520,6 +535,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 for(int i = 1; i<jsonArray.length(); i++){
 
                     valeur = jsonArray.getString(i);
+                    if(!valeur.equals("null")){
                     String modifier = jsonObject.getString("modifier");
 
                     if(modifier.equals("1")){
@@ -529,7 +545,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                              getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).setNumberOfRoom(nameBatiment, valeur); break;
 
                     }
-
+                    }
 
                 }
             }
@@ -573,6 +589,8 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String nameSalle = jsonArray.getString(1);
                 String nameEquipement = jsonArray.getString(2);
                 String id_building = getPortByName("setDatabaseBuilding", IadminDatabaseBuilding.class).getIdBuilding(nameBatiment) ;
+                JSONArray id = new JSONArray(id_building);
+                id_building = id.getString(0);
                 getPortByName("setDatabaseRoom", IadminDatabaseRoom.class).addRoom(nameSalle, nameBatiment,id_building,nameEquipement);
             }
         }
@@ -869,9 +887,8 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
         }
         else if(pageWeb.equals("etudiant")){
 
-            String personneChoisi = jsonObject.getString("personneChoisi");
 
-            if(personneChoisi.equals("pasFait")){
+            if(type.equals("pasFait")){
 
                 String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Etudiant");
                 String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Etudiant");
@@ -887,11 +904,12 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                     tableau.put(valeur);
                 }
                 JSONObject reponse = new JSONObject();
-                reponse.put("enseignant", tableau);
+                reponse.put("type" , "pasFait");
+                reponse.put("etudiant", tableau);
                 connection.send(reponse.toString());
             }
 
-            else if(personneChoisi.equals("fait")){
+            else if(type.equals("fait")){
 
                 jsonArray = jsonObject.getJSONArray("tableau");
                 String nom = jsonArray.getString(0);
@@ -899,15 +917,15 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String etudiantValue  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getPeople(nom,prenom);
                 JSONArray etudiant = new JSONArray(etudiantValue);
                 JSONObject reponse = new JSONObject();
+                reponse.put("type" , "fait");
                 reponse.put("valeur", etudiant);
                 connection.send(reponse.toString());
             }
         }
         else if(pageWeb.equals("personnel")){
 
-            String personneChoisi = jsonObject.getString("personneChoisi");
 
-            if(personneChoisi.equals("pasFait")){
+            if(type.equals("pasFait")){
 
                 String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Personnel");
                 String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Personnel");
@@ -923,11 +941,12 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                     tableau.put(valeur);
                 }
                 JSONObject reponse = new JSONObject();
+                reponse.put("type", "pasFait");
                 reponse.put("enseignant", tableau);
                 connection.send(reponse.toString());
             }
 
-            else if(personneChoisi.equals("fait")){
+            else if(type.equals("fait")){
 
                 jsonArray = jsonObject.getJSONArray("tableau");
                 String nom = jsonArray.getString(0);
@@ -935,15 +954,14 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String personnelValue  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getPeople(nom,prenom);
                 JSONArray personnel = new JSONArray(personnelValue);
                 JSONObject reponse = new JSONObject();
+                reponse.put("type" , "fait");
                 reponse.put("valeur", personnel);
                 connection.send(reponse.toString());
             }
         }
         else if(pageWeb.equals("enseignant")){
 
-            String personneChoisi = jsonObject.getString("personneChoisi");
-
-            if(personneChoisi.equals("pasFait")){
+            if(type.equals("pasFait")){
 
                 String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Enseignant");
                 String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Enseignant");
@@ -954,6 +972,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
                 for(int i = 0; i< JSONnom.length(); i++){   //pour mettre au format : {etudiant : [{"nom" : nomValeur1, "prenom" : prenomValeur1},{"nom" : nomValeur2, "prenom" : prenomValeur2} etc...]}
                     valeur = new JSONObject();
+                    valeur.put("type" , "pasFait");
                     valeur.put("nom",JSONnom.getString(i));
                     valeur.put("prenom", JSONprenom.getString(i));
                     tableau.put(valeur);
@@ -963,7 +982,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 connection.send(reponse.toString());
             }
 
-            else if(personneChoisi.equals("fait")){
+            else if(type.equals("fait")){
 
                 jsonArray = jsonObject.getJSONArray("tableau");
                 String nom = jsonArray.getString(0);
@@ -971,18 +990,17 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String enseignantValue  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getPeople(nom,prenom);
                 JSONArray enseignant = new JSONArray(enseignantValue);
                 JSONObject reponse = new JSONObject();
+                reponse.put("type" , "fait");
                 reponse.put("valeur", enseignant);
                 connection.send(reponse.toString());
             }
         }
-        else if(pageWeb.equals("historique")){
+        else if(pageWeb.equals("getEtudiant")){
 
-            String appelHistorique = jsonObject.getString("appelHistorique");
+            if(type.equals("pasFait")){
 
-            if(appelHistorique.equals("pasFait")){
-
-                String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Enseignant");
-                String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Enseignant");
+                String prenom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getFirstname("Etudiant");
+                String nom  =  getPortByName("setDatabasePeople", IadminDatabasePeople.class).getSurname("Etudiant");
                 JSONArray JSONnom = new JSONArray(nom);
                 JSONArray JSONprenom = new JSONArray(prenom);
                 JSONArray tableau = new JSONArray();
@@ -995,11 +1013,13 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                     tableau.put(valeur);
                 }
                 JSONObject reponse = new JSONObject();
+                reponse.put("type" , "pasFait");
                 reponse.put("people", tableau);
+                Log.debug("reponse :"+reponse);
                 connection.send(reponse.toString());
             }
 
-            else if(appelHistorique.equals("fait")){
+            else if(type.equals("fait")){
 
                 jsonArray = jsonObject.getJSONArray("tableau");
                 String nom = jsonArray.getString(0);
@@ -1008,6 +1028,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
                 String historyValue  =  getPortByName("putEntry", IDatabaseHistory.class).getHistory(id_people);
                 JSONObject history = new JSONObject(historyValue);
                 JSONObject reponse = new JSONObject();
+                reponse.put("type", "fait");
                 reponse.put("valeur", history);
                 connection.send(reponse.toString());
             }
