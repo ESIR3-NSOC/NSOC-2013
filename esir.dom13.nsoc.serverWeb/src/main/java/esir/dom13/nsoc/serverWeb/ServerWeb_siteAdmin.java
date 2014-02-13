@@ -67,7 +67,7 @@ public class ServerWeb_siteAdmin extends AbstractComponentType implements WebSoc
 
     @Start
     public void start() {
-
+        peers = new Peers();
         createWebServer();
         webServer.start();
         Log.info("Server running at " + webServer.getUri());
